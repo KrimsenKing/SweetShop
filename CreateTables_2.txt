@@ -1,0 +1,129 @@
+Create table JOBPOSITION
+(jobID Number(6) primary key,
+title Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table COUNTRY
+(countryID Number(1) primary key,
+country Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table PROVSTATE
+(provStateID Number(3) primary key,
+provState Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table MODEL
+(modelID Number(5) primary key,
+modelName Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table BRAND
+(brandID Number(5) primary key,
+brandName Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table PAYMENTMETHODS
+(methodID Number(5) primary key,
+methodName Varchar2(30))
+TABLESPACE sweetSpot;
+
+Create table LOCATION
+(locationID Number(3) primary key,
+locationName Varchar2(30),
+primaryPhoneNumber Varchar2(30),
+secondaryPhoneNumber Varchar2(30),
+email Varchar2(30),
+address Varchar2(30),
+city Varchar2(30),
+provState Number(3),
+country Number(1),
+postZip Varchar2(30)
+FOREIGN KEY (provState) References PROVSTATE,
+FOREIGN KEY (country) References COUNTRY,)
+TABLESPACE sweetSpot;
+
+
+
+Create table CUSTOMERS
+(custID Number(6) primary key,
+firstName Varchar2(30) NOT NULL,
+lastName Varchar2(30) NOT NULL,
+primaryAddress Varchar2(30),
+secondaryAddress Varchar2(30),
+primaryPhoneNumber Varchar2(30),
+secondaryPhoneNumber Varchar2(30),
+billingAddress Varchar2(30),
+email Varchar2(30),
+city Varchar2(30),
+provState Number(3),
+country Number(3),
+postZip Varchar2(30),
+FOREIGN KEY (provState) References PROVSTATE,
+FOREIGN KEY (country) References COUNTRY)
+TABLESPACE sweetSpot;
+
+Create table EMPLOYEE
+(empID Number(6) primary key,
+firstName Varchar2(30) NOT NULL,
+lastName Varchar2(30) NOT NULL,
+jobID Number(6),
+locationID Number(3),
+email Varchar2(30),
+primaryContactNumber Varchar2(30),
+secondaryContactNumber Varchar2(30),
+primaryAddress Varchar2(30),
+secondaryAddress Varchar2(30),
+city Varchar2(30),
+provState Number(3),
+country Number(3),
+postZip Varchar2(30),
+FOREIGN KEY (jobID) References JOBPOSITION,
+FOREIGN KEY (locationID) References LOCATION,
+FOREIGN KEY (provState) References PROVSTATE,
+FOREIGN KEY (country) References COUNTRY)
+TABLESPACE sweetSpot;
+
+Create table CLOTHING
+(sku Number(30) primary key,
+size Varchar2(30),
+colour Varchar2(30),
+gender Varchar2(30),
+style Varchar2(30),
+price Number(6,2),
+cost Number(6,2),
+brandID Number(5),
+quantity Number(6),
+FOREIGN KEY (brandID) References BRAND)
+TABLESPACE sweetSpot;
+
+Create table ACCESSORIES
+(sku Number(30) primary key,
+size Varchar2(30),
+colour Varchar2(30),
+price Number(6,2),
+cost Number(6,2),
+brandID Number(5),
+quantity Number(6),
+FOREIGN KEY (brandID) References BRAND)
+TABLESPACE sweetSpot;
+
+Create table INVOICE
+(invoiceNum Varchar2(30) NOT NULL,
+sku Number(30) NOT NULL,
+invoiceDate Date NOT NULL,
+quantity Number(6),
+cost Number(6,2),
+price Number(6,2),
+custID Number(6),
+methodID Number(5),
+locationID Number(3),
+empID Number(6),
+FOREIGN KEY (custID) References CUSTOMERS,
+FOREIGN KEY (methodID) References PAYMENTMETHODS,
+FOREIGN KEY (locationID) References LOCATION,
+FOREIGN KEY (empID) References EMPLOYEE,
+PRIMARY KEY (invoiceNum,sku,invoiceDate))
+TABLESPACE sweetSpot;
+
+ALSO NEED TO MAKE CHANGES TO THE TAX TABLE AND THE CLUB TABLE.

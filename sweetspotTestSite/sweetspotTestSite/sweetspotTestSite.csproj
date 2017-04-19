@@ -66,6 +66,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CartTemplate.aspx" />
+    <Content Include="CartTemplate.css" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -80,6 +82,13 @@
     <Content Include="SweetSpotHome.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartTemplate.aspx.cs">
+      <DependentUpon>CartTemplate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CartTemplate.aspx.designer.cs">
+      <DependentUpon>CartTemplate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SweetSpotHome.aspx.cs">
       <DependentUpon>SweetSpotHome.aspx</DependentUpon>

@@ -1,7 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="SalesCart.aspx.cs" Inherits="SweetSpotDiscountGolfPOS.SalesCart" %>
 
-<%--<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>--%>
+<asp:Content ID="scriptContent" ContentPlaceHolderID="head" runat="server">
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Are you sure you want to Cancel Sale? All cart items will be removed.")) {
+                confirm_value.value = "Yes";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
+</asp:Content>
 
 <asp:Content ID="NonActive" ContentPlaceHolderID="SPMaster" runat="server">
     <div id="menu_simple">
@@ -44,7 +57,7 @@
         <asp:Label ID="lblSubtotal" runat="server" Text="Subtotal:"></asp:Label>
         <asp:TextBox ID="txtSubtotal" ReadOnly="true" runat="server"></asp:TextBox>
         <hr />
-        <asp:Button ID="btnCancelSale" runat="server" Text="Cancel Sale" OnClick="btnCancelSale_Click" />
+        <asp:Button ID="btnCancelSale" runat="server" Text="Cancel Sale" OnClientClick="Confirm()" OnClick="btnCancelSale_Click" />
         <asp:Button ID="btnProceedToCheckout" runat="server" Text="Proceed to Checkout" OnClick="btnProceedToCheckout_Click" />
     </div>
 </asp:Content>

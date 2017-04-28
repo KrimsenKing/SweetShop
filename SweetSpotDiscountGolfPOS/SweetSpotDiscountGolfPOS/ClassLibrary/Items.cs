@@ -34,7 +34,7 @@ namespace SweetShop
             con.Open();
             SqlDataReader read = cmd.ExecuteReader();
 
-
+            string table = "tbl_";
             qry = "Select * from " + table + " Where sku = " + sku;
             switch (typeID) { 
                 case 1: //clubs

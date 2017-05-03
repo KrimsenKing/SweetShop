@@ -21,6 +21,42 @@
         <div class="divider" />
         <asp:Button ID="btnAddNewInventory" runat="server" Width="150" Text="Add New Inventory" OnClick="btnAddNewInventory_Click"/>
         <hr />
-        <asp:GridView ID="grdInventorySearched" runat="server" AutoGenerateSelectButton="true"></asp:GridView>
+        <asp:GridView ID="grdInventorySearched" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:TemplateField HeaderText="View Item">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lbtnView" CommandName="viewItem" CommandArgument='<%#Eval("sku") %>' Text="View Item" runat="server">View Item</asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            <asp:TemplateField HeaderText="SKU">
+                    <ItemTemplate>
+                        <asp:Label runat="server" Text='<%#Eval("sku")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            <asp:TemplateField HeaderText="Description">
+                    <ItemTemplate>
+                        <asp:Label runat="server" Text='<%#Eval("description")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            <asp:TemplateField HeaderText="Quantity">
+                    <ItemTemplate>
+                        <asp:Label runat="server" Text='<%#Eval("quantity")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            <asp:TemplateField HeaderText="Price">
+                    <ItemTemplate>
+                        <asp:Label runat="server" Text='<%#Eval("price")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            <asp:TemplateField HeaderText="Cost">
+                    <ItemTemplate>
+                        <asp:Label runat="server" Text='<%#Eval("cost")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+             <EmptyDataTemplate>
+                No current Inventory data, please search for an Inventory Item
+            </EmptyDataTemplate>
+        </asp:GridView>
     </div>
 </asp:Content>

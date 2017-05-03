@@ -74,6 +74,7 @@
     <Content Include="Images\SweetSpotLogo.jpg" />
     <Content Include="InventoryAddNew.aspx" />
     <Content Include="InventoryHomePage.aspx" />
+    <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="MasterPage.Master" />
     <None Include="Web.Debug.config">
@@ -106,6 +107,8 @@
     <Compile Include="ClassLibrary\ItemDataUtilities.cs" />
     <Compile Include="ClassLibrary\Items.cs" />
     <Compile Include="ClassLibrary\MessageBox.cs" />
+    <Compile Include="ClassLibrary\Brand.cs" />
+    <Compile Include="ClassLibrary\Model.cs" />
     <Compile Include="ClassLibrary\Sale.cs" />
     <Compile Include="ClassLibrary\SweetShopManager.cs" />
     <Compile Include="ClassLibrary\Tax.cs" />
@@ -152,6 +155,13 @@
     </Compile>
     <Compile Include="InventoryHomePage.aspx.designer.cs">
       <DependentUpon>InventoryHomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage.aspx.cs">
+      <DependentUpon>LoginPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginPage.aspx.designer.cs">
+      <DependentUpon>LoginPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>

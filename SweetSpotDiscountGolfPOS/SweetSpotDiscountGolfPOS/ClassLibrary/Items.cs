@@ -7,17 +7,30 @@ using System.Threading.Tasks;
 
 namespace SweetShop
 {
-    class Items
+    public class Items
     {
-        private int sku { get; set; }
-        private string description { get; set; }
-        private int quantity { get; set; }
-        private int price { get; set; }
-        private int cost { get; set; }
+        public int sku { get; set; }
+        public string description { get; set; }
+        public int quantity { get; set; }
+        public double price { get; set; }
+        public double cost { get; set; }
 
         private string connectionString;
 
         public Items() { }
+
+        public Items(int s, string d, int q, double p, double c)
+        {
+            sku = s;
+            description = d;
+            quantity = q;
+            price = p;
+            cost = c;
+
+
+
+
+        }
 
         public Items(int sku, int typeID)
         {
@@ -35,6 +48,7 @@ namespace SweetShop
             SqlDataReader read = cmd.ExecuteReader();
 
             string table = "tbl_";
+
             qry = "Select * from " + table + " Where sku = " + sku;
             switch (typeID) { 
                 case 1: //clubs

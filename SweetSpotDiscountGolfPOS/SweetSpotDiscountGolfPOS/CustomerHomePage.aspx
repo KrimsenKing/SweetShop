@@ -16,18 +16,19 @@
         <%--<div class="divider" />--%>
         <asp:Button ID="btnAddNewCustomer" runat="server" Width="150" Text="Add New Customer" OnClick="btnAddNewCustomer_Click" />
         <hr />
-        <asp:GridView ID="grdCustomersSearched" runat="server" AutoGenerateColumns="false" OnRowDataBound="grdCustomersSearched_RowDataBound" OnRowCommand="grdCustomersSearched_RowCommand">
+        <asp:GridView ID="grdCustomersSearched" runat="server" AutoGenerateColumns="false" OnRowCommand="grdCustomersSearched_RowCommand">
             <Columns>
                 <asp:TemplateField HeaderText="Sale">
                     <ItemTemplate>
                         <asp:LinkButton ID="lbtnStartSale" CommandName="StartSale" CommandArgument='<%#Eval("CustomerId") %>' Text="Start Sale" runat="server">Start Sale</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField  HeaderText="View Profile">
+                <asp:TemplateField HeaderText="View Profile">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lbtnViewProfile" CommandName="ViewProfile" CommandArgument='<%#Eval("CustomerId") %>' Text="View Profile" runat="server">View Profile</asp:LinkButton>
+                        <asp:LinkButton ID="lbtnEditCustomer" CommandName="EditCustomer" CommandArgument='<%#Eval("CustomerId") %>' Text="Edit" runat="server">Edit</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField  HeaderText="Customer Number">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("CustomerId") %>' ID="key" ></asp:Label>
@@ -38,17 +39,17 @@
                         <asp:Label runat="server" Text='<%#Eval("firstName") + " " + Eval("lastName") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField  HeaderText="Customer Address">
+                <asp:TemplateField HeaderText="Customer Address">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("primaryAddress") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField  HeaderText="Customer Phone Number">
+                <asp:TemplateField  HeaderText="Phone Number">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("primaryPhoneNumber") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField  HeaderText="Customer City">
+                <asp:TemplateField  HeaderText="City">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("city") %>'></asp:Label>
                     </ItemTemplate>
@@ -57,7 +58,6 @@
             <EmptyDataTemplate>
                 No current customer data, please search for a customer
             </EmptyDataTemplate>
-
         </asp:GridView>
     </div>
 </asp:Content>

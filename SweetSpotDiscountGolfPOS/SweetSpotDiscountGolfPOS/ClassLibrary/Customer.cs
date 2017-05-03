@@ -22,13 +22,11 @@ namespace SweetShop
         public int country { get; set; }
         public string postalCode { get; set; }
 
-
-
         public Customer() { }
 
         public Customer(int CustomerID, string FirstName, string LastName, string pAddress,
-            string sAddress, string pPhoneNumber, string sPhoneNumber, string billAddress, string Email,
-            string City, int Province, int Country, string PostalCode)
+           string sAddress, string pPhoneNumber, string sPhoneNumber, string billAddress, string Email,
+           string City, int Province, int Country, string PostalCode)
         {
             customerId = CustomerID;
             firstName = FirstName;

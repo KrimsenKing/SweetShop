@@ -25,6 +25,10 @@
                 <div id="image_simple">
                     <img src="Images/SweetSpotLogo.jpg" />
                 </div>
+
+                <div id="button_simple">
+                    <asp:Button ID="Button1" runat="server" Text="LogOut" OnClick="btnLogout_Click" />
+                </div>
                 <link rel="stylesheet" type="text/css" href="CSS/MainStyleSheet.css" />
             </asp:ContentPlaceHolder>
             <div id="indentContent">

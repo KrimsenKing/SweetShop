@@ -4,17 +4,61 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Configuration;
 using SweetShop;
 
-namespace SweetSpotProShop
+namespace SweetSpot
 {
     public class ItemDataUtilities
     {
         private String connectionString;
-
         public ItemDataUtilities()
         {
-            connectionString = WebConfigurationManager.ConnectionStrings["SweetSpotSBConnectionString"].ConnectionString;
+            connectionString = ConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString;
+        }
+
+        public string modelType(int modelID)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select modelName from tbl_model where modelID = " + modelID;
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            string model = null;
+
+            while (reader.Read())
+            {
+                string m = reader["modelName"].ToString();
+                model = m;
+            }
+            conn.Close();
+            return model;
+        }
+
+        public string brandType(int brandID)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select brandName from tbl_brand where brandID = " + brandID;
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            string brand = null;
+
+            while (reader.Read())
+            {
+                string b = reader["brandName"].ToString();
+                brand = b;
+            }
+            conn.Close();
+            return brand;
         }
 
         public List<Clubs> GetItemByID(Int32 ItemNumber)

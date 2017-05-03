@@ -36,6 +36,12 @@
     margin-left:22%;
 }
 /*.divider{
-    /*width:3%;
+    width:3%;
     height:auto;
-    display:inline-block;*/
+    display:inline-block;
+}*/
+#button_simple{
+    position:absolute;
+    right: 80px;
+    top: 200px;
+}

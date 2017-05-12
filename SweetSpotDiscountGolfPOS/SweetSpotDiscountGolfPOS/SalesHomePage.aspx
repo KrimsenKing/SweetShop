@@ -9,7 +9,7 @@
     <div id="Sales">
         <h2>Sales</h2>
         <hr />
-        <asp:Button ID="btnNewSale" runat="server" Width="150" Text="New Sale" OnClick="btnNewSale_Click" />
+        <asp:Button ID="btnQuickSale" runat="server" Width="150" Text="Quick Sale" OnClick="btnQuickSale_Click" />
         <div class="divider" />
         <asp:Button ID="btnReturn" runat="server" Width="150" Text="Return" OnClick="btnReturn_Click" />
     </div>

@@ -12,10 +12,10 @@ namespace SweetShop
         public int sku { get; set; }
         public string description { get; set; }
         public int quantity { get; set; }
+        public int quantityInOrder { get; set; }
         public double price { get; set; }
         public double cost { get; set; }
 
-        private string connectionString;
 
         public Items() { }
 
@@ -26,41 +26,13 @@ namespace SweetShop
             quantity = q;
             price = p;
             cost = c;
-
-
-
-
         }
 
-        public Items(int sku, int typeID)
+        public Items(int sk,  double prc)
         {
-            string description;
-            string qry;
-
-            connectionString = "SweetSpotSBConnectionString";
-
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "Select typeDescription from tbl_itemType Where typeID = @typeID";
-            cmd.Parameters.AddWithValue("typeID", typeID);
-            con.Open();
-            SqlDataReader read = cmd.ExecuteReader();
-
-            string table = "tbl_";
-
-            qry = "Select * from " + table + " Where sku = " + sku;
-            switch (typeID) { 
-                case 1: //clubs
-                    
-                    break;
-                case 2: //accessories
-                    
-                    break;
-                case 3: //clothing
-                    
-                    break;
-            }
+            sku = sk;
+            quantityInOrder = 1;
+            price = prc;
         }
     }
 }

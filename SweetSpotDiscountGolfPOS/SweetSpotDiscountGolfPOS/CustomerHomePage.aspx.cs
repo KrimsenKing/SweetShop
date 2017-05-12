@@ -12,7 +12,7 @@ namespace SweetSpotDiscountGolfPOS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         protected void btnCustomerSearch_Click(object sender, EventArgs e)

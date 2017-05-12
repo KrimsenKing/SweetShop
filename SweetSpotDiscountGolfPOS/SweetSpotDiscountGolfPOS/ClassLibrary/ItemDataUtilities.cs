@@ -7,11 +7,12 @@ using System.Web.Configuration;
 using System.Configuration;
 using SweetShop;
 
-namespace SweetSpot
+namespace SweetSpotProShop
 {
     public class ItemDataUtilities
     {
         private String connectionString;
+
         public ItemDataUtilities()
         {
             connectionString = ConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString;
@@ -160,6 +161,75 @@ namespace SweetSpot
 
             conn.Close();
             return t;
+        }
+
+        public List<Items> getItemByID(Int32 ItemNumber)
+        {
+            List<Items> items = new List<Items>();
+            Items i = new Items();
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.CommandText = "Select sku ,price From tbl_accessories Where SKU = @skuAcc";
+            cmd.Parameters.AddWithValue("skuAcc", ItemNumber);
+
+            SqlDataReader readerAcc = cmd.ExecuteReader();
+            while (readerAcc.Read())
+            {
+
+                i = new Items(
+                   Convert.ToInt32(readerAcc["sku"]),
+                   //reader["Model"].ToString(),
+                   //Convert.ToInt32(readerAcc["quantity"]),
+                    Convert.ToDouble(readerAcc["price"])
+                   );
+
+            }
+            if (!readerAcc.HasRows)
+            {
+                readerAcc.Close();
+                cmd.CommandText = "Select sku ,price From tbl_clubs Where SKU = @skuClubs";
+                cmd.Parameters.AddWithValue("skuClubs", ItemNumber);
+                SqlDataReader readerClubs = cmd.ExecuteReader();
+                while (readerClubs.Read())
+                {
+                    i = new Items(
+                       Convert.ToInt32(readerClubs["sku"]),
+                       //reader["Model"].ToString(),
+                       //Convert.ToInt32(readerClubs["quantity"]),
+                        Convert.ToDouble(readerClubs["price"])
+                       );
+
+                }
+                if (!readerClubs.HasRows)
+                {
+                    readerClubs.Close();
+                    cmd.CommandText = "Select sku ,price From tbl_clothing Where SKU = @skuClothing";
+                    cmd.Parameters.AddWithValue("skuClothing", ItemNumber);
+                    SqlDataReader readerClothing = cmd.ExecuteReader();
+                    while (readerClothing.Read())
+                    {
+                        i = new Items(
+                           Convert.ToInt32(readerClothing["sku"]),
+                           //reader["Model"].ToString(),
+                           //Convert.ToInt32(readerClothing["quantity"]),
+                            Convert.ToDouble(readerClothing["price"])
+                           );
+
+
+                    }
+                }
+            }
+            if (i.sku > 0)
+            {
+                items.Add(i);
+            }
+            conn.Close();
+
+            return items;
+
         }
 
 

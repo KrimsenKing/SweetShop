@@ -17,12 +17,19 @@ namespace SweetSpotDiscountGolfPOS
 
         protected void btnInventorySearch_Click(object sender, EventArgs e)
         {
-            SweetShopManager ssm = new SweetShopManager();
-            List<Items> i = ssm.GetItemfromSearch(txtSearch.Text, ddlInventoryType.SelectedItem.Text);
+            if (txtSearch.Text == "")
+            {
 
-            grdInventorySearched.Visible = true;
-            grdInventorySearched.DataSource = i;
-            grdInventorySearched.DataBind();
+            }
+            else
+            {
+                SweetShopManager ssm = new SweetShopManager();
+                List<Items> i = ssm.GetItemfromSearch(txtSearch.Text, ddlInventoryType.SelectedItem.Text);
+
+                grdInventorySearched.Visible = true;
+                grdInventorySearched.DataSource = i;
+                grdInventorySearched.DataBind();
+            }
         }
 
         protected void btnAddNewInventory_Click(object sender, EventArgs e)

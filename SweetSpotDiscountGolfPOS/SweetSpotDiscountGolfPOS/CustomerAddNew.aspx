@@ -9,6 +9,13 @@
     <div id="NewCustomer">
         <%--Textboxes and Labels for user to enter customer info--%>
         <h2>New Customer</h2>
+        <asp:SqlDataSource ID="sqlCountrySource" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT * FROM [tbl_country] ORDER BY [countryDesc]"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="sqlProvinceSource" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT * FROM [tbl_provState] WHERE ([countryID] = @countryID) ORDER BY [provName]">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="ddlCountry" DefaultValue="0" Name="countryID" PropertyName="SelectedValue" Type="Int32" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+
         <asp:Label ID="lblFirstName" runat="server" Text="First Name: "></asp:Label>
         <asp:TextBox ID="txtFirstName" runat="server" ValidateRequestMode="Enabled" ViewStateMode="Enabled"></asp:TextBox>
         <br />
@@ -48,13 +55,12 @@
         <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
         <br />
         <br />
-        <asp:Label ID="lblCountry" runat="server" Text="Country: "></asp:Label>
-        <asp:DropDownList ID="ddlCountry" runat="server" AutoPostBack="True" DataSourceID="dataSourceCountry" DataTextField="countryDesc" DataValueField="countryID"></asp:DropDownList>
-        <%--<asp:DropDownList ID="ddlCountry" runat="server" AutoPostBack="True" DataSourceID="dataSourceCountry" DataTextField="countryDesc" DataValueField="countryID" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" OnDataBound="ddlCountry_DataBound"></asp:DropDownList>--%>
-        <br />
-        <br />
         <asp:Label ID="lblProvince" runat="server" Text="Province: "></asp:Label>
-        <asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True" DataSourceID="dataSourceProvince" DataTextField="stateProvDesc" DataValueField="stateProvID"></asp:DropDownList>
+        <asp:DropDownList ID="ddlProvince" runat="server" AutoPostBack="True" DataSourceID="sqlProvinceSource" DataTextField="provName" DataValueField="provStateID"></asp:DropDownList>
+        <br />
+        <br />
+        <asp:Label ID="lblCountry" runat="server" Text="Country: "></asp:Label>
+        <asp:DropDownList ID="ddlCountry" runat="server" AutoPostBack="True" DataSourceID="sqlCountrySource" DataTextField="countryDesc" DataValueField="countryID"></asp:DropDownList>
         <br />
         <br />
         <asp:Label ID="lblPostalCode" runat="server" Text="PostalCode: "></asp:Label>
@@ -65,13 +71,4 @@
         <br />
         <br />
     </div>
-    <%--Whatever country user selects will update the provinces to only those in that country--%>
-    <asp:SqlDataSource ID="dataSourceProvince" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT [stateProvID], [stateProvDesc] FROM [StateProvLT] WHERE ([countryID] = @countryID)">
-        <SelectParameters>
-            <asp:ControlParameter ControlID="ddlCountry" DefaultValue="1" Name="countryID" PropertyName="SelectedValue" Type="Int32" />
-        </SelectParameters>
-    </asp:SqlDataSource>
-    <br />
-    <%-- Display the countries in the Country dropdown--%>
-    <asp:SqlDataSource ID="dataSourceCountry" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT [countryID], [countryDesc] FROM [CountryLT]"></asp:SqlDataSource>
 </asp:Content>

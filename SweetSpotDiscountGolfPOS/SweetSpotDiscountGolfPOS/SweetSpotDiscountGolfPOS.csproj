@@ -107,8 +107,6 @@
     <Compile Include="ClassLibrary\ItemDataUtilities.cs" />
     <Compile Include="ClassLibrary\Items.cs" />
     <Compile Include="ClassLibrary\MessageBox.cs" />
-    <Compile Include="ClassLibrary\Brand.cs" />
-    <Compile Include="ClassLibrary\Model.cs" />
     <Compile Include="ClassLibrary\Sale.cs" />
     <Compile Include="ClassLibrary\SweetShopManager.cs" />
     <Compile Include="ClassLibrary\Tax.cs" />

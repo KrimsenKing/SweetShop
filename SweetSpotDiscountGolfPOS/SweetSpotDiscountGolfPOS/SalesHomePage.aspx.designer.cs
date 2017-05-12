@@ -13,13 +13,13 @@ namespace SweetSpotDiscountGolfPOS {
     public partial class SalesHomePage {
         
         /// <summary>
-        /// btnNewSale control.
+        /// btnQuickSale control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNewSale;
+        protected global::System.Web.UI.WebControls.Button btnQuickSale;
         
         /// <summary>
         /// btnReturn control.

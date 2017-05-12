@@ -14,8 +14,9 @@ namespace SweetSpotDiscountGolfPOS
 
         }
 
-        protected void btnNewSale_Click(object sender, EventArgs e)
+        protected void btnQuickSale_Click(object sender, EventArgs e)
         {
+            Session["key"] = 1;
             Response.Redirect("SalesCart.aspx");
         }
 

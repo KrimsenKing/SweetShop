@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,24 +10,14 @@ namespace SweetShop
 {
     public class Tax
     {
-        public double gst { get; set; }
-        public double pst { get; set; }
-        public int regionID { get; set; }
-
+        public double taxRate { get; set; }
+        public string taxName { get; set; }
         public Tax() { }
 
-        public Tax(double GST, double PST, int RegionID)
+        public Tax(string tName, double tRate)
         {
-            gst = GST;
-            pst = PST;
-            regionID = RegionID;
+            taxName = tName;
+            taxRate = tRate;
         }
-
-        public Tax(double GST, double PST)
-        {
-            gst = GST;
-            pst = PST;
-        }
-
     }
 }

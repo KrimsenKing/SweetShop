@@ -54,7 +54,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-             <EmptyDataTemplate>
+            <EmptyDataTemplate>
                 No current Inventory data, please search for an Inventory Item
             </EmptyDataTemplate>
         </asp:GridView>

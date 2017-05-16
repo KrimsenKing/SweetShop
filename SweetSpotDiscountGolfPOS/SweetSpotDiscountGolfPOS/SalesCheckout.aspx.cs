@@ -122,7 +122,7 @@ namespace SweetSpotDiscountGolfPOS
 
         }
 
-        protected void mopDiscover_Click(object sender, EventArgs e)
+        protected void mopOnAccount_Click(object sender, EventArgs e)
         {
 
         }

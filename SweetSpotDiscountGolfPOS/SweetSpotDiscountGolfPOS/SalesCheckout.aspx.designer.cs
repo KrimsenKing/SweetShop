@@ -31,13 +31,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Button mopCash;
         
         /// <summary>
-        /// mopDiscover control.
+        /// mopMasterCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopDiscover;
+        protected global::System.Web.UI.WebControls.Button mopMasterCard;
         
         /// <summary>
         /// mopCheque control.
@@ -49,13 +49,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Button mopCheque;
         
         /// <summary>
-        /// mopMasterCard control.
+        /// mopVisa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopMasterCard;
+        protected global::System.Web.UI.WebControls.Button mopVisa;
         
         /// <summary>
         /// mopDebit control.
@@ -67,13 +67,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Button mopDebit;
         
         /// <summary>
-        /// mopVisa control.
+        /// mopOnAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopVisa;
+        protected global::System.Web.UI.WebControls.Button mopOnAccount;
         
         /// <summary>
         /// mopGiftCard control.
@@ -110,6 +110,24 @@ namespace SweetSpotDiscountGolfPOS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalInCartAmount;
+        
+        /// <summary>
+        /// lblTotalInDiscounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalInDiscounts;
+        
+        /// <summary>
+        /// lblTotalInDiscountsAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalInDiscountsAmount;
         
         /// <summary>
         /// lblTradeIns control.

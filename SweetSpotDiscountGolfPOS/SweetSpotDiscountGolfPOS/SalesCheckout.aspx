@@ -59,7 +59,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Button ID="mopDiscover" runat="server" Text="Discover" OnClick="mopDiscover_Click" Width="163px" />
+                                    <asp:Button ID="mopMasterCard" runat="server" Text="MasterCard" OnClick="mopMasterCard_Click" Width="163px"/>
                                 </td>
                                 <td>
                                     <asp:Button ID="mopCheque" runat="server" Text="Cheque" OnClick="mopCheque_Click" Width="163px"/>
@@ -67,7 +67,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Button ID="mopMasterCard" runat="server" Text="MasterCard" OnClick="mopMasterCard_Click" Width="163px"/>
+                                    <asp:Button ID="mopVisa" runat="server" Text="Visa" OnClick="mopVisa_Click" Width="163px"/>
                                 </td>
                                 <td>
                                     <asp:Button ID="mopDebit" runat="server" Text="Debit" OnClick="mopDebit_Click" Width="163px"/>
@@ -75,7 +75,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Button ID="mopVisa" runat="server" Text="Visa" OnClick="mopVisa_Click" Width="163px"/>
+                                    <asp:Button ID="mopOnAccount" runat="server" Text="Charge to Account" OnClick="mopOnAccount_Click" Width="163px"/>
                                 </td>
                                 <td>
                                     <asp:Button ID="mopGiftCard" runat="server" Text="Gift Card" OnClick="mopGiftCard_Click" Width="163px"/>
@@ -87,10 +87,18 @@
                         <asp:Table ID="tblTotals" runat="server">
                             <asp:TableRow>
                                 <asp:TableCell>
-                                    <asp:Label ID="lblTotalInCart" runat="server" Text="Total In Cart:"></asp:Label>
+                                    <asp:Label ID="lblTotalInCart" runat="server" Text="Total In Cart:" Width="100px"></asp:Label>
                                 </asp:TableCell>
                                 <asp:TableCell>
                                     <asp:Label ID="lblTotalInCartAmount" runat="server" Text=""></asp:Label>
+                                </asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>
+                                    <asp:Label ID="lblTotalInDiscounts" runat="server" Text="Total Discounts:"></asp:Label>
+                                </asp:TableCell>
+                                <asp:TableCell>
+                                    <asp:Label ID="lblTotalInDiscountsAmount" runat="server" Text=""></asp:Label>
                                 </asp:TableCell>
                             </asp:TableRow>
                             <asp:TableRow>

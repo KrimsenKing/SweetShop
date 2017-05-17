@@ -18,23 +18,204 @@ namespace SweetSpotDiscountGolfPOS
                 SweetShopManager ssm = new SweetShopManager();
                 Customer c = ssm.GetCustomerbyCustomerNumber(custNum);
 
-                txtFirstName.Text = c.firstName.ToString();
-                txtLastName.Text = c.lastName.ToString();
-                txtPrimaryAddress.Text = c.primaryAddress.ToString();
-                txtBillingAddress.Text = c.billingAddress.ToString();
-                txtSecondaryAddress.Text = c.secondaryAddress.ToString();
-                txtPrimaryPhoneNumber.Text = c.primaryPhoneNumber.ToString();
-                txtSecondaryPhoneNumber.Text = c.secondaryPhoneNumber.ToString();
-                txtEmail.Text = c.email.ToString();
-                txtCity.Text = c.city.ToString();
-                ddlProvince.Text = c.province.ToString();
-                ddlCountry.Text = c.country.ToString();
-                txtPostalCode.Text = c.postalCode.ToString();
+                lblFirstNameDisplay.Text = c.firstName.ToString();
+                lblLastNameDisplay.Text = c.lastName.ToString();
+                lblPrimaryAddressDisplay.Text = c.primaryAddress.ToString();
+                lblBillingAddressDisplay.Text = c.billingAddress.ToString();
+                lblSecondaryAddressDisplay.Text = c.secondaryAddress.ToString();
+                lblPrimaryPhoneNumberDisplay.Text = c.primaryPhoneNumber.ToString();
+                lblSecondaryPhoneNumberDisplay.Text = c.secondaryPhoneNumber.ToString();
+                lblEmailDisplay.Text = c.email.ToString();
+                lblCityDisplay.Text = c.city.ToString();
+                lblProvinceDisplay.Text = c.province.ToString();
+                lblCountryDisplay.Text = c.country.ToString();
+                lblPostalCodeDisplay.Text = c.postalCode.ToString();
+            }
+            else
+            {
+                txtFirstName.Visible = true;
+                lblFirstNameDisplay.Visible = false;
+
+                txtLastName.Visible = true;
+                lblLastNameDisplay.Visible = false;
+
+                txtPrimaryAddress.Visible = true;
+                lblPrimaryAddressDisplay.Visible = false;
+
+                txtBillingAddress.Visible = true;
+                lblBillingAddressDisplay.Visible = false;
+
+                txtSecondaryAddress.Visible = true;
+                lblSecondaryAddressDisplay.Visible = false;
+
+                txtPrimaryPhoneNumber.Visible = true;
+                lblPrimaryPhoneNumberDisplay.Visible = false;
+
+                txtSecondaryPhoneNumber.Visible = true;
+                lblSecondaryPhoneNumberDisplay.Visible = false;
+
+                txtEmail.Visible = true;
+                lblEmailDisplay.Visible = false;
+
+                txtCity.Visible = true;
+                lblCityDisplay.Visible = false;
+
+                ddlProvince.Visible = true;
+                lblProvinceDisplay.Visible = false;
+
+                ddlCountry.Visible = true;
+                lblCountryDisplay.Visible = false;
+
+                txtPostalCode.Visible = true;
+                lblPostalCodeDisplay.Visible = false;
+
+                btnSaveCustomer.Visible = false;
+                btnAddCustomer.Visible = true;
+                btnEditCustomer.Visible = false;
+                btnCancel.Visible = true;
+                btnBackToSearch.Visible = false;
             }
 
         }
 
         protected void btnAddCustomer_Click(object sender, EventArgs e)
+        {
+            SweetShopManager ssm = new SweetShopManager();
+            Customer c = new Customer();
+            c.firstName = txtFirstName.Text;
+            c.lastName = txtLastName.Text;
+            c.primaryAddress = txtPrimaryAddress.Text;
+            c.secondaryAddress = txtSecondaryAddress.Text;
+            c.primaryPhoneNumber = txtPrimaryPhoneNumber.Text;
+            c.secondaryPhoneNumber = txtSecondaryPhoneNumber.Text;
+            c.billingAddress = txtBillingAddress.Text;
+            c.email = txtEmail.Text;
+            c.city = txtCity.Text;
+            c.province = ddlProvince.SelectedIndex;
+            c.country = ddlCountry.SelectedIndex;
+            c.postalCode = txtPostalCode.Text;
+
+            Session["key"] = ssm.addCustomer(c);
+            Response.Redirect(Request.RawUrl);
+        }
+
+        protected void btnEditCustomer_Click(object sender, EventArgs e)
+        {
+
+            txtFirstName.Text = lblFirstNameDisplay.Text;
+            txtFirstName.Visible = true;
+            lblFirstNameDisplay.Visible = false;
+
+            txtLastName.Text = lblLastNameDisplay.Text;
+            txtLastName.Visible = true;
+            lblLastNameDisplay.Visible = false;
+
+            txtPrimaryAddress.Text = lblPrimaryAddressDisplay.Text;
+            txtPrimaryAddress.Visible = true;
+            lblPrimaryAddressDisplay.Visible = false;
+
+            txtBillingAddress.Text = lblBillingAddressDisplay.Text;
+            txtBillingAddress.Visible = true;
+            lblBillingAddressDisplay.Visible = false;
+
+            txtSecondaryAddress.Text = lblSecondaryAddressDisplay.Text;
+            txtSecondaryAddress.Visible = true;
+            lblSecondaryAddressDisplay.Visible = false;
+
+            txtPrimaryPhoneNumber.Text = lblPrimaryPhoneNumberDisplay.Text;
+            txtPrimaryPhoneNumber.Visible = true;
+            lblPrimaryPhoneNumberDisplay.Visible = false;
+
+            txtSecondaryPhoneNumber.Text = lblSecondaryPhoneNumberDisplay.Text;
+            txtSecondaryPhoneNumber.Visible = true;
+            lblSecondaryPhoneNumberDisplay.Visible = false;
+
+            txtEmail.Text = lblEmailDisplay.Text;
+            txtEmail.Visible = true;
+            lblEmailDisplay.Visible = false;
+
+            txtCity.Text = lblCityDisplay.Text;
+            txtCity.Visible = true;
+            lblCityDisplay.Visible = false;
+
+            ddlProvince.Text = lblProvinceDisplay.Text;
+            ddlProvince.Visible = true;
+            lblProvinceDisplay.Visible = false;
+
+            ddlCountry.Text = lblCountryDisplay.Text;
+            ddlCountry.Visible = true;
+            lblCountryDisplay.Visible = false;
+
+            txtPostalCode.Text = lblPostalCodeDisplay.Text;
+            txtPostalCode.Visible = true;
+            lblPostalCodeDisplay.Visible = false;
+
+            btnSaveCustomer.Visible = true;
+            btnEditCustomer.Visible = false;
+            btnAddCustomer.Visible = false;
+            btnCancel.Visible = true;
+            btnBackToSearch.Visible = false;
+
+        }
+        protected void btnSaveCustomer_Click(object sender, EventArgs e)
+        {
+
+            SweetShopManager ssm = new SweetShopManager();
+            Customer c = new Customer();
+            c.customerId = (int)(Convert.ToInt32(Session["key"].ToString()));
+            c.firstName = txtFirstName.Text;
+            c.lastName = txtLastName.Text;
+            c.primaryAddress = txtPrimaryAddress.Text;
+            c.secondaryAddress = txtSecondaryAddress.Text;
+            c.primaryPhoneNumber = txtPrimaryPhoneNumber.Text;
+            c.secondaryPhoneNumber = txtSecondaryPhoneNumber.Text;
+            c.billingAddress = txtBillingAddress.Text;
+            c.email = txtEmail.Text;
+            c.city = txtCity.Text;
+            c.province = ddlProvince.SelectedIndex;
+            c.country = ddlCountry.SelectedIndex;
+            c.postalCode = txtPostalCode.Text;
+
+            ssm.updateCustomer(c);
+
+            txtFirstName.Visible = false;
+            lblFirstNameDisplay.Visible = true;
+            txtLastName.Visible = false;
+            lblLastNameDisplay.Visible = true;
+            txtPrimaryAddress.Visible = false;
+            lblPrimaryAddressDisplay.Visible = true;
+            txtBillingAddress.Visible = false;
+            lblBillingAddressDisplay.Visible = true;
+            txtSecondaryAddress.Visible = false;
+            lblSecondaryAddressDisplay.Visible = true;
+            txtPrimaryPhoneNumber.Visible = false;
+            lblPrimaryPhoneNumberDisplay.Visible = true;
+            txtSecondaryPhoneNumber.Visible = false;
+            lblSecondaryPhoneNumberDisplay.Visible = true;
+            txtEmail.Visible = false;
+            lblEmailDisplay.Visible = true;
+            txtCity.Visible = false;
+            lblCityDisplay.Visible = true;            
+            ddlProvince.Visible = false;
+            lblProvinceDisplay.Visible = true;
+            ddlCountry.Visible = false;
+            lblCountryDisplay.Visible = true;
+            txtPostalCode.Visible = false;
+            lblPostalCodeDisplay.Visible = true;
+            btnSaveCustomer.Visible = false;
+            btnEditCustomer.Visible = true;
+            btnCancel.Visible = false;
+            btnAddCustomer.Visible = false;
+            btnBackToSearch.Visible = true;
+
+            Response.Redirect(Request.RawUrl);
+
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
+        }
+        protected void btnBackToSearch_Click(object sender, EventArgs e)
         {
             Response.Redirect("CustomerHomePage.aspx");
         }

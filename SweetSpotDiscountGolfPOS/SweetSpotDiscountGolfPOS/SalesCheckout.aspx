@@ -5,7 +5,7 @@
 
 <asp:Content ID="NonActive" ContentPlaceHolderID="SPMaster" runat="server">
 
-     <script type="text/javascript">
+    <script type="text/javascript">
         function Confirm() {
             var confirm_value = document.createElement("INPUT");
             confirm_value.type = "hidden";
@@ -20,11 +20,13 @@
 
         function getValue() {
             var retVal = prompt("Enter amount paid: $", "0.00");
+            retVal.type = "hidden";
+            retVal.name = "retVal";
             document.forms[0].appendChild(retVal);
         }
     </script>
 
-     <div id="menu_simple">
+    <div id="menu_simple">
         <ul>
             <li><a>HOME</a></li>
             <li><a>CUSTOMERS</a></li>
@@ -41,142 +43,155 @@
 </asp:Content>
 <asp:Content ID="CheckoutPageContent" ContentPlaceHolderID="IndividualPageContent" runat="server">
     <h3>Transaction Details</h3>
-        <div>
-            <table>
-                <tr>
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td colspan="2" style="text-align:center">Methods of Payment</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Button ID="mopAmericanExpress" runat="server" Text="American Express" OnClick="mopAmericanExpress_Click" Width="163px"/>
-                                </td>
-                                <td>
-                                    <asp:Button ID="mopCash" runat="server" Text="Cash" OnClick="mopCash_Click" Width="163px"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Button ID="mopMasterCard" runat="server" Text="MasterCard" OnClick="mopMasterCard_Click" Width="163px"/>
-                                </td>
-                                <td>
-                                    <asp:Button ID="mopCheque" runat="server" Text="Cheque" OnClick="mopCheque_Click" Width="163px"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Button ID="mopVisa" runat="server" Text="Visa" OnClick="mopVisa_Click" Width="163px"/>
-                                </td>
-                                <td>
-                                    <asp:Button ID="mopDebit" runat="server" Text="Debit" OnClick="mopDebit_Click" Width="163px"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Button ID="mopOnAccount" runat="server" Text="Charge to Account" OnClick="mopOnAccount_Click" Width="163px"/>
-                                </td>
-                                <td>
-                                    <asp:Button ID="mopGiftCard" runat="server" Text="Gift Card" OnClick="mopGiftCard_Click" Width="163px"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td colspan="2">
-                        <asp:Table ID="tblTotals" runat="server">
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTotalInCart" runat="server" Text="Total In Cart:" Width="100px"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTotalInCartAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTotalInDiscounts" runat="server" Text="Total Discounts:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTotalInDiscountsAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTradeIns" runat="server" Text="Trade-Ins:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblTradeInsAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblShipping" runat="server" Text="Shipping:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:TextBox ID="txtShippingAmount" runat="server" Text=""></asp:TextBox>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblSubTotal" runat="server" Text="Subtotal:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblSubTotalAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblGovernment" runat="server" Text="GST:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblGovernmentAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Button ID="btnRemoveGov" runat="server" Text="Remove GST" />
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblProvincial" runat="server" Text="PST:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblProvincialAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Button ID="btnRemoveProv" runat="server" Text="Remove PST" />
-                                </asp:TableCell>
-                            </asp:TableRow>
-                            <asp:TableRow>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblBalance" runat="server" Text="Balance Due:"></asp:Label>
-                                </asp:TableCell>
-                                <asp:TableCell>
-                                    <asp:Label ID="lblBalanceAmount" runat="server" Text=""></asp:Label>
-                                </asp:TableCell>
-                            </asp:TableRow>
-                        </asp:Table>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <asp:GridView ID="gvCurrentMOPs" runat="server"></asp:GridView>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="btnCancelSale" runat="server" Text="Cancel Sale" OnClick="btnCancelSale_Click" Width="163px"/>
-                    </td>
-                    <td>
-                        <asp:Button ID="btnReturnToCart" runat="server" Text="Return To Cart" OnClick="btnReturnToCart_Click" Width="163px"/>
-                    </td>
-                    <td>
-                        <asp:Button ID="btnLayaway" runat="server" Text="Layaway" OnClick="btnLayaway_Click" Width="163px"/>
-                    </td>
-                    <td>
-                        <asp:Button ID="btnFinalize" runat="server" Text="Process Sale" OnClick="btnFinalize_Click" Width="163px"/>
-                    </td>
-                </tr>
-            </table>
-        </div>
+    <div>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td colspan="2" style="text-align: center">Methods of Payment</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="mopAmericanExpress" runat="server" Text="American Express" OnClick="mopAmericanExpress_Click" Width="163px" />
+                            </td>
+                            <td>
+                                <asp:Button ID="mopCash" runat="server" Text="Cash" OnClick="mopCash_Click" Width="163px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="mopMasterCard" runat="server" Text="MasterCard" OnClick="mopMasterCard_Click" Width="163px" />
+                            </td>
+                            <td>
+                                <asp:Button ID="mopCheque" runat="server" Text="Cheque" OnClick="mopCheque_Click" Width="163px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="mopVisa" runat="server" Text="Visa" OnClick="mopVisa_Click" Width="163px" />
+                            </td>
+                            <td>
+                                <asp:Button ID="mopDebit" runat="server" Text="Debit" OnClick="mopDebit_Click" Width="163px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="mopOnAccount" runat="server" Text="Charge to Account" OnClick="mopOnAccount_Click" Width="163px" />
+                            </td>
+                            <td>
+                                <asp:Button ID="mopGiftCard" runat="server" Text="Gift Card" OnClick="mopGiftCard_Click" Width="163px" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="2">
+                    <asp:Table ID="tblTotals" runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTotalInCart" runat="server" Text="Total In Cart:" Width="100px"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTotalInCartAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTotalInDiscounts" runat="server" Text="Total Discounts:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTotalInDiscountsAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTradeIns" runat="server" Text="Trade-Ins:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblTradeInsAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblShipping" runat="server" Text="Shipping:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:TextBox ID="txtShippingAmount" runat="server" Text=""></asp:TextBox>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblSubTotal" runat="server" Text="Subtotal:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblSubTotalAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblGovernment" runat="server" Text="GST:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblGovernmentAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Button ID="btnRemoveGov" runat="server" Text="Remove GST" />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblProvincial" runat="server" Text="PST:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblProvincialAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Button ID="btnRemoveProv" runat="server" Text="Remove PST" />
+                            </asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblBalance" runat="server" Text="Balance Due:"></asp:Label>
+                            </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="lblBalanceAmount" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <asp:GridView ID="gvCurrentMOPs" runat="server">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Method of Payment Used">
+                                <ItemTemplate>
+                                    <asp:Label Text='<%#Eval("methoddesc") %>' runat="server"></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Amount Paid">
+                                <ItemTemplate>
+                                    <asp:Label runat="server" Text='<%#Eval("amountopayment") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:Button ID="btnCancelSale" runat="server" Text="Cancel Sale" OnClick="btnCancelSale_Click" Width="163px" />
+                </td>
+                <td>
+                    <asp:Button ID="btnReturnToCart" runat="server" Text="Return To Cart" OnClick="btnReturnToCart_Click" Width="163px" />
+                </td>
+                <td>
+                    <asp:Button ID="btnLayaway" runat="server" Text="Layaway" OnClick="btnLayaway_Click" Width="163px" />
+                </td>
+                <td>
+                    <asp:Button ID="btnFinalize" runat="server" Text="Process Sale" OnClick="btnFinalize_Click" Width="163px" />
+                </td>
+            </tr>
+        </table>
+    </div>
 </asp:Content>

@@ -1,4 +1,5 @@
 ﻿using SweetShop;
+using SweetSpotDiscountGolfPOS.ClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace SweetSpotDiscountGolfPOS
         double gst = 0;
         double pst = 0;
         double balancedue;
+        List<CheckOut> co;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -53,7 +55,7 @@ namespace SweetSpotDiscountGolfPOS
             lblSubTotalAmount.Text = "$" + subtotal.ToString();
 
             List<Tax> t = new List<Tax>();
-            Boolean bolShip = (Boolean) Session["ship"];
+            Boolean bolShip = (Boolean)Session["ship"];
             if (bolShip)
             {
                 t = ssm.getTaxes(c.province);
@@ -110,46 +112,65 @@ namespace SweetSpotDiscountGolfPOS
 
             balancedue = gst + pst + subtotal;
             lblBalanceAmount.Text = "$" + balancedue.ToString();
+            gvCurrentMOPs.DataSource = co;
+            gvCurrentMOPs.DataBind();
         }
 
         protected void mopAmericanExpress_Click(object sender, EventArgs e)
         {
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(3, dblPaymentAmount);
+            co.Add(c);
 
         }
 
         protected void mopCash_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(5, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopOnAccount_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(9, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopCheque_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(8, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopMasterCard_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(2, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopDebit_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(7, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopVisa_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(1, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void mopGiftCard_Click(object sender, EventArgs e)
         {
-
+            double dblPaymentAmount = Convert.ToDouble(Request.Form["retVal"].ToString());
+            CheckOut c = new CheckOut(6, dblPaymentAmount);
+            co.Add(c);
         }
 
         protected void btnCancelSale_Click(object sender, EventArgs e)

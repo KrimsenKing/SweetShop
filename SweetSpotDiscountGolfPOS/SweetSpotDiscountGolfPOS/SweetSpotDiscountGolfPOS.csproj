@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="ClassLibrary\Accessories.cs" />
     <Compile Include="ClassLibrary\Cart.cs" />
+    <Compile Include="ClassLibrary\CheckOut.cs" />
     <Compile Include="ClassLibrary\Clothing.cs" />
     <Compile Include="ClassLibrary\Clubs.cs" />
     <Compile Include="ClassLibrary\CurrentUser.cs" />

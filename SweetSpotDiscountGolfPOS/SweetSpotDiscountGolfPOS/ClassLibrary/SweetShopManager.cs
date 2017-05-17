@@ -27,7 +27,7 @@ namespace SweetShop
 
         /*******Customer Utilities************************************************************************************/
 
-        //Retrieves Customer from search parameters
+        //Retrieves Customer from search parameters Nathan and tyler created
         public List<Customer> GetCustomerfromSearch(String searchField)
         {
             try
@@ -78,7 +78,7 @@ namespace SweetShop
             }
         }
 
-        //Retreive Customer from custID
+        //Retreive Customer from custID Nathan and tyler created
         public Customer GetCustomerbyCustomerNumber(int custNum)
         {
             try
@@ -125,20 +125,23 @@ namespace SweetShop
             }
         }
 
-        //Add Customer
-        public void addCustomer(Customer c)
+        //Add Customer Nathan and tyler created
+        public int addCustomer(Customer c)
         {
             //New command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Insert Into Customer (FirstName, LastName, primaryAddress,"
-                + " secondaryAddress, City, PostalCode, Province, Country, primaryPhoneNumber,"
-                + " secondaryPhoneNumber, Email) Values (@FirstName,@LastName,@primaryAddress,@secondaryAddress,@City,@PostalCode,@Province,@Country,@primaryPhoneNumber,@secondaryPhoneNumber,@Email)";
+            cmd.CommandText = "Insert Into tbl_customers (firstName, lastName, primaryAddress,"
+                + " secondaryAddress, primaryPhoneINT, secondaryPhoneINT, billingAddress, email,"
+                + " city, provStateID, country, postZip) Values (@FirstName, @LastName, @primaryAddress,"
+                + " @secondaryAddress, @primaryPhoneNumber, @secondaryPhoneNumber, @billingAddress,"
+                + " @Email, @City, @Province, @Country, @PostalCode)";
             cmd.Parameters.AddWithValue("FirstName", c.firstName);
             cmd.Parameters.AddWithValue("LastName", c.lastName);
             cmd.Parameters.AddWithValue("primaryAddress", c.primaryAddress);
             cmd.Parameters.AddWithValue("secondaryAddress", c.secondaryAddress);
+            cmd.Parameters.AddWithValue("billingAddress", c.billingAddress);
             cmd.Parameters.AddWithValue("City", c.city);
             cmd.Parameters.AddWithValue("PostalCode", c.postalCode);
             cmd.Parameters.AddWithValue("Province", c.province);
@@ -152,28 +155,67 @@ namespace SweetShop
             //Execute Insert
             cmd.ExecuteNonQuery();
             con.Close();
+
+            return returnCustomerNumber(c);
+
         }
 
-        //Update Customer
+        public int returnCustomerNumber(Customer c)
+        {
+
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "Select custID From tbl_customers Where firstName = @FirstName and lastName = @LastName and primaryAddress = @primaryAddress and secondaryAddress = @secondaryAddress and primaryPhoneINT = @primaryPhoneNumber and secondaryPhoneINT = @secondaryPhoneNumber and billingAddress = @BillingAddress and email = @Email and city = @City and provStateID = @Province and country = @Country and postZip = @PostalCode;";
+            cmd.Parameters.AddWithValue("FirstName", c.firstName);
+            cmd.Parameters.AddWithValue("LastName", c.lastName);
+            cmd.Parameters.AddWithValue("primaryAddress", c.primaryAddress);
+            cmd.Parameters.AddWithValue("secondaryAddress", c.secondaryAddress);
+            cmd.Parameters.AddWithValue("primaryPhoneNumber", c.primaryPhoneNumber);
+            cmd.Parameters.AddWithValue("secondaryPhoneNumber", c.secondaryPhoneNumber);
+            cmd.Parameters.AddWithValue("BillingAddress", c.billingAddress);
+            cmd.Parameters.AddWithValue("Email", c.email);
+            cmd.Parameters.AddWithValue("City", c.city);
+            cmd.Parameters.AddWithValue("Province", c.province);
+            cmd.Parameters.AddWithValue("Country", c.country);
+            cmd.Parameters.AddWithValue("PostalCode", c.postalCode);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //New Customer
+            int custNum=0;
+
+            //Begin reading
+            while (reader.Read())
+            {
+                custNum = Convert.ToInt32(reader["custID"]);
+            }
+            
+            return custNum;
+        }
+
+        //Update Customer Nathan and Tyler Created
         public void updateCustomer(Customer c)
         {
             //New command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Update Customer Set FirstName = @FirstName, LastName = @LastName, primaryAddress = @primaryAddress, secondaryAddress = @secondaryAddress, City = @City, PostalCode = @PostalCode, Province = @Province, Country = @Country, primaryPhoneNumber = @primaryPhoneNumber, secondaryPhoneNumber = @secondaryPhoneNumber, Email = @Email Where customerId = @CustomerID";
+            cmd.CommandText = "Update tbl_customers Set firstName = @FirstName, lastName = @LastName, primaryAddress = @primaryAddress, secondaryAddress = @secondaryAddress, primaryPhoneINT = @primaryPhoneNumber, secondaryPhoneINT = @secondaryPhoneNumber, billingAddress = @BillingAddress, email = @Email, city = @City, provStateID = @Province, country = @Country, postZip = @PostalCode Where custID = @CustomerID";
             //Should these not be the text boxes???
+            cmd.Parameters.AddWithValue("CustomerID", c.customerId);
             cmd.Parameters.AddWithValue("FirstName", c.firstName);
             cmd.Parameters.AddWithValue("LastName", c.lastName);
             cmd.Parameters.AddWithValue("primaryAddress", c.primaryAddress);
             cmd.Parameters.AddWithValue("secondaryAddress", c.secondaryAddress);
-            cmd.Parameters.AddWithValue("City", c.city);
-            cmd.Parameters.AddWithValue("PostalCode", c.postalCode);
-            cmd.Parameters.AddWithValue("Province", c.province);
-            cmd.Parameters.AddWithValue("Country", c.country);
             cmd.Parameters.AddWithValue("primaryPhoneNumber", c.primaryPhoneNumber);
             cmd.Parameters.AddWithValue("secondaryPhoneNumber", c.secondaryPhoneNumber);
+            cmd.Parameters.AddWithValue("BillingAddress", c.billingAddress);
             cmd.Parameters.AddWithValue("Email", c.email);
+            cmd.Parameters.AddWithValue("City", c.city);
+            cmd.Parameters.AddWithValue("Province", c.province);
+            cmd.Parameters.AddWithValue("Country", c.country);
+            cmd.Parameters.AddWithValue("PostalCode", c.postalCode);
 
             //Declare and open connection
             cmd.Connection = con;

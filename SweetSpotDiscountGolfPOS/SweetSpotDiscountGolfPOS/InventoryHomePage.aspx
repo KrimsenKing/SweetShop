@@ -12,14 +12,14 @@
         <asp:Label ID="lblInventoryType" runat="server" Text="Inventory Type"></asp:Label>
         <div class="divider" />
         <asp:DropDownList ID="ddlInventoryType" runat="server" DataSourceID="sqlInventoryTypes" DataTextField="typeDescription" DataValueField="typeID"></asp:DropDownList>
-            <asp:SqlDataSource ID="sqlInventoryTypes" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT [typeID], [typeDescription] FROM [tbl_itemType]"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="sqlInventoryTypes" runat="server" ConnectionString="<%$ ConnectionStrings:SweetSpotDevConnectionString %>" SelectCommand="SELECT [typeID], [typeDescription] FROM [tbl_itemType]"></asp:SqlDataSource>
         <hr />
         <%--Enter search text to find matching Inventory information--%>
         <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
         <hr />
-        <asp:Button ID="btnInventorySearch" runat="server" Width="150" Text="Inventory Search" OnClick="btnInventorySearch_Click"/>
+        <asp:Button ID="btnInventorySearch" runat="server" Width="150" Text="Inventory Search" OnClick="btnInventorySearch_Click" />
         <div class="divider" />
-        <asp:Button ID="btnAddNewInventory" runat="server" Width="150" Text="Add New Inventory" OnClick="btnAddNewInventory_Click"/>
+        <asp:Button ID="btnAddNewInventory" runat="server" Width="150" Text="Add New Inventory" OnClick="btnAddNewInventory_Click" />
         <hr />
         <asp:GridView ID="grdInventorySearched" runat="server" AutoGenerateColumns="False">
             <Columns>
@@ -28,27 +28,27 @@
                         <asp:LinkButton ID="lbtnView" CommandName="viewItem" CommandArgument='<%#Eval("sku") %>' Text="View Item" runat="server">View Item</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
-            <asp:TemplateField HeaderText="SKU">
+                <asp:TemplateField HeaderText="SKU">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("sku")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-            <asp:TemplateField HeaderText="Description">
+                <asp:TemplateField HeaderText="Description">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("description")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-            <asp:TemplateField HeaderText="Quantity">
+                <asp:TemplateField HeaderText="Quantity">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("quantity")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-            <asp:TemplateField HeaderText="Price">
+                <asp:TemplateField HeaderText="Price">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("price")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-            <asp:TemplateField HeaderText="Cost">
+                <asp:TemplateField HeaderText="Cost">
                     <ItemTemplate>
                         <asp:Label runat="server" Text='<%#Eval("cost")%>'></asp:Label>
                     </ItemTemplate>

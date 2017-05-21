@@ -21,7 +21,7 @@
         <div class="divider" />
         <asp:Button ID="btnAddNewInventory" runat="server" Width="150" Text="Add New Inventory" OnClick="btnAddNewInventory_Click" />
         <hr />
-        <asp:GridView ID="grdInventorySearched" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="grdInventorySearched" runat="server" AutoGenerateColumns="False" OnRowCommand="grdInventorySearched_RowCommand">
             <Columns>
                 <asp:TemplateField HeaderText="View Item">
                     <ItemTemplate>

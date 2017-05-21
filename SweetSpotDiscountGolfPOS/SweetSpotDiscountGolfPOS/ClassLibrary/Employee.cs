@@ -8,11 +8,11 @@ namespace SweetShop
 {
     public class Employee
     {
-        public int employeeId { get; set; }
+        public int employeeID { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public int jobID { get; set; }
-        public int locationId { get; set; }
+        public int locationID { get; set; }
         public string emailAddress { get; set; }
         public string primaryContactNumber { get; set; }
         public string secondaryContactNumber { get; set; }
@@ -31,11 +31,11 @@ namespace SweetShop
             string pcNumber, string scNumber, string pAddress, string sAddress, string cty, int pState,
             int cntry, string pZip)
         {
-            employeeId = ID;
+            employeeID = ID;
             firstName = first;
             lastName = last;
             jobID = job;
-            locationId = location;
+            locationID = location;
             emailAddress = email;
             primaryContactNumber = pcNumber;
             secondaryContactNumber = scNumber;

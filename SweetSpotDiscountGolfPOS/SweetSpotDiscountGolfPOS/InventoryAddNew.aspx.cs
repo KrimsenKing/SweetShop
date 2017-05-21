@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SweetShop;
 
 namespace SweetSpotDiscountGolfPOS
 {
@@ -11,7 +12,463 @@ namespace SweetSpotDiscountGolfPOS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["itemKey"] != null)
+            {
+                string itemType = Session["itemType"].ToString();
+                SweetShopManager ssm = new SweetShopManager();
+                int itemSKU = Convert.ToInt32(Session["itemKey"].ToString());
 
+                if (itemType == "Clubs")
+                {
+                    Clubs c = ssm.singleItemLookUp(itemSKU);
+                    lblTypeDisplay.Text = c.typeID.ToString();
+                    lblSKUDisplay.Text = c.sku.ToString();
+                    lblCostDisplay.Text = c.cost.ToString();
+                    lblBrandDisplay.Text = c.brandID.ToString();
+                    lblPriceDisplay.Text = c.price.ToString();
+                    lblQuantityDisplay.Text = c.quantity.ToString();
+                    lblPremiumDisplay.Text = c.premium.ToString();
+
+                    lblClubTypeDisplay.Text = c.clubType.ToString();
+                    lblModelDisplay.Text = c.modelID.ToString();
+                    lblShaftDisplay.Text = c.shaft.ToString();
+                    lblNumberofClubsDisplay.Text = c.numberOfClubs.ToString();
+                    lblClubSpecDisplay.Text = c.clubSpec.ToString();
+                    lblShaftSpecDisplay.Text = c.shaftSpec.ToString();
+                    lblShaftFlexDisplay.Text = c.shaftFlex.ToString();
+                    lblDexterityDisplay.Text = c.dexterity.ToString();
+
+                    chkUsed.Checked = c.used.Equals(1);
+                    lblCommentsDisplay.Text = c.comments.ToString();
+
+                }
+                else if (itemType == "Accessories")
+                {
+                    Accessories a = ssm.getAccessory(itemSKU);
+                    lblTypeDisplay.Text = a.typeID.ToString();
+                    lblSKUDisplay.Text = a.sku.ToString();
+                    lblCostDisplay.Text = a.cost.ToString();
+                    lblBrandDisplay.Text = a.brandID.ToString();
+                    lblPriceDisplay.Text = a.price.ToString();
+                    lblQuantityDisplay.Text = a.quantity.ToString();
+                    txtPremium.Visible = false;
+                    lblPremiumDisplay.Visible = false;
+
+                    lblClubType.Text = "Size: ";
+                    lblClubTypeDisplay.Text = a.size.ToString();
+                    lblModel.Visible = false;
+                    lblModelDisplay.Visible = false;
+                    lblShaft.Text = "Color: ";
+                    lblShaftDisplay.Text = a.color.ToString();
+                    lblNumberofClubs.Visible = false;
+                    lblNumberofClubsDisplay.Visible = false;
+                    lblClubSpec.Visible = false;
+                    lblClubSpecDisplay.Visible = false;
+                    lblShaftSpec.Visible = false;
+                    lblShaftSpecDisplay.Visible = false;
+                    lblShaftFlex.Visible = false;
+                    lblShaftFlexDisplay.Visible = false;
+                    lblDexterity.Visible = false;
+                    lblDexterityDisplay.Visible = false;
+                    lblComments.Visible = false;
+                    lblCommentsDisplay.Visible = false;
+                    chkUsed.Visible = false;
+
+                }
+                else if (itemType == "Clothing")
+                {
+                    Clothing c = ssm.getClothing(itemSKU);
+                    lblTypeDisplay.Text = c.typeID.ToString();
+                    lblSKUDisplay.Text = c.sku.ToString();
+                    lblCostDisplay.Text = c.cost.ToString();
+                    lblBrandDisplay.Text = c.brandID.ToString();
+                    lblPriceDisplay.Text = c.price.ToString();
+                    lblQuantityDisplay.Text = c.quantity.ToString();
+                    txtPremium.Visible = false;
+                    lblPremiumDisplay.Visible = false;
+
+                    lblClubType.Text = "Size: ";
+                    lblClubTypeDisplay.Text = c.size.ToString();
+                    lblModel.Visible = false;
+                    lblModelDisplay.Visible = false;
+                    lblShaft.Text = "Color: ";
+                    lblShaftDisplay.Text = c.color.ToString();
+                    lblNumberofClubs.Visible = false;
+                    lblNumberofClubsDisplay.Visible = false;
+                    lblClubSpec.Text = "Gender: ";
+                    lblClubSpecDisplay.Text = c.gender.ToString();
+                    lblShaftSpec.Text = "Style: ";
+                    lblShaftSpecDisplay.Text = c.style.ToString();
+                    lblShaftFlex.Visible = false;
+                    lblShaftFlexDisplay.Visible = false;
+                    lblDexterity.Visible = false;
+                    lblDexterityDisplay.Visible = false;
+                    lblComments.Visible = false;
+                    lblCommentsDisplay.Visible = false;
+                    chkUsed.Visible = false;
+                }
+            }
+            else
+            {
+                ddlType.Visible = true;
+                lblTypeDisplay.Visible = false;
+
+                txtCost.Visible = true;
+                lblCostDisplay.Visible = false;
+
+                ddlBrand.Visible = true;
+                lblBrandDisplay.Visible = false;
+
+                txtPrice.Visible = true;
+                lblPriceDisplay.Visible = false;
+
+                txtQuantity.Visible = true;
+                lblQuantityDisplay.Visible = false;
+
+                lblPremiumDisplay.Visible = false;
+                lblClubTypeDisplay.Visible = false;
+                lblModelDisplay.Visible = false;
+                lblShaftDisplay.Visible = false;
+                lblNumberofClubsDisplay.Visible = false;
+                lblClubSpecDisplay.Visible = false;
+                lblShaftSpecDisplay.Visible = false;
+                lblShaftFlexDisplay.Visible = false;
+                lblDexterityDisplay.Visible = false;
+                lblCommentsDisplay.Visible = false;
+
+                if (ddlType.SelectedIndex == 1)
+                {
+                    lblPremium.Visible = true;
+                    txtPremium.Visible = true;
+
+                    txtClubType.Visible = true;
+                    ddlModel.Visible = true;
+                    txtShaft.Visible = true;
+                    txtNumberofClubs.Visible = true;
+                    txtClubSpec.Visible = true;
+                    txtShaftSpec.Visible = true;
+                    txtShaftFlex.Visible = true;
+                    txtDexterity.Visible = true;
+                    txtComments.Visible = true;
+                    chkUsed.Enabled = true;
+
+                }
+                else if (ddlType.SelectedIndex == 2)
+                {
+                    lblPremium.Visible = false;
+                    lblPremiumDisplay.Visible = false;
+
+                    lblClubType.Text = "Size: ";
+                    txtClubType.Visible = true;
+                    lblShaft.Text = "Color: ";
+                    txtShaft.Visible = true;
+                    chkUsed.Visible = false;
+                }
+                else if (ddlType.SelectedIndex == 3)
+                {
+                    lblPremium.Visible = false;
+                    lblPremiumDisplay.Visible = false;
+
+                    lblClubType.Text = "Size: ";
+                    txtClubType.Visible = true;
+                    lblShaft.Text = "Color: ";
+                    txtShaft.Visible = true;
+                    lblClubSpec.Text = "Gender: ";
+                    txtClubSpec.Visible = true;
+                    lblShaftSpec.Text = "Style: ";
+                    txtShaftSpec.Visible = true;
+                    chkUsed.Visible = false;
+                }
+
+                btnSaveItem.Visible = false;
+                btnAddItem.Visible = true;
+                btnEditItem.Visible = false;
+                btnCancel.Visible = true;
+                btnBackToSearch.Visible = false;
+            }
+        }
+
+        protected void btnAddItem_Click(object sender, EventArgs e)
+        {
+            SweetShopManager ssm = new SweetShopManager();
+            Object o = new Object();
+
+            if (ddlType.SelectedIndex == 1)
+            {
+                Clubs c = new Clubs();
+                c.cost = Convert.ToDouble(txtCost.Text);
+                c.brandID = ddlBrand.SelectedIndex;
+                c.price = Convert.ToDouble(txtPrice.Text);
+                c.quantity = Convert.ToInt32(txtQuantity.Text);
+                c.premium = Convert.ToDouble(txtPremium.Text);
+                c.clubType = txtClubType.Text;
+                c.modelID = ddlModel.SelectedIndex;
+                c.shaft = txtShaft.Text;
+                c.numberOfClubs = txtNumberofClubs.Text;
+                c.clubSpec = txtClubSpec.Text;
+                c.shaftSpec = txtShaftSpec.Text;
+                c.shaftFlex = txtShaftFlex.Text;
+                c.dexterity = txtDexterity.Text;
+                c.used = chkUsed.Checked;
+                c.comments = txtComments.Text;
+                c.typeID = ddlType.SelectedIndex;
+                o = c as Object;
+            }
+            else if (ddlType.SelectedIndex == 2)
+            {
+                Accessories a = new Accessories();
+                a.brandID = ddlBrand.SelectedIndex;
+                a.cost = Convert.ToDouble(txtCost.Text);
+                a.price = Convert.ToDouble(txtPrice.Text);
+                a.quantity = Convert.ToInt32(txtQuantity.Text);
+                a.typeID = ddlType.SelectedIndex;
+                a.size = txtClubType.Text;
+                a.color = txtShaft.Text;
+                o = a as Object;
+            }
+            else if (ddlType.SelectedIndex == 3)
+            {
+                Clothing cl = new Clothing();
+                cl.brandID = ddlBrand.SelectedIndex;
+                cl.cost = Convert.ToDouble(txtCost.Text);
+                cl.price = Convert.ToDouble(txtPrice.Text);
+                cl.quantity = Convert.ToInt32(txtQuantity.Text);
+                cl.typeID = ddlType.SelectedIndex;
+                cl.size = txtClubType.Text;
+                cl.color = txtShaft.Text;
+                cl.gender = txtClubSpec.Text;
+                cl.style = txtShaftSpec.Text;
+                o = cl as Object;
+            }
+
+            Session["itemKey"] = ssm.addItem(o);
+            Response.Redirect(Request.RawUrl);
+        }
+
+        protected void btnEditItem_Click(object sender, EventArgs e)
+        {
+            txtCost.Text = lblCostDisplay.Text;
+            txtCost.Visible = true;
+            lblCostDisplay.Visible = false;
+
+            ddlBrand.Text = lblBrandDisplay.Text;
+            ddlBrand.Visible = true;
+            lblBrandDisplay.Visible = false;
+
+            txtPrice.Text = lblPriceDisplay.Text;
+            txtPrice.Visible = true;
+            lblPriceDisplay.Visible = false;
+
+            txtQuantity.Text = lblQuantityDisplay.Text;
+            txtQuantity.Visible = true;
+            lblQuantityDisplay.Visible = false;
+
+            if (lblTypeDisplay.Text == "Clubs")
+            {
+                txtPremium.Text = lblPremiumDisplay.Text;
+                txtPremium.Visible = true;
+                lblPremiumDisplay.Visible = false;
+
+                txtClubType.Text = lblClubTypeDisplay.Text;
+                txtClubType.Visible = true;
+                lblClubTypeDisplay.Visible = false;
+
+                ddlModel.Text = lblModelDisplay.Text;
+                ddlModel.Visible = true;
+                lblModelDisplay.Visible = false;
+
+                txtShaft.Text = lblShaftDisplay.Text;
+                txtShaft.Visible = true;
+                lblShaftDisplay.Visible = false;
+
+                txtNumberofClubs.Text = lblNumberofClubsDisplay.Text;
+                txtNumberofClubs.Visible = true;
+                lblNumberofClubsDisplay.Visible = false;
+
+                txtClubSpec.Text = lblClubSpecDisplay.Text;
+                txtClubSpec.Visible = true;
+                lblClubSpecDisplay.Visible = false;
+
+                txtShaftSpec.Text = lblShaftSpecDisplay.Text;
+                txtShaftSpec.Visible = true;
+                lblShaftSpecDisplay.Visible = false;
+
+                txtShaftFlex.Text = lblShaftFlexDisplay.Text;
+                txtShaftFlex.Visible = true;
+                lblShaftFlexDisplay.Visible = false;
+
+                txtDexterity.Text = lblDexterityDisplay.Text;
+                txtDexterity.Visible = true;
+                lblDexterityDisplay.Visible = false;
+
+                txtComments.Text = lblCommentsDisplay.Text;
+                txtComments.Visible = true;
+                lblCommentsDisplay.Visible = false;
+
+                chkUsed.Enabled = true;
+            }
+            else if (lblTypeDisplay.Text == "Accessories")
+            {
+                txtClubType.Text = lblClubTypeDisplay.Text;
+                txtClubType.Visible = true;
+                lblClubTypeDisplay.Visible = false;
+
+                txtShaft.Text = lblShaftDisplay.Text;
+                txtShaft.Visible = true;
+                lblShaftDisplay.Visible = false;
+            }
+            else if (lblTypeDisplay.Text == "Clothing")
+            {
+                txtClubType.Text = lblClubTypeDisplay.Text;
+                txtClubType.Visible = true;
+                lblClubTypeDisplay.Visible = false;
+
+                txtShaft.Text = lblShaftDisplay.Text;
+                txtShaft.Visible = true;
+                lblShaftDisplay.Visible = false;
+
+                txtClubSpec.Text = lblClubSpecDisplay.Text;
+                txtClubSpec.Visible = true;
+                lblClubSpecDisplay.Visible = false;
+
+                txtShaftSpec.Text = lblShaftSpecDisplay.Text;
+                txtShaftSpec.Visible = true;
+                lblShaftSpecDisplay.Visible = false;
+            }
+            btnSaveItem.Visible = true;
+            btnEditItem.Visible = false;
+            btnAddItem.Visible = false;
+            btnCancel.Visible = true;
+            btnBackToSearch.Visible = false;
+
+        }
+        protected void btnSaveItem_Click(object sender, EventArgs e)
+        {
+
+            SweetShopManager ssm = new SweetShopManager();
+            if (lblTypeDisplay.Text == "Clubs")
+            {
+                Clubs c = new Clubs();
+                c.sku = Convert.ToInt32(Session["itemKey"].ToString());
+                c.cost = Convert.ToDouble(txtCost.ToString());
+                c.brandID = ddlBrand.SelectedIndex;
+                c.price = Convert.ToDouble(txtPrice.ToString());
+                c.quantity = Convert.ToInt32(txtQuantity.ToString());
+                c.premium = Convert.ToDouble(txtPremium.ToString());
+                c.clubType = txtClubType.Text;
+                c.modelID = ddlModel.SelectedIndex;
+                c.shaft = txtShaft.Text;
+                c.numberOfClubs = txtNumberofClubs.Text;
+                c.clubSpec = txtClubSpec.Text;
+                c.shaftSpec = txtShaftSpec.Text;
+                c.shaftFlex = txtShaftFlex.Text;
+                c.dexterity = txtDexterity.Text;
+                c.comments = txtComments.Text;
+                c.used = chkUsed.Checked;
+                c.typeID = ddlType.SelectedIndex;
+                ssm.updateItem(c);
+
+                txtCost.Visible = false;
+                lblCostDisplay.Visible = true;
+                ddlBrand.Visible = false;
+                lblBrandDisplay.Visible = true;
+                txtPrice.Visible = false;
+                lblPriceDisplay.Visible = true;
+                txtQuantity.Visible = false;
+                lblQuantityDisplay.Visible = true;
+                txtPremium.Visible = false;
+                lblPremiumDisplay.Visible = true;
+                txtClubType.Visible = false;
+                lblClubTypeDisplay.Visible = true;
+                ddlModel.Visible = false;
+                lblModelDisplay.Visible = true;
+                txtShaft.Visible = false;
+                lblShaftDisplay.Visible = true;
+                txtNumberofClubs.Visible = false;
+                lblNumberofClubsDisplay.Visible = true;
+                txtClubSpec.Visible = false;
+                lblClubSpecDisplay.Visible = true;
+                txtShaftSpec.Visible = false;
+                lblShaftSpecDisplay.Visible = true;
+                txtShaftFlex.Visible = false;
+                lblShaftFlexDisplay.Visible = true;
+                txtDexterity.Visible = false;
+                lblDexterityDisplay.Visible = true;
+                txtComments.Visible = false;
+                lblCommentsDisplay.Visible = true;
+                chkUsed.Enabled = false;
+            }else if(lblTypeDisplay.Text == "Accessories")
+            {
+                Accessories a = new Accessories();
+                a.brandID = ddlBrand.SelectedIndex;
+                a.cost = Convert.ToDouble(txtCost.Text);
+                a.price = Convert.ToDouble(txtPrice.Text);
+                a.quantity = Convert.ToInt32(txtQuantity.Text);
+                a.size = txtClubType.Text;
+                a.color = txtShaft.Text;
+                ssm.updateAccessories(a);
+
+                txtCost.Visible = false;
+                lblCostDisplay.Visible = true;
+                ddlBrand.Visible = false;
+                lblBrandDisplay.Visible = true;
+                txtPrice.Visible = false;
+                lblPriceDisplay.Visible = true;
+                txtQuantity.Visible = false;
+                lblQuantityDisplay.Visible = true;
+                txtClubType.Visible = false;
+                lblClubTypeDisplay.Visible = true;
+                txtShaft.Visible = false;
+                lblShaftDisplay.Visible = true;
+            }
+            else if(lblTypeDisplay.Text == "Clothing")
+            {
+                Clothing cl = new Clothing();
+                cl.brandID = ddlBrand.SelectedIndex;
+                cl.cost = Convert.ToDouble(txtCost.Text);
+                cl.price = Convert.ToDouble(txtPrice.Text);
+                cl.quantity = Convert.ToInt32(txtQuantity.Text);
+                cl.size = txtClubType.Text;
+                cl.color = txtShaft.Text;
+                cl.gender = txtClubSpec.Text;
+                cl.style = txtShaftSpec.Text;
+                ssm.updateClothing(cl);
+
+                txtCost.Visible = false;
+                lblCostDisplay.Visible = true;
+                ddlBrand.Visible = false;
+                lblBrandDisplay.Visible = true;
+                txtPrice.Visible = false;
+                lblPriceDisplay.Visible = true;
+                txtQuantity.Visible = false;
+                lblQuantityDisplay.Visible = true;
+                txtClubType.Visible = false;
+                lblClubTypeDisplay.Visible = true;
+                txtShaft.Visible = false;
+                lblShaftDisplay.Visible = true;
+                txtClubSpec.Visible = false;
+                lblClubSpecDisplay.Visible = true;
+                txtShaftSpec.Visible = false;
+                lblShaftSpecDisplay.Visible = true;
+            }
+
+
+            btnSaveItem.Visible = false;
+            btnEditItem.Visible = true;
+            btnCancel.Visible = false;
+            btnAddItem.Visible = false;
+            btnBackToSearch.Visible = true;
+
+            Response.Redirect(Request.RawUrl);
+
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
+        }
+        protected void btnBackToSearch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("InventoryHomePage.aspx");
         }
     }
 }

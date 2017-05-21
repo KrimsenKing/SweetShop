@@ -36,5 +36,17 @@ namespace SweetSpotDiscountGolfPOS
         {
             Response.Redirect("InventoryAddNew.aspx");
         }
+
+        protected void grdInventorySearched_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            string itemKey = e.CommandArgument.ToString();
+            string itemType = ddlInventoryType.SelectedItem.ToString();
+            if (e.CommandName == "ViewItem")
+            {
+                Session["itemType"] = itemType;
+                Session["itemKey"] = itemKey;
+                Response.Redirect("InventoryAddNew.aspx");
+            }
+        }
     }
 }

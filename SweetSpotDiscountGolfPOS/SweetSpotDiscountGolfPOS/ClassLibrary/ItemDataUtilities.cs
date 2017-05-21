@@ -18,6 +18,7 @@ namespace SweetSpotProShop
             connectionString = ConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString;
         }
 
+        //Return Model string created by Nathan and Tyler
         public string modelType(int modelID)
         {
 
@@ -39,7 +40,7 @@ namespace SweetSpotProShop
             conn.Close();
             return model;
         }
-
+        //Return Brand string created by Nathan and Tyler
         public string brandType(int brandID)
         {
 
@@ -61,51 +62,51 @@ namespace SweetSpotProShop
             conn.Close();
             return brand;
         }
+        //**Possible deletion
+        //public List<Clubs> GetItemByID(Int32 ItemNumber)
+        //{
+        //    SqlConnection conn = new SqlConnection(connectionString);
+        //    SqlCommand cmd = new SqlCommand();
 
-        public List<Clubs> GetItemByID(Int32 ItemNumber)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
+        //    cmd.Connection = conn;
+        //    //cmd.CommandText = "Select * From Inventory Where ItemNumber = @ItemNumber";
+        //    cmd.CommandText = "Select sku , brand, model, clubType, shaft,numberOfClubs, tradeInPrice, premium, wePay, quantity, extendedPrice, retailPrice,  clubSpec, shaftSpec, shaftFlex, dexterity, gst, pst From Item Where SKU = @sku";
+        //    cmd.Parameters.AddWithValue("sku", ItemNumber);
 
-            cmd.Connection = conn;
-            //cmd.CommandText = "Select * From Inventory Where ItemNumber = @ItemNumber";
-            cmd.CommandText = "Select sku , brand, model, clubType, shaft,numberOfClubs, tradeInPrice, premium, wePay, quantity, extendedPrice, retailPrice,  clubSpec, shaftSpec, shaftFlex, dexterity, gst, pst From Item Where SKU = @sku";
-            cmd.Parameters.AddWithValue("sku", ItemNumber);
+        //    conn.Open();
+        //    SqlDataReader reader = cmd.ExecuteReader();
+        //    List<Clubs> clubs = new List<Clubs>();
 
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            List<Clubs> clubs = new List<Clubs>();
-
-            while (reader.Read())
-            {
-                Clubs c = new Clubs
-                (Convert.ToInt32(reader["sku"]),
-                ConvertDBNullToString( reader["Brand"]).ToString(),
-                reader["Model"].ToString(),
-                reader["ClubType"].ToString(),
-                reader["Shaft"].ToString(),
-                reader["NumberOfClubs"].ToString(),
-                Convert.ToDouble(reader["tradeInPrice"]),
-                Convert.ToDouble(reader["premium"]),
-                Convert.ToDouble(reader["wePay"]),
-                Convert.ToInt32(reader["quantity"]),
-                Convert.ToDouble(reader["extendedPrice"]),
-                ConvertDBNullToDouble(reader["retailPrice"]),
-                reader["ClubSpec"].ToString(),
-                reader["ShaftSpec"].ToString(),
-                reader["ShaftFlex"].ToString(),
-                reader["Dexterity"].ToString(),
-                Convert.ToBoolean(reader["GST"]),
-                Convert.ToBoolean(reader["PST"])
-                );
+        //    while (reader.Read())
+        //    {
+        //        Clubs c = new Clubs
+        //        (Convert.ToInt32(reader["sku"]),
+        //        ConvertDBNullToString( reader["Brand"]).ToString(),
+        //        reader["Model"].ToString(),
+        //        reader["ClubType"].ToString(),
+        //        reader["Shaft"].ToString(),
+        //        reader["NumberOfClubs"].ToString(),
+        //        Convert.ToDouble(reader["tradeInPrice"]),
+        //        Convert.ToDouble(reader["premium"]),
+        //        Convert.ToDouble(reader["wePay"]),
+        //        Convert.ToInt32(reader["quantity"]),
+        //        Convert.ToDouble(reader["extendedPrice"]),
+        //        ConvertDBNullToDouble(reader["retailPrice"]),
+        //        reader["ClubSpec"].ToString(),
+        //        reader["ShaftSpec"].ToString(),
+        //        reader["ShaftFlex"].ToString(),
+        //        reader["Dexterity"].ToString(),
+        //        Convert.ToBoolean(reader["GST"]),
+        //        Convert.ToBoolean(reader["PST"])
+        //        );
 
 
-                clubs.Add(c);
-            }
-            conn.Close();
-            return clubs;
+        //        clubs.Add(c);
+        //    }
+        //    conn.Close();
+        //    return clubs;
 
-        }
+        //}
 
         public string ConvertDBNullToString(Object o)
         {

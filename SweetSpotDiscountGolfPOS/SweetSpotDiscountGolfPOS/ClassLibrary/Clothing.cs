@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace SweetShop
 {
-    class Clothing
+    public class Clothing
     {
-        private int sku { get; set; }
-        private int brandID { get; set; }
-        private string size { get; set; }
-        private string color { get; set; }
-        private string gender { get; set; }
-        private string style { get; set; }
-        private float price { get; set; }
-        private float cost { get; set; }
-        private int quantity { get; set; }
+        public int sku { get; set; }
+        public int brandID { get; set; }
+        public string size { get; set; }
+        public string color { get; set; }
+        public string gender { get; set; }
+        public string style { get; set; }
+        public double price { get; set; }
+        public double cost { get; set; }
+        public int quantity { get; set; }
+        public int typeID { get; set; }
 
         public Clothing() { }
-        public Clothing(int s, int b, string z, string clr, string g, string syl, float p, float c, int q)
+        public Clothing(int s, int b, string z, string clr, string g, string syl, double p, double c, int q, int t)
         {
             sku = s;
             brandID = b;
@@ -30,6 +31,7 @@ namespace SweetShop
             price = p;
             cost = c;
             quantity = q;
+            typeID = t;
         }
     }
 }

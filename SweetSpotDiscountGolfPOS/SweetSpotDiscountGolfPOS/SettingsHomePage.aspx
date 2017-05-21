@@ -7,7 +7,7 @@
 
 <asp:Content ID="SettingsPageContent" ContentPlaceHolderID="IndividualPageContent" runat="server">
     <div id="Settings">
-        <h2>Employee Management</h2>
+        <h2>Employee Information</h2>
         <hr />
          <%--Enter search text to find matching Employees information--%>
         <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>

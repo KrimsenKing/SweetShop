@@ -10,14 +10,9 @@ C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\roslyn\vbc.exe
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\roslyn\VBCSCompiler.exe
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\WebApplication1.dll.config
-C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\WebApplication1.dll
-C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\WebApplication1.pdb
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.csprojResolveAssemblyReference.cache
-C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\WebApplication1.dll
-C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\WebApplication1.pdb
 \\bisiisdev\sweet_spot\MainTest\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.csproj.ResolveComReference.cache
 \\bisiisdev\sweet_spot\MainTest\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\roslyn\csc.exe
 \\bisiisdev\sweet_spot\MainTest\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -60,3 +55,9 @@ M:\COMP_253_SystemsProject\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountG
 M:\COMP_253_SystemsProject\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.csproj.ResolveComReference.cache
 M:\COMP_253_SystemsProject\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.dll
 M:\COMP_253_SystemsProject\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.pdb
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\SweetSpotDiscountGolfPOS.dll.config
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\SweetSpotDiscountGolfPOS.dll
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\bin\SweetSpotDiscountGolfPOS.pdb
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.csproj.ResolveComReference.cache
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.dll
+C:\Users\Neo\Desktop\SweetShop\SweetSpotDiscountGolfPOS\SweetSpotDiscountGolfPOS\obj\Debug\SweetSpotDiscountGolfPOS.pdb

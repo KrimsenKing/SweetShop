@@ -72,8 +72,8 @@ namespace SweetSpotDiscountGolfPOS
                 btnSaveCustomer.Visible = false;
                 btnAddCustomer.Visible = true;
                 btnEditCustomer.Visible = false;
-                btnCancel.Visible = true;
-                btnBackToSearch.Visible = false;
+                btnCancel.Visible = false;
+                btnBackToSearch.Visible = true;
             }
 
         }

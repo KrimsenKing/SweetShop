@@ -41,7 +41,7 @@ namespace SweetSpotDiscountGolfPOS
         {
             string itemKey = e.CommandArgument.ToString();
             string itemType = ddlInventoryType.SelectedItem.ToString();
-            if (e.CommandName == "ViewItem")
+            if (e.CommandName == "viewItem")
             {
                 Session["itemType"] = itemType;
                 Session["itemKey"] = itemKey;

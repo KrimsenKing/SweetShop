@@ -16,7 +16,7 @@
         <br />
         <br />
         <h3>
-            <asp:DropDownList ID="ddlType" runat="server" AutoPostBack="True" DataSourceID="sqlItemType" DataTextField="typeDescription" DataValueField="typeID" Visible="false" ></asp:DropDownList>
+            <asp:DropDownList ID="ddlType" runat="server" AutoPostBack="true" DataSourceID="sqlItemType" DataTextField="typeDescription" DataValueField="typeID" Visible="false" OnSelectedIndexChanged="ddlType_SelectedIndexChanged" ></asp:DropDownList>
             <asp:Label ID="lblTypeDisplay" runat="server" Visible="true"></asp:Label>
         </h3>
         <asp:Table ID="Table1" runat="server" Width="100%">
@@ -40,7 +40,7 @@
                     <asp:Label ID="lblBrand" runat="server" Text="Brand Name: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:DropDownList ID="ddlBrand" runat="server" AutoPostBack="True" DataSourceID="sqlBrand" DataTextField="brandName" DataValueField="brandID" Visible="false"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlBrand" runat="server" AutoPostBack="false" DataSourceID="sqlBrand" DataTextField="brandName" DataValueField="brandID" Visible="false"></asp:DropDownList>
                     <asp:Label ID="lblBrandDisplay" runat="server" Text="" Visible="true"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
@@ -83,7 +83,7 @@
                     <asp:Label ID="lblModel" runat="server" Text="Model: " Visible="true"></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:DropDownList ID="ddlModel" runat="server" AutoPostBack="True" DataSourceID="sqlModel" DataTextField="modelName" DataValueField="modelID" Visible="false"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlModel" runat="server" AutoPostBack="false" DataSourceID="sqlModel" DataTextField="modelName" DataValueField="modelID" Visible="false"></asp:DropDownList>
                     <asp:Label ID="lblModelDisplay" runat="server" Text="" Visible="true"></asp:Label>
                 </asp:TableCell>
             </asp:TableRow>
@@ -143,7 +143,7 @@
                     <asp:Label ID="lblComments" runat="server" Text="Comments: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:CheckBox ID="chkUsed" runat="server" Text="Used" Enabled="false"></asp:CheckBox>
+                    <asp:CheckBox ID="chkUsed" runat="server" AutoPostBack="false" Text="Used" Enabled="false"></asp:CheckBox>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow>

@@ -12,16 +12,16 @@ namespace SweetSpotDiscountGolfPOS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (Session["itemKey"] != null)
             {
                 string itemType = Session["itemType"].ToString();
                 SweetShopManager ssm = new SweetShopManager();
                 int itemSKU = Convert.ToInt32(Session["itemKey"].ToString());
-
+                lblTypeDisplay.Text = itemType;
                 if (itemType == "Clubs")
                 {
                     Clubs c = ssm.singleItemLookUp(itemSKU);
-                    lblTypeDisplay.Text = c.typeID.ToString();
                     lblSKUDisplay.Text = c.sku.ToString();
                     lblCostDisplay.Text = c.cost.ToString();
                     lblBrandDisplay.Text = c.brandID.ToString();
@@ -45,7 +45,6 @@ namespace SweetSpotDiscountGolfPOS
                 else if (itemType == "Accessories")
                 {
                     Accessories a = ssm.getAccessory(itemSKU);
-                    lblTypeDisplay.Text = a.typeID.ToString();
                     lblSKUDisplay.Text = a.sku.ToString();
                     lblCostDisplay.Text = a.cost.ToString();
                     lblBrandDisplay.Text = a.brandID.ToString();
@@ -58,8 +57,8 @@ namespace SweetSpotDiscountGolfPOS
                     lblClubTypeDisplay.Text = a.size.ToString();
                     lblModel.Visible = false;
                     lblModelDisplay.Visible = false;
-                    lblShaft.Text = "Color: ";
-                    lblShaftDisplay.Text = a.color.ToString();
+                    lblShaft.Text = "Colour: ";
+                    lblShaftDisplay.Text = a.colour.ToString();
                     lblNumberofClubs.Visible = false;
                     lblNumberofClubsDisplay.Visible = false;
                     lblClubSpec.Visible = false;
@@ -78,7 +77,6 @@ namespace SweetSpotDiscountGolfPOS
                 else if (itemType == "Clothing")
                 {
                     Clothing c = ssm.getClothing(itemSKU);
-                    lblTypeDisplay.Text = c.typeID.ToString();
                     lblSKUDisplay.Text = c.sku.ToString();
                     lblCostDisplay.Text = c.cost.ToString();
                     lblBrandDisplay.Text = c.brandID.ToString();
@@ -91,16 +89,16 @@ namespace SweetSpotDiscountGolfPOS
                     lblClubTypeDisplay.Text = c.size.ToString();
                     lblModel.Visible = false;
                     lblModelDisplay.Visible = false;
-                    lblShaft.Text = "Color: ";
-                    lblShaftDisplay.Text = c.color.ToString();
+                    lblShaft.Text = "Colour: ";
+                    lblShaftDisplay.Text = c.colour.ToString();
                     lblNumberofClubs.Visible = false;
                     lblNumberofClubsDisplay.Visible = false;
                     lblClubSpec.Text = "Gender: ";
                     lblClubSpecDisplay.Text = c.gender.ToString();
-                    lblShaftSpec.Text = "Style: ";
-                    lblShaftSpecDisplay.Text = c.style.ToString();
-                    lblShaftFlex.Visible = false;
-                    lblShaftFlexDisplay.Visible = false;
+                    lblShaftFlex.Text = "Style: ";
+                    lblShaftFlexDisplay.Text = c.style.ToString();
+                    lblShaftSpec.Visible = false;
+                    lblShaftSpecDisplay.Visible = false;
                     lblDexterity.Visible = false;
                     lblDexterityDisplay.Visible = false;
                     lblComments.Visible = false;
@@ -136,7 +134,35 @@ namespace SweetSpotDiscountGolfPOS
                 lblDexterityDisplay.Visible = false;
                 lblCommentsDisplay.Visible = false;
 
-                if (ddlType.SelectedIndex == 1)
+                //Accessories
+                if (ddlType.SelectedIndex <= 0)
+                {
+
+                    lblPremium.Visible = false;
+                    lblPremiumDisplay.Visible = false;
+
+                    lblClubType.Text = "Size: ";
+                    txtClubType.Visible = true;
+                    lblShaft.Text = "Colour: ";
+                    txtShaft.Visible = true;
+                    txtClubSpec.Visible = false;
+                    txtShaftFlex.Visible = false;
+                    chkUsed.Visible = false;
+                    lblModel.Visible = false;
+                    ddlModel.Visible = false;
+                    lblNumberofClubs.Visible = false;
+                    txtNumberofClubs.Visible = false;
+                    lblClubSpec.Visible = false;
+                    lblShaftSpec.Visible = false;
+                    txtShaftSpec.Visible = false;
+                    lblShaftFlex.Visible = false;
+                    lblDexterity.Visible = false;
+                    txtDexterity.Visible = false;
+                    lblComments.Visible = false;
+                    txtComments.Visible = false;
+                }
+                //Clubs
+                else if (ddlType.SelectedIndex == 2)
                 {
                     lblPremium.Visible = true;
                     txtPremium.Visible = true;
@@ -151,40 +177,53 @@ namespace SweetSpotDiscountGolfPOS
                     txtDexterity.Visible = true;
                     txtComments.Visible = true;
                     chkUsed.Enabled = true;
-
+                    lblClubType.Text = "Club Type: ";
+                    lblShaft.Text = "Shaft: ";
+                    lblClubSpec.Text = "Club Spec: ";
+                    lblShaftFlex.Text = "Shaft Flex: ";
+                    lblModel.Visible = true;
+                    lblNumberofClubs.Visible = true;
+                    lblShaftSpec.Visible = true;
+                    lblDexterity.Visible = true;
+                    lblComments.Visible = true;
+                    chkUsed.Visible = true;
                 }
-                else if (ddlType.SelectedIndex == 2)
+                //Clothing
+                else if (ddlType.SelectedIndex == 1)
                 {
                     lblPremium.Visible = false;
                     lblPremiumDisplay.Visible = false;
 
                     lblClubType.Text = "Size: ";
                     txtClubType.Visible = true;
-                    lblShaft.Text = "Color: ";
-                    txtShaft.Visible = true;
-                    chkUsed.Visible = false;
-                }
-                else if (ddlType.SelectedIndex == 3)
-                {
-                    lblPremium.Visible = false;
-                    lblPremiumDisplay.Visible = false;
-
-                    lblClubType.Text = "Size: ";
-                    txtClubType.Visible = true;
-                    lblShaft.Text = "Color: ";
+                    lblShaft.Text = "Colour: ";
                     txtShaft.Visible = true;
                     lblClubSpec.Text = "Gender: ";
+                    lblClubSpec.Visible = true;
                     txtClubSpec.Visible = true;
-                    lblShaftSpec.Text = "Style: ";
-                    txtShaftSpec.Visible = true;
+                    lblShaftFlex.Text = "Style: ";
+                    lblShaftFlex.Visible = true;
+                    txtShaftFlex.Visible = true;
                     chkUsed.Visible = false;
+                    txtPremium.Visible = false;
+                    ddlModel.Visible = false;
+                    txtNumberofClubs.Visible = false;
+                    txtShaftSpec.Visible = false;
+                    txtDexterity.Visible = false;
+                    txtComments.Visible = false;
+                    lblShaftSpec.Visible = false;
+                    lblModel.Visible = false;
+                    lblNumberofClubs.Visible = false;
+                    lblDexterity.Visible = false;
+                    lblComments.Visible = false;
+
                 }
 
                 btnSaveItem.Visible = false;
                 btnAddItem.Visible = true;
                 btnEditItem.Visible = false;
-                btnCancel.Visible = true;
-                btnBackToSearch.Visible = false;
+                btnCancel.Visible = false;
+                btnBackToSearch.Visible = true;
             }
         }
 
@@ -197,12 +236,12 @@ namespace SweetSpotDiscountGolfPOS
             {
                 Clubs c = new Clubs();
                 c.cost = Convert.ToDouble(txtCost.Text);
-                c.brandID = ddlBrand.SelectedIndex;
+                c.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 c.price = Convert.ToDouble(txtPrice.Text);
                 c.quantity = Convert.ToInt32(txtQuantity.Text);
                 c.premium = Convert.ToDouble(txtPremium.Text);
                 c.clubType = txtClubType.Text;
-                c.modelID = ddlModel.SelectedIndex;
+                c.modelID = Convert.ToInt32(ddlModel.SelectedValue);
                 c.shaft = txtShaft.Text;
                 c.numberOfClubs = txtNumberofClubs.Text;
                 c.clubSpec = txtClubSpec.Text;
@@ -211,33 +250,33 @@ namespace SweetSpotDiscountGolfPOS
                 c.dexterity = txtDexterity.Text;
                 c.used = chkUsed.Checked;
                 c.comments = txtComments.Text;
-                c.typeID = ddlType.SelectedIndex;
+                c.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 o = c as Object;
             }
             else if (ddlType.SelectedIndex == 2)
             {
                 Accessories a = new Accessories();
-                a.brandID = ddlBrand.SelectedIndex;
+                a.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 a.cost = Convert.ToDouble(txtCost.Text);
                 a.price = Convert.ToDouble(txtPrice.Text);
                 a.quantity = Convert.ToInt32(txtQuantity.Text);
-                a.typeID = ddlType.SelectedIndex;
+                a.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 a.size = txtClubType.Text;
-                a.color = txtShaft.Text;
+                a.colour = txtShaft.Text;
                 o = a as Object;
             }
             else if (ddlType.SelectedIndex == 3)
             {
                 Clothing cl = new Clothing();
-                cl.brandID = ddlBrand.SelectedIndex;
+                cl.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 cl.cost = Convert.ToDouble(txtCost.Text);
                 cl.price = Convert.ToDouble(txtPrice.Text);
                 cl.quantity = Convert.ToInt32(txtQuantity.Text);
-                cl.typeID = ddlType.SelectedIndex;
+                cl.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 cl.size = txtClubType.Text;
-                cl.color = txtShaft.Text;
+                cl.colour = txtShaft.Text;
                 cl.gender = txtClubSpec.Text;
-                cl.style = txtShaftSpec.Text;
+                cl.style = txtShaftFlex.Text;
                 o = cl as Object;
             }
 
@@ -331,9 +370,9 @@ namespace SweetSpotDiscountGolfPOS
                 txtClubSpec.Visible = true;
                 lblClubSpecDisplay.Visible = false;
 
-                txtShaftSpec.Text = lblShaftSpecDisplay.Text;
-                txtShaftSpec.Visible = true;
-                lblShaftSpecDisplay.Visible = false;
+                txtShaftFlex.Text = lblShaftFlexDisplay.Text;
+                txtShaftFlex.Visible = true;
+                lblShaftFlexDisplay.Visible = false;
             }
             btnSaveItem.Visible = true;
             btnEditItem.Visible = false;
@@ -350,13 +389,13 @@ namespace SweetSpotDiscountGolfPOS
             {
                 Clubs c = new Clubs();
                 c.sku = Convert.ToInt32(Session["itemKey"].ToString());
-                c.cost = Convert.ToDouble(txtCost.ToString());
-                c.brandID = ddlBrand.SelectedIndex;
-                c.price = Convert.ToDouble(txtPrice.ToString());
-                c.quantity = Convert.ToInt32(txtQuantity.ToString());
-                c.premium = Convert.ToDouble(txtPremium.ToString());
+                c.cost = Convert.ToDouble(txtCost.Text);
+                c.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
+                c.price = Convert.ToDouble(txtPrice.Text);
+                c.quantity = Convert.ToInt32(txtQuantity.Text);
+                c.premium = Convert.ToDouble(txtPremium.Text);
                 c.clubType = txtClubType.Text;
-                c.modelID = ddlModel.SelectedIndex;
+                c.modelID = Convert.ToInt32(ddlModel.SelectedValue);
                 c.shaft = txtShaft.Text;
                 c.numberOfClubs = txtNumberofClubs.Text;
                 c.clubSpec = txtClubSpec.Text;
@@ -365,7 +404,7 @@ namespace SweetSpotDiscountGolfPOS
                 c.dexterity = txtDexterity.Text;
                 c.comments = txtComments.Text;
                 c.used = chkUsed.Checked;
-                c.typeID = ddlType.SelectedIndex;
+                c.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 ssm.updateItem(c);
 
                 txtCost.Visible = false;
@@ -397,15 +436,17 @@ namespace SweetSpotDiscountGolfPOS
                 txtComments.Visible = false;
                 lblCommentsDisplay.Visible = true;
                 chkUsed.Enabled = false;
-            }else if(lblTypeDisplay.Text == "Accessories")
+            }
+            else if (lblTypeDisplay.Text == "Accessories")
             {
                 Accessories a = new Accessories();
-                a.brandID = ddlBrand.SelectedIndex;
+                a.sku = Convert.ToInt32(lblSKUDisplay.Text);
+                a.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 a.cost = Convert.ToDouble(txtCost.Text);
                 a.price = Convert.ToDouble(txtPrice.Text);
                 a.quantity = Convert.ToInt32(txtQuantity.Text);
                 a.size = txtClubType.Text;
-                a.color = txtShaft.Text;
+                a.colour = txtShaft.Text;
                 ssm.updateAccessories(a);
 
                 txtCost.Visible = false;
@@ -421,17 +462,18 @@ namespace SweetSpotDiscountGolfPOS
                 txtShaft.Visible = false;
                 lblShaftDisplay.Visible = true;
             }
-            else if(lblTypeDisplay.Text == "Clothing")
+            else if (lblTypeDisplay.Text == "Clothing")
             {
                 Clothing cl = new Clothing();
-                cl.brandID = ddlBrand.SelectedIndex;
+                cl.sku = Convert.ToInt32(lblSKUDisplay.Text);
+                cl.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 cl.cost = Convert.ToDouble(txtCost.Text);
                 cl.price = Convert.ToDouble(txtPrice.Text);
                 cl.quantity = Convert.ToInt32(txtQuantity.Text);
                 cl.size = txtClubType.Text;
-                cl.color = txtShaft.Text;
+                cl.colour = txtShaft.Text;
                 cl.gender = txtClubSpec.Text;
-                cl.style = txtShaftSpec.Text;
+                cl.style = txtShaftFlex.Text;
                 ssm.updateClothing(cl);
 
                 txtCost.Visible = false;
@@ -448,8 +490,8 @@ namespace SweetSpotDiscountGolfPOS
                 lblShaftDisplay.Visible = true;
                 txtClubSpec.Visible = false;
                 lblClubSpecDisplay.Visible = true;
-                txtShaftSpec.Visible = false;
-                lblShaftSpecDisplay.Visible = true;
+                txtShaftFlex.Visible = false;
+                lblShaftFlexDisplay.Visible = true;
             }
 
 
@@ -469,6 +511,11 @@ namespace SweetSpotDiscountGolfPOS
         protected void btnBackToSearch_Click(object sender, EventArgs e)
         {
             Response.Redirect("InventoryHomePage.aspx");
+        }
+
+        protected void ddlType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["itemType"] = ddlType.SelectedIndex;
         }
     }
 }

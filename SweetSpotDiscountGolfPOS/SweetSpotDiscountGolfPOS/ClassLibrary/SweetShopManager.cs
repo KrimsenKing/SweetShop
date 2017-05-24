@@ -418,7 +418,7 @@ namespace SweetShop
             //New Command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select brandID, modelID, clubType, shaft, numberOfClubs, premium, cost, price, quantity, clubSpec,"
+            cmd.CommandText = "Select sku, brandID, modelID, clubType, shaft, numberOfClubs, premium, cost, price, quantity, clubSpec,"
                 + " shaftSpec, shaftFlex, dexterity, used, comments From tbl_clubs Where sku = @sku";
             cmd.Parameters.AddWithValue("sku", sku);
 
@@ -436,7 +436,7 @@ namespace SweetShop
             {
                 clubs.sku = Convert.ToInt32(reader["sku"]);
                 clubs.brandID = Convert.ToInt32(reader["brandID"]);
-                clubs.modelID = Convert.ToInt32(reader["model"]);
+                clubs.modelID = Convert.ToInt32(reader["modelID"]);
                 clubs.clubType = reader["clubType"].ToString();
                 clubs.shaft = reader["shaft"].ToString();
                 clubs.numberOfClubs = reader["numberOfClubs"].ToString();
@@ -448,7 +448,12 @@ namespace SweetShop
                 clubs.shaftSpec = reader["shaftSpec"].ToString();
                 clubs.shaftFlex = reader["shaftFlex"].ToString();
                 clubs.dexterity = reader["dexterity"].ToString();
-                clubs.used = Convert.ToBoolean(reader["used"]);
+                clubs.used = false;
+                int bol = Convert.ToInt32(reader["used"]);
+                if (bol == 1)
+                {
+                    clubs.used = true;
+                }
                 clubs.comments = reader["comments"].ToString();
             }
             con.Close();
@@ -504,21 +509,21 @@ namespace SweetShop
                 cmd.Parameters.AddWithValue("comments", c.comments);
             }else if(o is Accessories){
                 Accessories a = o as Accessories;
-                cmd.CommandText = "Select sku From tbl_accessories Where brandID = @brandID and size = @size and color = @color and"
+                cmd.CommandText = "Select sku From tbl_accessories Where brandID = @brandID and size = @size and colour = @colour and"
                     + " price = @price and cost = @cost and quantity = @quantity)";
                 cmd.Parameters.AddWithValue("brandID", a.brandID);
                 cmd.Parameters.AddWithValue("size", a.size);
-                cmd.Parameters.AddWithValue("color", a.color);
+                cmd.Parameters.AddWithValue("colour", a.colour);
                 cmd.Parameters.AddWithValue("price", a.price);
                 cmd.Parameters.AddWithValue("cost", a.cost);
                 cmd.Parameters.AddWithValue("quantity", a.quantity);
             } else if(o is Clothing){
                 Clothing c = o as Clothing;
-                cmd.CommandText = "Select sku From tbl_clothing Where brandID = @brandID and size = @size and color = @color and"
+                cmd.CommandText = "Select sku From tbl_clothing Where brandID = @brandID and size = @size and colour = @colour and"
                     + " gender = @gender and style = @style and price = @price and cost = @cost and quantity = @quantity)";
                 cmd.Parameters.AddWithValue("brandID", c.brandID);
                 cmd.Parameters.AddWithValue("size", c.size);
-                cmd.Parameters.AddWithValue("color", c.color);
+                cmd.Parameters.AddWithValue("colour", c.colour);
                 cmd.Parameters.AddWithValue("gender", c.gender);
                 cmd.Parameters.AddWithValue("style", c.style);
                 cmd.Parameters.AddWithValue("price", c.price);
@@ -581,10 +586,10 @@ namespace SweetShop
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Insert Into tbl_accessories (size, color, price, cost, brandID, quantity, typeID)"
-                + " Values (@size, @color, @price, @cost, @brandID, @quantity, @typeID)";
+            cmd.CommandText = "Insert Into tbl_accessories (size, colour, price, cost, brandID, quantity, typeID)"
+                + " Values (@size, @colour, @price, @cost, @brandID, @quantity, @typeID)";
             cmd.Parameters.AddWithValue("size", a.size);
-            cmd.Parameters.AddWithValue("color", a.color);
+            cmd.Parameters.AddWithValue("colour", a.colour);
             cmd.Parameters.AddWithValue("price", a.price);
             cmd.Parameters.AddWithValue("cost", a.cost);
             cmd.Parameters.AddWithValue("brandID", a.brandID);
@@ -603,10 +608,10 @@ namespace SweetShop
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Insert Into tbl_clothing (size, color, gender, style, price, cost, brandID, quantity, typeID)"
-                + " Values (@size, @color, @gender, @style, @price, @cost, @brandID, @quantity, @typeID)";
+            cmd.CommandText = "Insert Into tbl_clothing (size, colour, gender, style, price, cost, brandID, quantity, typeID)"
+                + " Values (@size, @colour, @gender, @style, @price, @cost, @brandID, @quantity, @typeID)";
             cmd.Parameters.AddWithValue("size", c.size);
-            cmd.Parameters.AddWithValue("color", c.color);
+            cmd.Parameters.AddWithValue("colour", c.colour);
             cmd.Parameters.AddWithValue("gender", c.gender);
             cmd.Parameters.AddWithValue("style", c.style);
             cmd.Parameters.AddWithValue("price", c.price);
@@ -691,7 +696,7 @@ namespace SweetShop
             //New Command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select brandID, size, color, price, cost, quantity, typeID From tbl_accessories Where sku = @sku";
+            cmd.CommandText = "Select sku, brandID, size, colour, price, cost, quantity, typeID From tbl_accessories Where sku = @sku";
             cmd.Parameters.AddWithValue("sku", sku);
 
             //Open Database Connection
@@ -707,7 +712,7 @@ namespace SweetShop
                 a.sku = Convert.ToInt32(reader["sku"]);
                 a.brandID = Convert.ToInt32(reader["brandID"]);
                 a.size = reader["size"].ToString();
-                a.color = reader["color"].ToString();
+                a.colour = reader["colour"].ToString();
                 a.cost = Convert.ToDouble(reader["cost"]);
                 a.price = Convert.ToDouble(reader["price"]);
                 a.quantity = Convert.ToInt32(reader["quantity"]);
@@ -722,7 +727,7 @@ namespace SweetShop
             //New Command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select brandID, size, color, gender, style, price, cost, quantity, typeID From tbl_clothing Where sku = @sku";
+            cmd.CommandText = "Select sku, brandID, size, colour, gender, style, price, cost, quantity, typeID From tbl_clothing Where sku = @sku";
             cmd.Parameters.AddWithValue("sku", sku);
 
             //Open Database Connection
@@ -738,7 +743,7 @@ namespace SweetShop
                 c.sku = Convert.ToInt32(reader["sku"]);
                 c.brandID = Convert.ToInt32(reader["brandID"]);
                 c.size = reader["size"].ToString();
-                c.color = reader["color"].ToString();
+                c.colour = reader["colour"].ToString();
                 c.gender = reader["gender"].ToString();
                 c.style = reader["style"].ToString();
                 c.cost = Convert.ToDouble(reader["cost"]);
@@ -908,7 +913,7 @@ namespace SweetShop
             cmd.CommandText = "UPDATE tbl_clubs SET brandID = @brandID, modelID = @modelID, clubType = @clubType, shaft = @shaft,"
                 + " numberOfClubs = @numberOfClubs, premium = @premium, cost = @cost, price = @price, quantity = @quantity,"
                 + " clubSpec = @clubSpec, shaftSpec = @shaftSpec, shaftFlex = @shaftFlex, dexterity = @dexterity,"
-                + " comments = @comments WHERE sku = @sku";
+                + " comments = @comments, used = @used WHERE sku = @sku";
             cmd.Parameters.AddWithValue("@sku", c.sku);
             cmd.Parameters.AddWithValue("@brandID", c.brandID);
             cmd.Parameters.AddWithValue("@modelID", c.modelID);
@@ -923,6 +928,9 @@ namespace SweetShop
             cmd.Parameters.AddWithValue("@clubSpec", c.clubSpec);
             cmd.Parameters.AddWithValue("@shaftSpec", c.shaftSpec);
             cmd.Parameters.AddWithValue("@shaftFlex", c.shaftFlex);
+            int bol = 0;
+            if (c.used) { bol = 1; }
+            cmd.Parameters.AddWithValue("@used", bol);
             cmd.Parameters.AddWithValue("@dexterity", c.dexterity);
             //Declare and open connection
             cmd.Connection = con;
@@ -936,11 +944,11 @@ namespace SweetShop
         {
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "UPDATE tbl_accessories SET size = @size, color = @color, price = @price, cost = @cost, brandID = @brandID,"
+            cmd.CommandText = "UPDATE tbl_accessories SET size = @size, colour = @colour, price = @price, cost = @cost, brandID = @brandID,"
                 + " quantity = @quantity WHERE sku = @sku";
             cmd.Parameters.AddWithValue("@sku", a.sku);
             cmd.Parameters.AddWithValue("@size", a.size);
-            cmd.Parameters.AddWithValue("@color", a.color);
+            cmd.Parameters.AddWithValue("@colour", a.colour);
             cmd.Parameters.AddWithValue("@price", a.price);
             cmd.Parameters.AddWithValue("@cost", a.cost);
             cmd.Parameters.AddWithValue("@brandID", a.brandID);
@@ -957,11 +965,11 @@ namespace SweetShop
         {
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "UPDATE tbl_clothing SET size = @size, color = @color, gender = @gender, style = @style,"
-                + " price = @price, cost = @cost, brandID = @brandID, quantity = @quantity, typeID = @typeID WHERE sku = @sku";
+            cmd.CommandText = "UPDATE tbl_clothing SET size = @size, colour = @colour, gender = @gender, style = @style,"
+                + " price = @price, cost = @cost, brandID = @brandID, quantity = @quantity WHERE sku = @sku";
             cmd.Parameters.AddWithValue("@sku", cl.sku);
             cmd.Parameters.AddWithValue("@size", cl.size);
-            cmd.Parameters.AddWithValue("@color", cl.color);
+            cmd.Parameters.AddWithValue("@colour", cl.colour);
             cmd.Parameters.AddWithValue("@gender", cl.gender);
             cmd.Parameters.AddWithValue("@style", cl.style);
             cmd.Parameters.AddWithValue("@price", cl.price);

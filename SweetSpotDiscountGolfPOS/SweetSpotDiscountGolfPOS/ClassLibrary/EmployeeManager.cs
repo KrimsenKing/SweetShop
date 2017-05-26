@@ -17,6 +17,58 @@ namespace SweetShop
             connectionString = ConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString;
         }
 
+        //Retrieves Customer from search parameters Nathan and Tyler created
+        public List<Employee> GetEmployeefromSearch(String searchField)
+        {
+            try
+            {
+                //Declares space for connection string and new command
+                SqlConnection con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                //cmd.CommandText = "Select * From tbl_customers Where (firstName + ' ' + lastName) Like '%@searchField1%' or (primaryPhoneINT + ' ' + secondaryPhoneINT) like '%@searchField2%' order by firstName asc";
+                cmd.CommandText = "Select * From tbl_employee Where Concat(firstName,lastName) Like '%" + searchField + "%' or Concat(primaryContactINT,secondaryContactINT) like '%" + searchField + "%' order by firstName asc";
+                //cmd.Parameters.AddWithValue("searchField1", searchField);
+                //cmd.Parameters.AddWithValue("searchField2", searchField);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                //New List for Customer
+
+                List<Employee> employee = new List<Employee>();
+
+                //Begin reading
+                while (reader.Read())
+                {
+                    Employee emp = new Employee(Convert.ToInt32(reader["empID"]),
+                        reader["firstName"].ToString(),
+                        reader["lastName"].ToString(),
+                        Convert.ToInt32(reader["jobID"]),
+                        Convert.ToInt32(reader["locationID"]),
+                        reader["email"].ToString(),
+                        reader["primaryContactINT"].ToString(),
+                        reader["secondaryContactINT"].ToString(),
+                        reader["primaryAddress"].ToString(),
+                        reader["secondaryAddress"].ToString(),
+                        reader["city"].ToString(),
+                        Convert.ToInt32(reader["provStateID"]),
+                        Convert.ToInt32(reader["countryID"]),
+                        reader["postZip"].ToString());
+                   
+                    employee.Add(emp);
+
+                }
+
+                con.Close();
+                return employee;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
         public Employee getEmployeeByID(int empID)
         {
             try
@@ -167,6 +219,27 @@ namespace SweetShop
             //Execute Update
             cmd.ExecuteNonQuery();
             con.Close();
+        }
+
+        public string jobName(int jobNum)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select title from tbl_jobPosition where jobID = " + jobNum;
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            string job = null;
+            while (reader.Read())
+            {
+                string j = reader["title"].ToString();
+                job = j;
+            }
+            conn.Close();
+            return job;
         }
     }
 }

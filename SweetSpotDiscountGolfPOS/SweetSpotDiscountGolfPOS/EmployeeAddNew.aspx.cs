@@ -5,23 +5,25 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SweetShop;
+using SweetSpotDiscountGolfPOS.ClassLibrary;
 
 namespace SweetSpotDiscountGolfPOS
 {
     public partial class EmployeeAddNew : System.Web.UI.Page
     {
+        locationManager lm = new locationManager();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["employeeKey"] != null)
+            if (Session["empKey"] != null)
             {
-                int empNum = (Convert.ToInt32(Session["employeeKey"].ToString()));
+                int empNum = (Convert.ToInt32(Session["empKey"].ToString()));
                 EmployeeManager empM = new EmployeeManager();
                 Employee em = empM.getEmployeeByID(empNum);
 
                 lblFirstNameDisplay.Text = em.firstName.ToString();
                 lblLastNameDisplay.Text = em.lastName.ToString();
-                lblJobDisplay.Text = em.jobID.ToString();
-                lblLocationDisplay.Text = em.locationID.ToString();
+                lblJobDisplay.Text = empM.jobName(em.jobID);
+                lblLocationDisplay.Text = lm.locationName(em.locationID);
                 lblEmailDisplay.Text = em.emailAddress.ToString();
                 lblPrimaryPhoneNumberDisplay.Text = em.primaryContactNumber.ToString();
                 lblSecondaryPhoneNumberDisplay.Text = em.secondaryContactNumber.ToString();
@@ -29,8 +31,8 @@ namespace SweetSpotDiscountGolfPOS
                 lblSecondaryAddressDisplay.Text = em.secondaryAddress.ToString();
                 lblCityDisplay.Text = em.city.ToString();
                 lblPostalCodeDisplay.Text = em.postZip.ToString();
-                lblProvinceDisplay.Text = em.provState.ToString();
-                lblCountryDisplay.Text = em.country.ToString();
+                lblProvinceDisplay.Text = lm.provinceName(em.provState);
+                lblCountryDisplay.Text = lm.countryName(em.country);
                 
             }
             else
@@ -83,7 +85,7 @@ namespace SweetSpotDiscountGolfPOS
 
         }
 
-        protected void btnAddCustomer_Click(object sender, EventArgs e)
+        protected void btnAddEmployee_Click(object sender, EventArgs e)
         {
             EmployeeManager empM = new EmployeeManager();
             Employee em = new Employee();
@@ -101,11 +103,11 @@ namespace SweetSpotDiscountGolfPOS
             em.provState = ddlProvince.SelectedIndex;
             em.country = ddlCountry.SelectedIndex;
 
-            Session["employeeKey"] = empM.addEmployee(em);
+            Session["empKey"] = empM.addEmployee(em);
             Response.Redirect(Request.RawUrl);
         }
 
-        protected void btnEditCustomer_Click(object sender, EventArgs e)
+        protected void btnEditEmployee_Click(object sender, EventArgs e)
         {
 
             txtFirstName.Text = lblFirstNameDisplay.Text;
@@ -167,12 +169,12 @@ namespace SweetSpotDiscountGolfPOS
             btnBackToSearch.Visible = false;
 
         }
-        protected void btnSaveCustomer_Click(object sender, EventArgs e)
+        protected void btnSaveEmployee_Click(object sender, EventArgs e)
         {
 
             EmployeeManager ssm = new EmployeeManager();
             Employee em = new Employee();
-            em.employeeID = Convert.ToInt32(Session["employeeKey"].ToString());
+            em.employeeID = Convert.ToInt32(Session["empKey"].ToString());
             em.firstName = txtFirstName.Text;
             em.lastName = txtLastName.Text;
             em.jobID = ddlJob.SelectedIndex;
@@ -231,6 +233,7 @@ namespace SweetSpotDiscountGolfPOS
         }
         protected void btnBackToSearch_Click(object sender, EventArgs e)
         {
+            Session["empKey"] = null;
             Response.Redirect("SettingsHomePage.aspx");
         }
     }

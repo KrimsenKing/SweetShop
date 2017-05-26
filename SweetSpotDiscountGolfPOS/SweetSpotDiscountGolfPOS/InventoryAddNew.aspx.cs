@@ -5,105 +5,113 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SweetShop;
+using SweetSpotProShop;
 
 namespace SweetSpotDiscountGolfPOS
 {
     public partial class InventoryAddNew : System.Web.UI.Page
     {
+        Object o = new Object();
+        SweetShopManager ssm = new SweetShopManager();
+        Clubs c = new Clubs();
+        Accessories a = new Accessories();
+        Clothing cl = new Clothing();
+        ItemDataUtilities idu = new ItemDataUtilities();
         protected void Page_Load(object sender, EventArgs e)
         {
 
             if (Session["itemKey"] != null)
             {
-                string itemType = Session["itemType"].ToString();
-                SweetShopManager ssm = new SweetShopManager();
-                int itemSKU = Convert.ToInt32(Session["itemKey"].ToString());
-                lblTypeDisplay.Text = itemType;
-                if (itemType == "Clubs")
+                if (!IsPostBack)
                 {
-                    Clubs c = ssm.singleItemLookUp(itemSKU);
-                    lblSKUDisplay.Text = c.sku.ToString();
-                    lblCostDisplay.Text = c.cost.ToString();
-                    lblBrandDisplay.Text = c.brandID.ToString();
-                    lblPriceDisplay.Text = c.price.ToString();
-                    lblQuantityDisplay.Text = c.quantity.ToString();
-                    lblPremiumDisplay.Text = c.premium.ToString();
+                    string itemType = Session["itemType"].ToString();
+                    int itemSKU = Convert.ToInt32(Session["itemKey"].ToString());
+                    lblTypeDisplay.Text = itemType;
+                    if (itemType == "Clubs")
+                    {
+                        c = ssm.singleItemLookUp(itemSKU);
+                        lblSKUDisplay.Text = c.sku.ToString();
+                        lblCostDisplay.Text = c.cost.ToString();
+                        lblBrandDisplay.Text = idu.brandType(c.brandID);
+                        lblPriceDisplay.Text = c.price.ToString();
+                        lblQuantityDisplay.Text = c.quantity.ToString();
+                        lblPremiumDisplay.Text = c.premium.ToString();
 
-                    lblClubTypeDisplay.Text = c.clubType.ToString();
-                    lblModelDisplay.Text = c.modelID.ToString();
-                    lblShaftDisplay.Text = c.shaft.ToString();
-                    lblNumberofClubsDisplay.Text = c.numberOfClubs.ToString();
-                    lblClubSpecDisplay.Text = c.clubSpec.ToString();
-                    lblShaftSpecDisplay.Text = c.shaftSpec.ToString();
-                    lblShaftFlexDisplay.Text = c.shaftFlex.ToString();
-                    lblDexterityDisplay.Text = c.dexterity.ToString();
+                        lblClubTypeDisplay.Text = c.clubType.ToString();
+                        lblModelDisplay.Text = idu.modelType(c.modelID);
+                        lblShaftDisplay.Text = c.shaft.ToString();
+                        lblNumberofClubsDisplay.Text = c.numberOfClubs.ToString();
+                        lblClubSpecDisplay.Text = c.clubSpec.ToString();
+                        lblShaftSpecDisplay.Text = c.shaftSpec.ToString();
+                        lblShaftFlexDisplay.Text = c.shaftFlex.ToString();
+                        lblDexterityDisplay.Text = c.dexterity.ToString();
+                        chkUsed.Checked = c.used;
+                        lblCommentsDisplay.Text = c.comments.ToString();
 
-                    chkUsed.Checked = c.used.Equals(1);
-                    lblCommentsDisplay.Text = c.comments.ToString();
+                    }
+                    else if (itemType == "Accessories")
+                    {
+                        a = ssm.getAccessory(itemSKU);
+                        lblSKUDisplay.Text = a.sku.ToString();
+                        lblCostDisplay.Text = a.cost.ToString();
+                        lblBrandDisplay.Text = idu.brandType(a.brandID);
+                        lblPriceDisplay.Text = a.price.ToString();
+                        lblQuantityDisplay.Text = a.quantity.ToString();
+                        txtPremium.Visible = false;
+                        lblPremiumDisplay.Visible = false;
 
-                }
-                else if (itemType == "Accessories")
-                {
-                    Accessories a = ssm.getAccessory(itemSKU);
-                    lblSKUDisplay.Text = a.sku.ToString();
-                    lblCostDisplay.Text = a.cost.ToString();
-                    lblBrandDisplay.Text = a.brandID.ToString();
-                    lblPriceDisplay.Text = a.price.ToString();
-                    lblQuantityDisplay.Text = a.quantity.ToString();
-                    txtPremium.Visible = false;
-                    lblPremiumDisplay.Visible = false;
+                        lblClubType.Text = "Size: ";
+                        lblClubTypeDisplay.Text = a.size.ToString();
+                        lblModel.Visible = false;
+                        lblModelDisplay.Visible = false;
+                        lblShaft.Text = "Colour: ";
+                        lblShaftDisplay.Text = a.colour.ToString();
+                        lblNumberofClubs.Visible = false;
+                        lblNumberofClubsDisplay.Visible = false;
+                        lblClubSpec.Visible = false;
+                        lblClubSpecDisplay.Visible = false;
+                        lblShaftSpec.Visible = false;
+                        lblShaftSpecDisplay.Visible = false;
+                        lblShaftFlex.Visible = false;
+                        lblShaftFlexDisplay.Visible = false;
+                        lblDexterity.Visible = false;
+                        lblDexterityDisplay.Visible = false;
+                        lblComments.Visible = false;
+                        lblCommentsDisplay.Visible = false;
+                        chkUsed.Visible = false;
 
-                    lblClubType.Text = "Size: ";
-                    lblClubTypeDisplay.Text = a.size.ToString();
-                    lblModel.Visible = false;
-                    lblModelDisplay.Visible = false;
-                    lblShaft.Text = "Colour: ";
-                    lblShaftDisplay.Text = a.colour.ToString();
-                    lblNumberofClubs.Visible = false;
-                    lblNumberofClubsDisplay.Visible = false;
-                    lblClubSpec.Visible = false;
-                    lblClubSpecDisplay.Visible = false;
-                    lblShaftSpec.Visible = false;
-                    lblShaftSpecDisplay.Visible = false;
-                    lblShaftFlex.Visible = false;
-                    lblShaftFlexDisplay.Visible = false;
-                    lblDexterity.Visible = false;
-                    lblDexterityDisplay.Visible = false;
-                    lblComments.Visible = false;
-                    lblCommentsDisplay.Visible = false;
-                    chkUsed.Visible = false;
+                    }
+                    else if (itemType == "Clothing")
+                    {
+                        cl = ssm.getClothing(itemSKU);
+                        lblSKUDisplay.Text = cl.sku.ToString();
+                        lblCostDisplay.Text = cl.cost.ToString();
+                        lblBrandDisplay.Text = idu.brandType(cl.brandID);
+                        lblPriceDisplay.Text = cl.price.ToString();
+                        lblQuantityDisplay.Text = cl.quantity.ToString();
+                        txtPremium.Visible = false;
+                        lblPremiumDisplay.Visible = false;
 
-                }
-                else if (itemType == "Clothing")
-                {
-                    Clothing c = ssm.getClothing(itemSKU);
-                    lblSKUDisplay.Text = c.sku.ToString();
-                    lblCostDisplay.Text = c.cost.ToString();
-                    lblBrandDisplay.Text = c.brandID.ToString();
-                    lblPriceDisplay.Text = c.price.ToString();
-                    lblQuantityDisplay.Text = c.quantity.ToString();
-                    txtPremium.Visible = false;
-                    lblPremiumDisplay.Visible = false;
-
-                    lblClubType.Text = "Size: ";
-                    lblClubTypeDisplay.Text = c.size.ToString();
-                    lblModel.Visible = false;
-                    lblModelDisplay.Visible = false;
-                    lblShaft.Text = "Colour: ";
-                    lblShaftDisplay.Text = c.colour.ToString();
-                    lblNumberofClubs.Visible = false;
-                    lblNumberofClubsDisplay.Visible = false;
-                    lblClubSpec.Text = "Gender: ";
-                    lblClubSpecDisplay.Text = c.gender.ToString();
-                    lblShaftFlex.Text = "Style: ";
-                    lblShaftFlexDisplay.Text = c.style.ToString();
-                    lblShaftSpec.Visible = false;
-                    lblShaftSpecDisplay.Visible = false;
-                    lblDexterity.Visible = false;
-                    lblDexterityDisplay.Visible = false;
-                    lblComments.Visible = false;
-                    lblCommentsDisplay.Visible = false;
-                    chkUsed.Visible = false;
+                        lblClubType.Text = "Size: ";
+                        lblClubTypeDisplay.Text = cl.size.ToString();
+                        lblModel.Visible = false;
+                        lblModelDisplay.Visible = false;
+                        lblShaft.Text = "Colour: ";
+                        lblShaftDisplay.Text = cl.colour.ToString();
+                        lblNumberofClubs.Visible = false;
+                        lblNumberofClubsDisplay.Visible = false;
+                        lblClubSpec.Text = "Gender: ";
+                        lblClubSpecDisplay.Text = cl.gender.ToString();
+                        lblShaftFlex.Text = "Style: ";
+                        lblShaftFlexDisplay.Text = cl.style.ToString();
+                        lblShaftSpec.Visible = false;
+                        lblShaftSpecDisplay.Visible = false;
+                        lblDexterity.Visible = false;
+                        lblDexterityDisplay.Visible = false;
+                        lblComments.Visible = false;
+                        lblCommentsDisplay.Visible = false;
+                        chkUsed.Visible = false;
+                    }
                 }
             }
             else
@@ -180,7 +188,9 @@ namespace SweetSpotDiscountGolfPOS
                     lblClubType.Text = "Club Type: ";
                     lblShaft.Text = "Shaft: ";
                     lblClubSpec.Text = "Club Spec: ";
+                    lblClubSpec.Visible = true;
                     lblShaftFlex.Text = "Shaft Flex: ";
+                    lblShaftFlex.Visible = true;
                     lblModel.Visible = true;
                     lblNumberofClubs.Visible = true;
                     lblShaftSpec.Visible = true;
@@ -225,16 +235,16 @@ namespace SweetSpotDiscountGolfPOS
                 btnCancel.Visible = false;
                 btnBackToSearch.Visible = true;
             }
+
         }
 
         protected void btnAddItem_Click(object sender, EventArgs e)
         {
-            SweetShopManager ssm = new SweetShopManager();
-            Object o = new Object();
-
-            if (ddlType.SelectedIndex == 1)
+            int skuNum;
+            string type = idu.typeName(Convert.ToInt32(ddlType.SelectedValue));
+            Session["itemType"] = type;
+            if (ddlType.SelectedIndex == 2)
             {
-                Clubs c = new Clubs();
                 c.cost = Convert.ToDouble(txtCost.Text);
                 c.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 c.price = Convert.ToDouble(txtPrice.Text);
@@ -253,9 +263,8 @@ namespace SweetSpotDiscountGolfPOS
                 c.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 o = c as Object;
             }
-            else if (ddlType.SelectedIndex == 2)
+            else if (ddlType.SelectedIndex == 0)
             {
-                Accessories a = new Accessories();
                 a.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 a.cost = Convert.ToDouble(txtCost.Text);
                 a.price = Convert.ToDouble(txtPrice.Text);
@@ -265,9 +274,8 @@ namespace SweetSpotDiscountGolfPOS
                 a.colour = txtShaft.Text;
                 o = a as Object;
             }
-            else if (ddlType.SelectedIndex == 3)
+            else if (ddlType.SelectedIndex == 1)
             {
-                Clothing cl = new Clothing();
                 cl.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 cl.cost = Convert.ToDouble(txtCost.Text);
                 cl.price = Convert.ToDouble(txtPrice.Text);
@@ -279,8 +287,8 @@ namespace SweetSpotDiscountGolfPOS
                 cl.style = txtShaftFlex.Text;
                 o = cl as Object;
             }
-
-            Session["itemKey"] = ssm.addItem(o);
+            skuNum = ssm.addItem(o);
+            Session["itemKey"] = skuNum;
             Response.Redirect(Request.RawUrl);
         }
 
@@ -290,7 +298,7 @@ namespace SweetSpotDiscountGolfPOS
             txtCost.Visible = true;
             lblCostDisplay.Visible = false;
 
-            ddlBrand.Text = lblBrandDisplay.Text;
+            ddlBrand.SelectedValue = idu.brandName(lblBrandDisplay.Text).ToString();
             ddlBrand.Visible = true;
             lblBrandDisplay.Visible = false;
 
@@ -312,7 +320,7 @@ namespace SweetSpotDiscountGolfPOS
                 txtClubType.Visible = true;
                 lblClubTypeDisplay.Visible = false;
 
-                ddlModel.Text = lblModelDisplay.Text;
+                ddlModel.SelectedValue = idu.modelName(lblModelDisplay.Text).ToString();
                 ddlModel.Visible = true;
                 lblModelDisplay.Visible = false;
 
@@ -384,10 +392,9 @@ namespace SweetSpotDiscountGolfPOS
         protected void btnSaveItem_Click(object sender, EventArgs e)
         {
 
-            SweetShopManager ssm = new SweetShopManager();
             if (lblTypeDisplay.Text == "Clubs")
             {
-                Clubs c = new Clubs();
+
                 c.sku = Convert.ToInt32(Session["itemKey"].ToString());
                 c.cost = Convert.ToDouble(txtCost.Text);
                 c.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
@@ -404,7 +411,6 @@ namespace SweetSpotDiscountGolfPOS
                 c.dexterity = txtDexterity.Text;
                 c.comments = txtComments.Text;
                 c.used = chkUsed.Checked;
-                c.typeID = Convert.ToInt32(ddlType.SelectedValue);
                 ssm.updateItem(c);
 
                 txtCost.Visible = false;
@@ -439,7 +445,6 @@ namespace SweetSpotDiscountGolfPOS
             }
             else if (lblTypeDisplay.Text == "Accessories")
             {
-                Accessories a = new Accessories();
                 a.sku = Convert.ToInt32(lblSKUDisplay.Text);
                 a.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 a.cost = Convert.ToDouble(txtCost.Text);
@@ -464,7 +469,6 @@ namespace SweetSpotDiscountGolfPOS
             }
             else if (lblTypeDisplay.Text == "Clothing")
             {
-                Clothing cl = new Clothing();
                 cl.sku = Convert.ToInt32(lblSKUDisplay.Text);
                 cl.brandID = Convert.ToInt32(ddlBrand.SelectedValue);
                 cl.cost = Convert.ToDouble(txtCost.Text);
@@ -510,12 +514,15 @@ namespace SweetSpotDiscountGolfPOS
         }
         protected void btnBackToSearch_Click(object sender, EventArgs e)
         {
+            Session["itemType"] = null;
+            Session["itemKey"] = null;
             Response.Redirect("InventoryHomePage.aspx");
         }
 
         protected void ddlType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["itemType"] = ddlType.SelectedIndex;
+
         }
     }
 }

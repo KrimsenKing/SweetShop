@@ -490,7 +490,7 @@ namespace SweetShop
                 cmd.CommandText = "Select sku From tbl_clubs Where brandID = @brandID and modelID = @modelID and clubType = @clubType and "
                     + " shaft = @shaft and numberOfClubs = @numberOfClubs and premium = @premium and cost = @cost and price = @price and "
                     + " quantity = @quantity and clubSpec = @clubSpec and shaftSpec = @shaftSpec and shaftFlex = @shaftFlex and "
-                    + " dexterity = @dexterity and  used = @used and typeID = @typeID and comments = @comments)";
+                    + " dexterity = @dexterity and  used = @used and typeID = @typeID and comments = @comments";
                 cmd.Parameters.AddWithValue("brandID", c.brandID);
                 cmd.Parameters.AddWithValue("modelID", c.modelID);
                 cmd.Parameters.AddWithValue("clubType", c.clubType);
@@ -510,7 +510,7 @@ namespace SweetShop
             }else if(o is Accessories){
                 Accessories a = o as Accessories;
                 cmd.CommandText = "Select sku From tbl_accessories Where brandID = @brandID and size = @size and colour = @colour and"
-                    + " price = @price and cost = @cost and quantity = @quantity)";
+                    + " price = @price and cost = @cost and quantity = @quantity";
                 cmd.Parameters.AddWithValue("brandID", a.brandID);
                 cmd.Parameters.AddWithValue("size", a.size);
                 cmd.Parameters.AddWithValue("colour", a.colour);
@@ -520,7 +520,7 @@ namespace SweetShop
             } else if(o is Clothing){
                 Clothing c = o as Clothing;
                 cmd.CommandText = "Select sku From tbl_clothing Where brandID = @brandID and size = @size and colour = @colour and"
-                    + " gender = @gender and style = @style and price = @price and cost = @cost and quantity = @quantity)";
+                    + " gender = @gender and style = @style and price = @price and cost = @cost and quantity = @quantity";
                 cmd.Parameters.AddWithValue("brandID", c.brandID);
                 cmd.Parameters.AddWithValue("size", c.size);
                 cmd.Parameters.AddWithValue("colour", c.colour);

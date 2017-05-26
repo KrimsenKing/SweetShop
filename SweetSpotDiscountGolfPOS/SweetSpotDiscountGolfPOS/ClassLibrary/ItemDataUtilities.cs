@@ -62,6 +62,75 @@ namespace SweetSpotProShop
             conn.Close();
             return brand;
         }
+
+        //Return Model Int created by Nathan and Tyler
+        public int modelName(string modelN)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select modelID from tbl_model where modelName = '" + modelN + "'";
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            int model = 0;
+            while (reader.Read())
+            {
+                int m = Convert.ToInt32(reader["modelID"]);
+                model = m;
+            }
+            conn.Close();
+            return model;
+        }
+        //Return Brand Int created by Nathan and Tyler
+        public int brandName(string brandN)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select brandID from tbl_brand where brandName = '" + brandN + "'";
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            int brand = 0;
+
+            while (reader.Read())
+            {
+                int b = Convert.ToInt32(reader["brandID"]);
+                brand = b;
+            }
+            conn.Close();
+            return brand;
+        }
+
+
+        //Return Model string created by Nathan and Tyler
+        public string typeName(int typeNum)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select typeDescription from tbl_itemType where typeID = " + typeNum;
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            string type = null;
+
+            while (reader.Read())
+            {
+                string t = reader["typeDescription"].ToString();
+                type = t;
+            }
+            conn.Close();
+            return type;
+        }
+
         //**Possible deletion
         //public List<Clubs> GetItemByID(Int32 ItemNumber)
         //{

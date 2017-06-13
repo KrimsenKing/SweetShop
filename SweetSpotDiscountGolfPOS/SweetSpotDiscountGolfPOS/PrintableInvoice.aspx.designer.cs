@@ -10,133 +10,178 @@
 namespace SweetSpotDiscountGolfPOS {
     
     
-    public partial class SalesCheckout {
+    public partial class PrintableInvoice {
         
         /// <summary>
-        /// pnlDefaultButton control.
+        /// printable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDefaultButton;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl printable;
         
         /// <summary>
-        /// mopAmericanExpress control.
+        /// lblinvoiceNum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopAmericanExpress;
+        protected global::System.Web.UI.WebControls.Label lblinvoiceNum;
         
         /// <summary>
-        /// mopCash control.
+        /// lblTaxNum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopCash;
+        protected global::System.Web.UI.WebControls.Label lblTaxNum;
         
         /// <summary>
-        /// mopMasterCard control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopMasterCard;
+        protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
-        /// mopCheque control.
+        /// tblPartiesInvolved control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopCheque;
+        protected global::System.Web.UI.WebControls.Table tblPartiesInvolved;
         
         /// <summary>
-        /// mopVisa control.
+        /// lblCustomerName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopVisa;
+        protected global::System.Web.UI.WebControls.Label lblCustomerName;
         
         /// <summary>
-        /// mopDebit control.
+        /// lblSweetShopName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopDebit;
+        protected global::System.Web.UI.WebControls.Label lblSweetShopName;
         
         /// <summary>
-        /// mopOnAccount control.
+        /// lblStreetAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopOnAccount;
+        protected global::System.Web.UI.WebControls.Label lblStreetAddress;
         
         /// <summary>
-        /// mopGiftCard control.
+        /// lblSweetShopStreetAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button mopGiftCard;
+        protected global::System.Web.UI.WebControls.Label lblSweetShopStreetAddress;
         
         /// <summary>
-        /// tblTotals control.
+        /// lblPostalAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblTotals;
+        protected global::System.Web.UI.WebControls.Label lblPostalAddress;
         
         /// <summary>
-        /// lblTotalInCart control.
+        /// lblSweetShopPostalAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalInCart;
+        protected global::System.Web.UI.WebControls.Label lblSweetShopPostalAddress;
         
         /// <summary>
-        /// lblTotalInCartAmount control.
+        /// lblPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalInCartAmount;
+        protected global::System.Web.UI.WebControls.Label lblPhone;
         
         /// <summary>
-        /// lblTotalInDiscounts control.
+        /// lblSweetShopPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalInDiscounts;
+        protected global::System.Web.UI.WebControls.Label lblSweetShopPhone;
         
         /// <summary>
-        /// lblTotalInDiscountsAmount control.
+        /// grdItemsSoldList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalInDiscountsAmount;
+        protected global::System.Web.UI.WebControls.GridView grdItemsSoldList;
+        
+        /// <summary>
+        /// tblSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tblSummary;
+        
+        /// <summary>
+        /// lblDiscounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDiscounts;
+        
+        /// <summary>
+        /// lblDiscountsDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDiscountsDisplay;
+        
+        /// <summary>
+        /// lblBlank control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBlank;
+        
+        /// <summary>
+        /// lblBlankDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBlankDisplay;
         
         /// <summary>
         /// lblTradeIns control.
@@ -148,13 +193,31 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Label lblTradeIns;
         
         /// <summary>
-        /// lblTradeInsAmount control.
+        /// lblTradeInsDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTradeInsAmount;
+        protected global::System.Web.UI.WebControls.Label lblTradeInsDisplay;
+        
+        /// <summary>
+        /// lblGST control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGST;
+        
+        /// <summary>
+        /// lblGSTDisplay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGSTDisplay;
         
         /// <summary>
         /// lblShipping control.
@@ -166,165 +229,93 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Label lblShipping;
         
         /// <summary>
-        /// lblShippingAmount control.
+        /// lblShippingDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblShippingAmount;
+        protected global::System.Web.UI.WebControls.Label lblShippingDisplay;
         
         /// <summary>
-        /// lblSubTotal control.
+        /// lblPST control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubTotal;
+        protected global::System.Web.UI.WebControls.Label lblPST;
         
         /// <summary>
-        /// lblSubTotalAmount control.
+        /// lblPSTDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubTotalAmount;
+        protected global::System.Web.UI.WebControls.Label lblPSTDisplay;
         
         /// <summary>
-        /// lblGovernment control.
+        /// lblSubtotal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGovernment;
+        protected global::System.Web.UI.WebControls.Label lblSubtotal;
         
         /// <summary>
-        /// lblGovernmentAmount control.
+        /// lblSubtotalDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGovernmentAmount;
+        protected global::System.Web.UI.WebControls.Label lblSubtotalDisplay;
         
         /// <summary>
-        /// btnRemoveGov control.
+        /// lblTotalPaid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemoveGov;
+        protected global::System.Web.UI.WebControls.Label lblTotalPaid;
         
         /// <summary>
-        /// lblProvincial control.
+        /// lblTotalPaidDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProvincial;
+        protected global::System.Web.UI.WebControls.Label lblTotalPaidDisplay;
         
         /// <summary>
-        /// lblProvincialAmount control.
+        /// txtComments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProvincialAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtComments;
         
         /// <summary>
-        /// btnRemoveProv control.
+        /// btnPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemoveProv;
+        protected global::System.Web.UI.WebControls.Button btnPrint;
         
         /// <summary>
-        /// lblBalance control.
+        /// btnHome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBalance;
-        
-        /// <summary>
-        /// lblBalanceAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBalanceAmount;
-        
-        /// <summary>
-        /// gvCurrentMOPs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCurrentMOPs;
-        
-        /// <summary>
-        /// lblRemainingBalanceDue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRemainingBalanceDue;
-        
-        /// <summary>
-        /// lblRemainingBalanceDueDisplay control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRemainingBalanceDueDisplay;
-        
-        /// <summary>
-        /// btnCancelSale control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelSale;
-        
-        /// <summary>
-        /// btnReturnToCart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReturnToCart;
-        
-        /// <summary>
-        /// btnLayaway control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLayaway;
-        
-        /// <summary>
-        /// btnFinalize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFinalize;
+        protected global::System.Web.UI.WebControls.Button btnHome;
     }
 }

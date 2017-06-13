@@ -229,15 +229,16 @@ namespace SweetSpotDiscountGolfPOS
 
                 }
 
+
                 btnSaveItem.Visible = false;
                 btnAddItem.Visible = true;
+                pnlDefaultButton.DefaultButton = "btnAddItem";
                 btnEditItem.Visible = false;
                 btnCancel.Visible = false;
                 btnBackToSearch.Visible = true;
             }
 
         }
-
         protected void btnAddItem_Click(object sender, EventArgs e)
         {
             int skuNum;
@@ -291,7 +292,6 @@ namespace SweetSpotDiscountGolfPOS
             Session["itemKey"] = skuNum;
             Response.Redirect(Request.RawUrl);
         }
-
         protected void btnEditItem_Click(object sender, EventArgs e)
         {
             txtCost.Text = lblCostDisplay.Text;
@@ -383,6 +383,7 @@ namespace SweetSpotDiscountGolfPOS
                 lblShaftFlexDisplay.Visible = false;
             }
             btnSaveItem.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnSaveItem";
             btnEditItem.Visible = false;
             btnAddItem.Visible = false;
             btnCancel.Visible = true;
@@ -498,9 +499,9 @@ namespace SweetSpotDiscountGolfPOS
                 lblShaftFlexDisplay.Visible = true;
             }
 
-
             btnSaveItem.Visible = false;
             btnEditItem.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnEditItem";
             btnCancel.Visible = false;
             btnAddItem.Visible = false;
             btnBackToSearch.Visible = true;
@@ -518,7 +519,6 @@ namespace SweetSpotDiscountGolfPOS
             Session["itemKey"] = null;
             Response.Redirect("InventoryHomePage.aspx");
         }
-
         protected void ddlType_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["itemType"] = ddlType.SelectedIndex;

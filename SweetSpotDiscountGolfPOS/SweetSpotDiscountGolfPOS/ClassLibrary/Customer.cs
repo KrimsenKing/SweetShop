@@ -43,5 +43,12 @@ namespace SweetShop
             postalCode = PostalCode;
         }
 
+        public Customer(string fname, string lname)
+        {
+            firstName = fname;
+            lastName = lname;
+        }
+
+
     }
 }

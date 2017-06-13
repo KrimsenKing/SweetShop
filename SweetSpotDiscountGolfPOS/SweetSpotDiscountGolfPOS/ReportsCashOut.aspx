@@ -9,7 +9,6 @@
     <div id="CashOut">
         <h2>Cash Out</h2>
         <hr />
-
         <%--Payment Breakdown--%>
         <div class="yesPrint" id="pmt_header">
             <h3>Sales</h3>

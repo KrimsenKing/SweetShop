@@ -48,6 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -85,18 +86,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PrintableInvoice.aspx" />
     <Content Include="ReportsCashOut.aspx" />
     <Content Include="ReportsHomePage.aspx" />
     <Content Include="SalesCart.aspx" />
     <Content Include="SalesCheckout.aspx" />
     <Content Include="SalesHomePage.aspx" />
     <Content Include="SettingsHomePage.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="TradeINEntry.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassLibrary\Accessories.cs" />
+    <Compile Include="ClassLibrary\CalculationManager.cs" />
     <Compile Include="ClassLibrary\Cart.cs" />
-    <Compile Include="ClassLibrary\CheckOut.cs" />
+    <Compile Include="ClassLibrary\Checkout.cs" />
+    <Compile Include="ClassLibrary\CheckoutManager.cs" />
     <Compile Include="ClassLibrary\Clothing.cs" />
     <Compile Include="ClassLibrary\Clubs.cs" />
     <Compile Include="ClassLibrary\CurrentUser.cs" />
@@ -107,7 +114,7 @@
     <Compile Include="ClassLibrary\InvSale.cs" />
     <Compile Include="ClassLibrary\ItemDataUtilities.cs" />
     <Compile Include="ClassLibrary\Items.cs" />
-    <Compile Include="ClassLibrary\locationManager.cs" />
+    <Compile Include="ClassLibrary\LocationManager.cs" />
     <Compile Include="ClassLibrary\MessageBox.cs" />
     <Compile Include="ClassLibrary\Sale.cs" />
     <Compile Include="ClassLibrary\SweetShopManager.cs" />
@@ -170,6 +177,13 @@
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
+    <Compile Include="PrintableInvoice.aspx.cs">
+      <DependentUpon>PrintableInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrintableInvoice.aspx.designer.cs">
+      <DependentUpon>PrintableInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsCashOut.aspx.cs">
       <DependentUpon>ReportsCashOut.aspx</DependentUpon>
@@ -212,6 +226,13 @@
     </Compile>
     <Compile Include="SettingsHomePage.aspx.designer.cs">
       <DependentUpon>SettingsHomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TradeINEntry.aspx.cs">
+      <DependentUpon>TradeINEntry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TradeINEntry.aspx.designer.cs">
+      <DependentUpon>TradeINEntry.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

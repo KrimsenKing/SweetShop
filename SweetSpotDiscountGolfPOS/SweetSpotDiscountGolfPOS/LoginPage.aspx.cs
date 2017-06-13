@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
-using SweetShop;
 
 namespace SweetSpotDiscountGolfPOS
 {
@@ -15,14 +14,11 @@ namespace SweetSpotDiscountGolfPOS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            txtPassword.Focus();
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
-        {  
-           
-
-
+        {
             SqlConnection con = new SqlConnection(WebConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString);
             SqlCommand cmd = new SqlCommand("SELECT empID, password FROM tbl_userInfo WHERE password = @password", con);
             cmd.Parameters.AddWithValue("@password", txtPassword.Text);
@@ -34,7 +30,6 @@ namespace SweetSpotDiscountGolfPOS
             con.Close();
             if (dt.Rows.Count > 0)
             {
-                Session["employee"] = i;
                 Session["id"] = txtPassword.Text;
                 Response.Redirect("HomePage.aspx");
                 Session.RemoveAll();

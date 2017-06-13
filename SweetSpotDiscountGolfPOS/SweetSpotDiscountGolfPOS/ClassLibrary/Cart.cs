@@ -6,8 +6,30 @@ using System.Threading.Tasks;
 
 namespace SweetShop
 {
-    class Cart
+    public class Cart
     {
+        public int sku { get; set; }
+        public string description { get; set; }
+        public int quantity { get; set; }
+        public double price { get; set; }
+        public double cost { get; set; }
+        public double discount { get; set; }
+        public bool percentage { get; set; }
+        public bool tradeIn { get; set; }
+
+        public Cart() { }
+
+        public Cart(int s, string de, int q, double pr, double c, double d, bool p, bool t)
+        {
+            sku = s;
+            description = de;
+            quantity = q;
+            price = pr;
+            cost = c;
+            discount = d;
+            percentage = p;
+            tradeIn = t;
+        }
         //public List<Items> ItemsInCart(int sku)
         //{
         //}

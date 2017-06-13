@@ -18,7 +18,7 @@ namespace SweetShop
         public int typeID { get; set; }
         public int locID { get; set; }
 
-        public Accessories(){}
+        public Accessories() { }
         public Accessories(int s, int b, string z, string clr, double p, double c, int q, int t, int l)
         {
             sku = s;

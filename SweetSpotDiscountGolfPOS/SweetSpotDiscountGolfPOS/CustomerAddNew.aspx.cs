@@ -1,4 +1,5 @@
 ﻿using SweetShop;
+using SweetSpotDiscountGolfPOS.ClassLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +11,30 @@ namespace SweetSpotDiscountGolfPOS
 {
     public partial class CustomerAddNew : System.Web.UI.Page
     {
+        SweetShopManager ssm = new SweetShopManager();
+        LocationManager lm = new LocationManager();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["key"] != null)
+            if (Session["key"] != null)
             {
-                int custNum = (int)(Convert.ToInt32(Session["key"].ToString()));
-                SweetShopManager ssm = new SweetShopManager();
-                Customer c = ssm.GetCustomerbyCustomerNumber(custNum);
+                if (!IsPostBack)
+                {
+                    int custNum = (int)(Convert.ToInt32(Session["key"].ToString()));
+                    Customer c = ssm.GetCustomerbyCustomerNumber(custNum);
 
-                lblFirstNameDisplay.Text = c.firstName.ToString();
-                lblLastNameDisplay.Text = c.lastName.ToString();
-                lblPrimaryAddressDisplay.Text = c.primaryAddress.ToString();
-                lblBillingAddressDisplay.Text = c.billingAddress.ToString();
-                lblSecondaryAddressDisplay.Text = c.secondaryAddress.ToString();
-                lblPrimaryPhoneNumberDisplay.Text = c.primaryPhoneNumber.ToString();
-                lblSecondaryPhoneNumberDisplay.Text = c.secondaryPhoneNumber.ToString();
-                lblEmailDisplay.Text = c.email.ToString();
-                lblCityDisplay.Text = c.city.ToString();
-                lblProvinceDisplay.Text = c.province.ToString();
-                lblCountryDisplay.Text = c.country.ToString();
-                lblPostalCodeDisplay.Text = c.postalCode.ToString();
+                    lblFirstNameDisplay.Text = c.firstName.ToString();
+                    lblLastNameDisplay.Text = c.lastName.ToString();
+                    lblPrimaryAddressDisplay.Text = c.primaryAddress.ToString();
+                    lblBillingAddressDisplay.Text = c.billingAddress.ToString();
+                    lblSecondaryAddressDisplay.Text = c.secondaryAddress.ToString();
+                    lblPrimaryPhoneNumberDisplay.Text = c.primaryPhoneNumber.ToString();
+                    lblSecondaryPhoneNumberDisplay.Text = c.secondaryPhoneNumber.ToString();
+                    lblEmailDisplay.Text = c.email.ToString();
+                    lblCityDisplay.Text = c.city.ToString();
+                    lblProvinceDisplay.Text = lm.provinceName(c.province);
+                    lblCountryDisplay.Text = lm.countryName(c.country);
+                    lblPostalCodeDisplay.Text = c.postalCode.ToString();
+                }
             }
             else
             {
@@ -71,16 +76,15 @@ namespace SweetSpotDiscountGolfPOS
 
                 btnSaveCustomer.Visible = false;
                 btnAddCustomer.Visible = true;
+                pnlDefaultButton.DefaultButton = "btnAddCustomer";
                 btnEditCustomer.Visible = false;
                 btnCancel.Visible = false;
                 btnBackToSearch.Visible = true;
             }
 
         }
-
         protected void btnAddCustomer_Click(object sender, EventArgs e)
         {
-            SweetShopManager ssm = new SweetShopManager();
             Customer c = new Customer();
             c.firstName = txtFirstName.Text;
             c.lastName = txtLastName.Text;
@@ -91,14 +95,13 @@ namespace SweetSpotDiscountGolfPOS
             c.billingAddress = txtBillingAddress.Text;
             c.email = txtEmail.Text;
             c.city = txtCity.Text;
-            c.province = ddlProvince.SelectedIndex;
-            c.country = ddlCountry.SelectedIndex;
+            c.province = Convert.ToInt32(ddlProvince.SelectedValue);
+            c.country = Convert.ToInt32(ddlCountry.SelectedValue);
             c.postalCode = txtPostalCode.Text;
 
             Session["key"] = ssm.addCustomer(c);
             Response.Redirect(Request.RawUrl);
         }
-
         protected void btnEditCustomer_Click(object sender, EventArgs e)
         {
 
@@ -138,11 +141,11 @@ namespace SweetSpotDiscountGolfPOS
             txtCity.Visible = true;
             lblCityDisplay.Visible = false;
 
-            ddlProvince.Text = lblProvinceDisplay.Text;
+            ddlProvince.SelectedValue = lm.pronvinceID(lblProvinceDisplay.Text).ToString();
             ddlProvince.Visible = true;
             lblProvinceDisplay.Visible = false;
 
-            ddlCountry.Text = lblCountryDisplay.Text;
+            ddlCountry.SelectedValue = lm.countryID(lblCountryDisplay.Text).ToString();
             ddlCountry.Visible = true;
             lblCountryDisplay.Visible = false;
 
@@ -151,6 +154,7 @@ namespace SweetSpotDiscountGolfPOS
             lblPostalCodeDisplay.Visible = false;
 
             btnSaveCustomer.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnSaveCustomer";
             btnEditCustomer.Visible = false;
             btnAddCustomer.Visible = false;
             btnCancel.Visible = true;
@@ -159,8 +163,6 @@ namespace SweetSpotDiscountGolfPOS
         }
         protected void btnSaveCustomer_Click(object sender, EventArgs e)
         {
-
-            SweetShopManager ssm = new SweetShopManager();
             Customer c = new Customer();
             c.customerId = (int)(Convert.ToInt32(Session["key"].ToString()));
             c.firstName = txtFirstName.Text;
@@ -172,8 +174,8 @@ namespace SweetSpotDiscountGolfPOS
             c.billingAddress = txtBillingAddress.Text;
             c.email = txtEmail.Text;
             c.city = txtCity.Text;
-            c.province = ddlProvince.SelectedIndex;
-            c.country = ddlCountry.SelectedIndex;
+            c.province = Convert.ToInt32(ddlProvince.SelectedValue);
+            c.country = Convert.ToInt32(ddlCountry.SelectedValue);
             c.postalCode = txtPostalCode.Text;
 
             ssm.updateCustomer(c);
@@ -195,7 +197,7 @@ namespace SweetSpotDiscountGolfPOS
             txtEmail.Visible = false;
             lblEmailDisplay.Visible = true;
             txtCity.Visible = false;
-            lblCityDisplay.Visible = true;            
+            lblCityDisplay.Visible = true;
             ddlProvince.Visible = false;
             lblProvinceDisplay.Visible = true;
             ddlCountry.Visible = false;
@@ -204,6 +206,13 @@ namespace SweetSpotDiscountGolfPOS
             lblPostalCodeDisplay.Visible = true;
             btnSaveCustomer.Visible = false;
             btnEditCustomer.Visible = true;
+            btnCancel.Visible = false;
+            btnAddCustomer.Visible = false;
+            btnBackToSearch.Visible = true;
+
+            btnSaveCustomer.Visible = false;
+            btnEditCustomer.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnEditCustomer";
             btnCancel.Visible = false;
             btnAddCustomer.Visible = false;
             btnBackToSearch.Visible = true;
@@ -217,6 +226,7 @@ namespace SweetSpotDiscountGolfPOS
         }
         protected void btnBackToSearch_Click(object sender, EventArgs e)
         {
+            Session["key"] = null;
             Response.Redirect("CustomerHomePage.aspx");
         }
     }

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SweetShop
 {
     class EmployeeManager
     {
+
         String connectionString;
         public EmployeeManager()
         {
@@ -54,7 +56,7 @@ namespace SweetShop
                         Convert.ToInt32(reader["provStateID"]),
                         Convert.ToInt32(reader["countryID"]),
                         reader["postZip"].ToString());
-                   
+
                     employee.Add(emp);
 
                 }
@@ -156,7 +158,7 @@ namespace SweetShop
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandText = "Select empID From tbl_employee Where firstName = @firstName and lastName = @lastName and jobID = @jobID and"
-                + " locationID and @locationID and email = @email and primaryContactINT = @primaryContactINT and secondaryContactINT ="
+                + " locationID = @locationID and email = @email and primaryContactINT = @primaryContactINT and secondaryContactINT ="
                 + " @secondaryContactINT and primaryAddress = @primaryAddress and secondaryAddress = @secondaryAddress and city = @city"
                 + " and provStateID = @province and countryID = @country and postZip = @postalCode;";
             cmd.Parameters.AddWithValue("firstName", em.firstName);
@@ -193,10 +195,10 @@ namespace SweetShop
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "Update tbl_employee Set firstName = @firstName and lastName = @lastName and jobID = @jobID and"
-                + " locationID and @locationID and email = @email and primaryContactINT = @primaryContactINT and secondaryContactINT ="
-                + " @secondaryContactINT and primaryAddress = @primaryAddress and secondaryAddress = @secondaryAddress and city = @city"
-                + " and provStateID = @province and countryID = @country and postZip = @postalCode Where empID = @employeeID";
+            cmd.CommandText = "Update tbl_employee Set firstName = @firstName, lastName = @lastName, jobID = @jobID, locationID = @locationID,"
+                + " email = @email, primaryContactINT = @primaryContactINT, secondaryContactINT = @secondaryContactINT,"
+                + " primaryAddress = @primaryAddress, secondaryAddress = @secondaryAddress, city = @city, provStateID = @province,"
+                + " countryID = @country, postZip = @postalCode Where empID = @employeeID";
             cmd.Parameters.AddWithValue("employeeID", em.employeeID);
             cmd.Parameters.AddWithValue("firstName", em.firstName);
             cmd.Parameters.AddWithValue("lastName", em.lastName);
@@ -221,6 +223,26 @@ namespace SweetShop
             con.Close();
         }
 
+        public int jobType(string jobName)
+        {
+
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+            cmd.CommandText = "Select jobID from tbl_jobPosition where title = '" + jobName + "'";
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            int job = 0;
+            while (reader.Read())
+            {
+                int j = Convert.ToInt32(reader["jobID"]);
+                job = j;
+            }
+            conn.Close();
+            return job;
+        }
         public string jobName(int jobNum)
         {
 
@@ -241,5 +263,6 @@ namespace SweetShop
             conn.Close();
             return job;
         }
+
     }
 }

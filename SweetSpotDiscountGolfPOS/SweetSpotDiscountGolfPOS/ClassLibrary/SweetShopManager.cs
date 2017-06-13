@@ -9,16 +9,17 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Web;
+using System.Collections;
 using System.Configuration;
 using SweetSpotProShop;
-using System.Collections;
 
 namespace SweetShop
 {
     public class SweetShopManager
     {
         private string connectionString;
-        //Using Nathan and Tyler created
+        ItemDataUtilities idu = new ItemDataUtilities();
+
         public SweetShopManager()
         {
 
@@ -87,7 +88,7 @@ namespace SweetShop
                 SqlConnection con = new SqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = "Select * From tbl_customers Where custID = @custNum;";
+                cmd.CommandText = "Select * From tbl_customers Where custID = @custNum";
                 cmd.Parameters.AddWithValue("custNum", custNum);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -184,7 +185,7 @@ namespace SweetShop
             SqlDataReader reader = cmd.ExecuteReader();
 
             //New Customer number
-            int custNum=0;
+            int custNum = 0;
 
             //Begin reading
             while (reader.Read())
@@ -230,8 +231,31 @@ namespace SweetShop
         }
 
         /*******Item Utilities************************************************************************************/
+        public List<Items> returnSearchFromAllThreeItemSets(string searchedText)
+        {
+            List<Items> searchClubs = new List<Items>();
+            List<Items> searchClothing = new List<Items>();
+            List<Items> searchAccessories = new List<Items>();
+            List<Items> searchedItems = new List<Items>();
+            searchClubs = GetItemfromSearch(searchedText, "Clubs");
+            searchClothing = GetItemfromSearch(searchedText, "Accessories");
+            searchAccessories = GetItemfromSearch(searchedText, "Clothing");
+            foreach (var item in searchClubs)
+            {
+                searchedItems.Add(item);
+            }
+            foreach (var item in searchClothing)
+            {
+                searchedItems.Add(item);
+            }
+            foreach (var item in searchAccessories)
+            {
+                searchedItems.Add(item);
+            }
+            return searchedItems;
 
-        //Select all items from inventory **possible deletion
+        }
+        //Select all Clubs from inventory
         public List<Clubs> selectAllItems()
         {
             //New Command
@@ -243,31 +267,37 @@ namespace SweetShop
             cmd.Connection = con;
             con.Open();
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader read = cmd.ExecuteReader();
 
             //Item List
 
             List<Clubs> clubs = new List<Clubs>();
 
-            while (reader.Read())
+            while (read.Read())
             {
-                Clubs c = new Clubs(Convert.ToInt32(reader["SKU"]),
-                    Convert.ToInt32(reader["brandID"]),
-                    Convert.ToInt32(reader["modelID"]),
-                    Convert.ToInt32(reader["typeID"]),
-                    reader["clubType"].ToString(),
-                    reader["shaft"].ToString(),
-                    reader["numberOfClubs"].ToString(),
-                    Convert.ToDouble(reader["premium"]),
-                    Convert.ToDouble(reader["cost"]),
-                    Convert.ToDouble(reader["price"]),
-                    Convert.ToInt32(reader["quantity"]),
-                    reader["clubSpec"].ToString(),
-                    reader["shaftSpec"].ToString(),
-                    reader["shaftFlex"].ToString(),
-                    reader["dexterity"].ToString(),
-                    Convert.ToBoolean(reader["used"]),
-                    reader["comments"].ToString());
+                Clubs c = new Clubs(Convert.ToInt32(read["SKU"]),
+                    Convert.ToDateTime(read["shipmentDate"]),
+                    Convert.ToInt32(read["brand"].ToString()),
+                    Convert.ToInt32(read["model"].ToString()),
+                    read["clubType"].ToString(),
+                    read["shaft"].ToString(),
+                    read["numberOfClubs"].ToString(),
+                    Convert.ToDouble(read["tradeInPrice"]),
+                    Convert.ToDouble(read["premium"]),
+                    Convert.ToDouble(read["wePay"]),
+                    Convert.ToInt32(read["quantity"]),
+                    Convert.ToDouble(read["extendedPrice"]),
+                    Convert.ToDouble(read["retailPrice"]),
+                    read["comments"].ToString(),
+                    read["clubSpec"].ToString(),
+                    read["shaftSpec"].ToString(),
+                    read["shaftFlex"].ToString(),
+                    read["dexterity"].ToString(),
+                    read["destination"].ToString(),
+                    Convert.ToBoolean(read["paid"]),
+                    Convert.ToBoolean(read["received"]),
+                    Convert.ToBoolean(read["gst"]),
+                    Convert.ToBoolean(read["gst"]));
 
                 clubs.Add(c);
             }
@@ -403,16 +433,55 @@ namespace SweetShop
                     Convert.ToInt32(reader["quantity"]),
                     Convert.ToDouble(reader["price"]),
                     Convert.ToDouble(reader["cost"]));
-
                 item.Add(j);
-
             }
-
             con.Close();
             return item;
         }
+        //Trade-in specific club from inventory lookup
+        public Clubs tradeInItemLookUp(int sku)
+        {
+            //New Command
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "Select sku, brandID, modelID, clubType, shaft, numberOfClubs, premium, cost, price, quantity, clubSpec,"
+                + " shaftSpec, shaftFlex, dexterity, used, comments From tbl_tempTradeInCartSkus Where sku = @sku";
+            cmd.Parameters.AddWithValue("sku", sku);
 
-        //Select specific item from inventory Nathan and Tyler created
+            //Open Database Connection
+            cmd.Connection = con;
+            con.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //Item List
+
+            Clubs clubs = new Clubs();
+
+            while (reader.Read())
+            {
+                clubs.sku = Convert.ToInt32(reader["sku"]);
+                clubs.brandID = Convert.ToInt32(reader["brandID"]);
+                clubs.modelID = Convert.ToInt32(reader["modelID"]);
+                clubs.clubType = reader["clubType"].ToString();
+                clubs.shaft = reader["shaft"].ToString();
+                clubs.numberOfClubs = reader["numberOfClubs"].ToString();
+                clubs.premium = Convert.ToDouble(reader["premium"]);
+                clubs.cost = Convert.ToDouble(reader["cost"]);
+                clubs.price = Convert.ToDouble(reader["price"]);
+                clubs.quantity = Convert.ToInt32(reader["quantity"]);
+                clubs.clubSpec = reader["clubSpec"].ToString();
+                clubs.shaftSpec = reader["shaftSpec"].ToString();
+                clubs.shaftFlex = reader["shaftFlex"].ToString();
+                clubs.dexterity = reader["dexterity"].ToString();
+                clubs.used = Convert.ToBoolean(reader["used"]);
+                clubs.comments = reader["comments"].ToString();
+            }
+            con.Close();
+            return clubs;
+        }
+
+        //Select specific club from inventory Nathan and Tyler created
         public Clubs singleItemLookUp(int sku)
         {
             //New Command
@@ -448,12 +517,7 @@ namespace SweetShop
                 clubs.shaftSpec = reader["shaftSpec"].ToString();
                 clubs.shaftFlex = reader["shaftFlex"].ToString();
                 clubs.dexterity = reader["dexterity"].ToString();
-                clubs.used = false;
-                int bol = Convert.ToInt32(reader["used"]);
-                if (bol == 1)
-                {
-                    clubs.used = true;
-                }
+                clubs.used = Convert.ToBoolean(reader["used"]);
                 clubs.comments = reader["comments"].ToString();
             }
             con.Close();
@@ -462,17 +526,17 @@ namespace SweetShop
         //Adds new Item to tables Nathan created
         public int addItem(Object o)
         {
-            if(o is Clubs)
+            if (o is Clubs)
             {
                 Clubs c = o as Clubs;
                 addClub(c);
             }
-            else if(o is Accessories)
+            else if (o is Accessories)
             {
                 Accessories a = o as Accessories;
                 addAccessory(a);
             }
-            else if(o is Clothing)
+            else if (o is Clothing)
             {
                 Clothing cl = o as Clothing;
                 addClothing(cl);
@@ -485,7 +549,8 @@ namespace SweetShop
             //New command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            if (o is Clubs){
+            if (o is Clubs)
+            {
                 Clubs c = o as Clubs;
                 cmd.CommandText = "Select sku From tbl_clubs Where brandID = @brandID and modelID = @modelID and clubType = @clubType and "
                     + " shaft = @shaft and numberOfClubs = @numberOfClubs and premium = @premium and cost = @cost and price = @price and "
@@ -507,7 +572,9 @@ namespace SweetShop
                 cmd.Parameters.AddWithValue("used", c.used);
                 cmd.Parameters.AddWithValue("typeID", c.typeID);
                 cmd.Parameters.AddWithValue("comments", c.comments);
-            }else if(o is Accessories){
+            }
+            else if (o is Accessories)
+            {
                 Accessories a = o as Accessories;
                 cmd.CommandText = "Select sku From tbl_accessories Where brandID = @brandID and size = @size and colour = @colour and"
                     + " price = @price and cost = @cost and quantity = @quantity";
@@ -517,7 +584,9 @@ namespace SweetShop
                 cmd.Parameters.AddWithValue("price", a.price);
                 cmd.Parameters.AddWithValue("cost", a.cost);
                 cmd.Parameters.AddWithValue("quantity", a.quantity);
-            } else if(o is Clothing){
+            }
+            else if (o is Clothing)
+            {
                 Clothing c = o as Clothing;
                 cmd.CommandText = "Select sku From tbl_clothing Where brandID = @brandID and size = @size and colour = @colour and"
                     + " gender = @gender and style = @style and price = @price and cost = @cost and quantity = @quantity";
@@ -627,7 +696,7 @@ namespace SweetShop
             con.Close();
         }
 
-        //Get item by ID for invoice process **possible deletion
+        //Get item by ID for invoice process
         public List<Clubs> getItemByID(Int32 ItemNumber)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -635,7 +704,7 @@ namespace SweetShop
 
             cmd.Connection = conn;
             //cmd.CommandText = "Select * From Inventory Where ItemNumber = @ItemNumber";
-            cmd.CommandText = "Select sku, brand, model, clubType, shaft,numberOfClubs, tradeInPrice, premium, wePay, quantity, extendedPrice, retailPrice,  clubSpec, shaftSpec, shaftFlex, dexterity From Item Where SKU = @sku";
+            cmd.CommandText = "Select sku , brand, model, clubType, shaft,numberOfClubs, tradeInPrice, premium, wePay, quantity, extendedPrice, retailPrice,  clubSpec, shaftSpec, shaftFlex, dexterity From Item Where SKU = @sku";
             cmd.Parameters.AddWithValue("sku", ItemNumber);
 
             conn.Open();
@@ -646,22 +715,24 @@ namespace SweetShop
             {
                 Clubs c = new Clubs
                 (Convert.ToInt32(reader["sku"]),
-                Convert.ToInt32(reader["brandID"]),
-                Convert.ToInt32(reader["modelID"]),
-                Convert.ToInt32(reader["typeID"]),
-                reader["clubType"].ToString(),
-                reader["shaft"].ToString(),
-                reader["numberOfClubs"].ToString(),
+                Convert.ToInt32(reader["Brand"].ToString()),
+                Convert.ToInt32(reader["Model"].ToString()),
+                reader["ClubType"].ToString(),
+                reader["Shaft"].ToString(),
+                reader["NumberOfClubs"].ToString(),
+                Convert.ToDouble(reader["tradeInPrice"]),
                 Convert.ToDouble(reader["premium"]),
-                Convert.ToDouble(reader["cost"]),
-                Convert.ToDouble(reader["price"]),
+                Convert.ToDouble(reader["wePay"]),
                 Convert.ToInt32(reader["quantity"]),
-                reader["clubSpec"].ToString(),
-                reader["shaftSpec"].ToString(),
-                reader["shaftFlex"].ToString(),
-                reader["dexterity"].ToString(),
-                Convert.ToBoolean(reader["used"]),
-                reader["comments"].ToString());
+                Convert.ToDouble(reader["extendedPrice"]),
+                convertDBNullToDouble(reader["retailPrice"]),
+                reader["ClubSpec"].ToString(),
+                reader["ShaftSpec"].ToString(),
+                reader["ShaftFlex"].ToString(),
+                reader["Dexterity"].ToString()
+                );
+
+
                 clubs.Add(c);
             }
             conn.Close();
@@ -669,7 +740,6 @@ namespace SweetShop
 
         }
 
-        //Conversions may be usefull
         public string convertDBNullToString(Object o)
         {
             if (o is DBNull)
@@ -754,52 +824,46 @@ namespace SweetShop
             con.Close();
             return c;
         }
-
-        // **possible deletion
-        public Clubs getItem(int sku)
+        // *****Old Method
+        public Clubs getItem(int SKU)
         {
             //New Command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select sku, brandID, modelID, typeID, clubType, shaft, numberOfClubs, premium, cost, quantity, price, clubSpec,"
-                + " shaftSpec, shaftFlex, dexterity From tbl_clubs Where sku = @sku";
-            cmd.Parameters.AddWithValue("sku", sku);
+            cmd.CommandText = "Select SKU, brand, model, clubType, shaft, numberOfClubs, tradeInPrice, premium, wePay, quantity, extendedPrice, retailPrice, clubSpec, shaftSpec, shaftFlex, dexterity From Item Where SKU = @SKU";
+            cmd.Parameters.AddWithValue("SKU", SKU);
 
             //Open Database Connection
             cmd.Connection = con;
             con.Open();
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader read = cmd.ExecuteReader();
 
             Clubs clubs = new Clubs();
-            while (reader.Read())
+            while (read.Read())
             {
-                clubs = new Clubs(Convert.ToInt32(reader["sku"]),
-                Convert.ToInt32(reader["brandID"]),
-                Convert.ToInt32(reader["modelID"]),
-                Convert.ToInt32(reader["typeID"]),
-                reader["clubType"].ToString(),
-                reader["shaft"].ToString(),
-                reader["numberOfClubs"].ToString(),
-                Convert.ToDouble(reader["premium"]),
-                Convert.ToDouble(reader["cost"]),
-                Convert.ToDouble(reader["price"]),
-                Convert.ToInt32(reader["quantity"]),
-                reader["clubSpec"].ToString(),
-                reader["shaftSpec"].ToString(),
-                reader["shaftFlex"].ToString(),
-                reader["dexterity"].ToString(),
-                Convert.ToBoolean(reader["used"]),
-                reader["comments"].ToString());
+                clubs = new Clubs(Convert.ToInt32(read["SKU"]),
+                Convert.ToInt32(read["brand"].ToString()),
+                Convert.ToInt32(read["model"].ToString()),
+                read["clubType"].ToString(),
+                read["shaft"].ToString(),
+                read["numberOfClubs"].ToString(),
+                Convert.ToDouble(read["tradeInPrice"]),
+                Convert.ToDouble(read["premium"]),
+                Convert.ToDouble(read["wePay"]),
+                Convert.ToInt32(read["quantity"]),
+                Convert.ToDouble(read["extendedPrice"]),
+                Convert.ToDouble(read["retailPrice"]),
+                read["clubSpec"].ToString(),
+                read["shaftSpec"].ToString(),
+                read["shaftFlex"].ToString(),
+                read["dexterity"].ToString());
             }
 
             con.Close();
             return clubs;
         }
 
-        //**EVERYTHING BELOW HERE WILL NEED VERIFICATION**//
-
-        //******EXPORT Section*******
         //Export items table to excel file in users Downloads folder
         public void exportItems()
         {
@@ -836,34 +900,42 @@ namespace SweetShop
         }
 
 
-        //Add single item into inventory using IDENTITY_INSERT **possible deletion
+        //Add single item into inventory
         public void addItem(Clubs c)
         {
             //New command
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
 
-            cmd.CommandText = "SET IDENTITY_INSERT tbl_clubs ON; INSERT INTO tbl_clubs(sku, brandID, modelID, clubType, shaft, numberOfClubs,"
-                + " premium, cost, price, quantity, clubSpec, shaftSpec, shaftFlex, dexterity, used, typeID, comments) VALUES(@sku,"
-                + " @brandID, @modelID, @clubType, @shaft, @numberOfClubs, @premium, @cost, @price, @quantity, @clubSpec, @shaftSpec,"
-                + " @shaftFlex, @dexterity, @used, @typeID, @comments); SET IDENTITY_INSERT tbl_clubs OFF;";
+            cmd.CommandText = "SET IDENTITY_INSERT Item ON; INSERT INTO Item(sku,shipmentDate, brand, model, clubType, shaft, numberOfClubs, tradeInPrice," +
+                "premium, wePay, quantity, extendedPrice, retailPrice, comments, clubSpec, shaftSpec," +
+                "shaftFlex, dexterity, destination, received, paid, gst, pst)" +
+                "VALUES(@sku, @shipmentDate, @brand, @model, @clubType, @shaft, @numberOfClubs, @tradeInPrice, " +
+                "@premium, @wePay, @quantity, @extendedPrice, @retailPrice, @comments, @clubSpec, @shaftSpec," +
+                "@shaftFlex, @dexterity, @destination, @received, @paid, @gst, @pst); SET IDENTITY_INSERT Item OFF;";
             cmd.Parameters.AddWithValue("sku", c.sku);
-            cmd.Parameters.AddWithValue("brandID", c.brandID);
-            cmd.Parameters.AddWithValue("modelID", c.modelID);
+            cmd.Parameters.AddWithValue("shipmentDate", c.ShipmentDate);
+            cmd.Parameters.AddWithValue("brand", c.brandID);
+            cmd.Parameters.AddWithValue("model", c.modelID);
             cmd.Parameters.AddWithValue("clubType", c.clubType);
             cmd.Parameters.AddWithValue("shaft", c.shaft);
             cmd.Parameters.AddWithValue("numberOfClubs", c.numberOfClubs);
+            cmd.Parameters.AddWithValue("tradeInPrice", c.TradeInPrice);
             cmd.Parameters.AddWithValue("premium", c.premium);
-            cmd.Parameters.AddWithValue("cost", c.cost);
-            cmd.Parameters.AddWithValue("price", c.price);
+            cmd.Parameters.AddWithValue("wePay", c.WePay);
             cmd.Parameters.AddWithValue("quantity", c.quantity);
+            cmd.Parameters.AddWithValue("extendedPrice", c.ExtendedPrice);
+            cmd.Parameters.AddWithValue("retailPrice", c.RetailPrice);
+            cmd.Parameters.AddWithValue("comments", c.comments);
             cmd.Parameters.AddWithValue("clubSpec", c.clubSpec);
             cmd.Parameters.AddWithValue("shaftSpec", c.shaftSpec);
             cmd.Parameters.AddWithValue("shaftFlex", c.shaftFlex);
             cmd.Parameters.AddWithValue("dexterity", c.dexterity);
-            cmd.Parameters.AddWithValue("used", c.used);
-            cmd.Parameters.AddWithValue("typeID", c.typeID);
-            cmd.Parameters.AddWithValue("comments", c.comments);
+            cmd.Parameters.AddWithValue("destination", c.Destination);
+            cmd.Parameters.AddWithValue("received", c.Received);
+            cmd.Parameters.AddWithValue("paid", c.Paid);
+            cmd.Parameters.AddWithValue("gst", c.Gst);
+            cmd.Parameters.AddWithValue("pst", c.Pst);
             //Declare and open connection
             cmd.Connection = con;
             con.Open();
@@ -872,31 +944,36 @@ namespace SweetShop
             con.Close();
         }
 
-        //Update item in inventory **possible deletion
+        //Update item in inventory
         public void updateItemInvoice(Clubs c)
         {
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "UPDATE tbl_clubs SET brandID = @brandID, modelID = @modelID, clubType = @clubType, shaft = @shaft,"
-                + " numberOfClubs = @numberOfClubs, premium = @premium, cost = @cost, quantity = @quantity, price = @price,"
-                + " clubSpec = @clubSpec, shaftSpec = @shaftSpec, shaftFlex = @shaftFlex, used = @used, dexterity = @dexterity,"
-                + " comments = @comments WHERE sku = @sku";
+            cmd.CommandText = "UPDATE Item SET  quantityInOrder = @quantityInOrder,brand = @brand, model = @model," +
+                "clubType = @clubType, shaft = @shaft, numberOfClubs = @numberOfClubs, tradeInPrice = @tradeInPrice," +
+                "premium = @premium, wePay = @wePay, quantity = @quantity, extendedPrice = @extendedPrice," +
+                "retailPrice = @retailPrice, clubSpec = @clubSpec, shaftSpec = @shaftSpec," +
+                "shaftFlex = @shaftFlex, dexterity = @dexterity, gst = @gst, pst = @pst WHERE sku = @sku";
+
             cmd.Parameters.AddWithValue("@sku", c.sku);
-            cmd.Parameters.AddWithValue("@brandID", c.brandID);
-            cmd.Parameters.AddWithValue("@modelID", c.modelID);
+            cmd.Parameters.AddWithValue("@quantityInOrder", c.QuantityInOrder);
+            cmd.Parameters.AddWithValue("@brand", c.brandID);
+            cmd.Parameters.AddWithValue("@model", c.modelID);
             cmd.Parameters.AddWithValue("@clubType", c.clubType);
             cmd.Parameters.AddWithValue("@shaft", c.shaft);
             cmd.Parameters.AddWithValue("@numberOfClubs", c.numberOfClubs);
+            cmd.Parameters.AddWithValue("@tradeInPrice", c.TradeInPrice);
             cmd.Parameters.AddWithValue("@premium", c.premium);
-            cmd.Parameters.AddWithValue("@cost", c.cost);
+            cmd.Parameters.AddWithValue("@wePay", c.WePay);
             cmd.Parameters.AddWithValue("@quantity", c.quantity);
-            cmd.Parameters.AddWithValue("@price", c.price);
+            cmd.Parameters.AddWithValue("@extendedPrice", c.ExtendedPrice);
+            cmd.Parameters.AddWithValue("@retailPrice", c.RetailPrice);
             cmd.Parameters.AddWithValue("@clubSpec", c.clubSpec);
             cmd.Parameters.AddWithValue("@shaftSpec", c.shaftSpec);
             cmd.Parameters.AddWithValue("@shaftFlex", c.shaftFlex);
-            cmd.Parameters.AddWithValue("@used", c.used);
             cmd.Parameters.AddWithValue("@dexterity", c.dexterity);
-            cmd.Parameters.AddWithValue("@comments", c.comments);
+            cmd.Parameters.AddWithValue("@gst", c.Gst);
+            cmd.Parameters.AddWithValue("@pst", c.Pst);
             //Declare and open connection
             cmd.Connection = con;
             con.Open();
@@ -913,7 +990,7 @@ namespace SweetShop
             cmd.CommandText = "UPDATE tbl_clubs SET brandID = @brandID, modelID = @modelID, clubType = @clubType, shaft = @shaft,"
                 + " numberOfClubs = @numberOfClubs, premium = @premium, cost = @cost, price = @price, quantity = @quantity,"
                 + " clubSpec = @clubSpec, shaftSpec = @shaftSpec, shaftFlex = @shaftFlex, dexterity = @dexterity,"
-                + " comments = @comments, used = @used WHERE sku = @sku";
+                + " comments = @comments WHERE sku = @sku";
             cmd.Parameters.AddWithValue("@sku", c.sku);
             cmd.Parameters.AddWithValue("@brandID", c.brandID);
             cmd.Parameters.AddWithValue("@modelID", c.modelID);
@@ -928,9 +1005,6 @@ namespace SweetShop
             cmd.Parameters.AddWithValue("@clubSpec", c.clubSpec);
             cmd.Parameters.AddWithValue("@shaftSpec", c.shaftSpec);
             cmd.Parameters.AddWithValue("@shaftFlex", c.shaftFlex);
-            int bol = 0;
-            if (c.used) { bol = 1; }
-            cmd.Parameters.AddWithValue("@used", bol);
             cmd.Parameters.AddWithValue("@dexterity", c.dexterity);
             //Declare and open connection
             cmd.Connection = con;
@@ -966,7 +1040,7 @@ namespace SweetShop
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "UPDATE tbl_clothing SET size = @size, colour = @colour, gender = @gender, style = @style,"
-                + " price = @price, cost = @cost, brandID = @brandID, quantity = @quantity WHERE sku = @sku";
+                + " price = @price, cost = @cost, brandID = @brandID, quantity = @quantity, typeID = @typeID WHERE sku = @sku";
             cmd.Parameters.AddWithValue("@sku", cl.sku);
             cmd.Parameters.AddWithValue("@size", cl.size);
             cmd.Parameters.AddWithValue("@colour", cl.colour);
@@ -983,8 +1057,6 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
-
-        //**possible deletion
         public void updateItemQuantity(int quantity, int sku)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1000,8 +1072,7 @@ namespace SweetShop
             con.Close();
         }
 
-
-        //Delete item from inventory **possible deletion
+        //Delete item from inventory
         public void deleteItem(int sku)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1014,10 +1085,8 @@ namespace SweetShop
             con.Close();
         }
 
-
-
         /*******Invoice Utilities************************************************************************************/
-        //***ALL INVOICE UTILITIES STILL NEED VALIDATION***
+
         public int getInvoiceID(DateTime saleDate)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -1038,6 +1107,7 @@ namespace SweetShop
             conn.Close();
             return invoiceID;
         }
+
         //Get Invoice by invoiceID and return the invoice object
         public Invoice getInvoice(int invoiceID)
         {
@@ -1062,6 +1132,7 @@ namespace SweetShop
             con.Close();
             return i;
         }
+
         public List<Invoice> getInvoiceBySaleDate(DateTime StartDate, DateTime EndDate)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1092,6 +1163,8 @@ namespace SweetShop
 
             return i;
         }
+
+
         //public void updateReturnToInvoice(int invoiceID, double gstRefund, double pstRefund, double retailPrice, double totalRefund)
         //{
         //    SqlConnection con = new SqlConnection(connectionString);
@@ -1111,6 +1184,7 @@ namespace SweetShop
         //    cmd.ExecuteNonQuery();
         //    con.Close();
         //}
+
         public void addInvoice(Invoice i)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1137,6 +1211,8 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
+
+
         //Sets affected invoices to posted and replaces the null value with a posted date.
         public void postInvoices(int invoiceID, DateTime PostedDate)
         {
@@ -1154,7 +1230,7 @@ namespace SweetShop
         }
 
         /*******Sale Utilities************************************************************************************/
-        //***ALL SALES UTILITIES STILL NEED VALIDATION***
+
         //Get sale by invoiceID
         public void getSaleByInvoiceIDAndSKU(int invoiceID, int SKU)
         {
@@ -1170,6 +1246,7 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
+
         public void addSale(Sale s)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1185,6 +1262,7 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
+
         public void returnUpdatedQuantity(int sku, int quantityInOrder)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -1200,6 +1278,7 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
+
         //Delete sale of specific item on an invoice
         public void deleteSale(int invoiceID, int sku)
         {
@@ -1219,6 +1298,7 @@ namespace SweetShop
             cmd.ExecuteNonQuery();
             con.Close();
         }
+
         //Get Sale object for a specific item on an invoice
         public List<Sale> getSale(int invoiceID, int sku)
         {
@@ -1247,6 +1327,7 @@ namespace SweetShop
             //return sale object
             return s;
         }
+
         //Get Sale object for a specific item on an invoice
         public Sale getSaleByInvAndSKU(int invoiceID, int sku)
         {
@@ -1277,7 +1358,7 @@ namespace SweetShop
         }
 
         /*******Tax Utilities************************************************************************************/
-        //***ALL TAX UTILITIES STILL NEED VALIDATION***
+
         public List<Tax> getTaxes(int provStateID)
         {
             //New command
@@ -1302,6 +1383,8 @@ namespace SweetShop
             con.Close();
             return tax;
         }
+
+
         //    public void updateTax(int regionID, double gst, double pst)
         //{
         //    SqlConnection con = new SqlConnection(connectionString);
@@ -1343,10 +1426,8 @@ namespace SweetShop
         //    return t;
         //}
 
-
-
         //*******Report Utilities************************************************************************************/
-        //***ALL REPORT UTILITIES STILL NEED VALIDATION***
+
         //Export customer table to excel file in users Downloads folder
         public void exportCustomers()
         {
@@ -1381,6 +1462,7 @@ namespace SweetShop
             ExcelApp.ActiveWorkbook.Saved = true;
             ExcelApp.Quit();
         }
+
         //Export Inventory Sales to excel file in users Downloads folder
         public void exportInvoices(DateTime startDate, DateTime endDate)
         {
@@ -1416,6 +1498,7 @@ namespace SweetShop
             ExcelApp.ActiveWorkbook.Saved = true;
             ExcelApp.Quit();
         }
+
         //Export Invoice table to excel 
         public void exportInvoices()
         {
@@ -1495,6 +1578,129 @@ namespace SweetShop
 
         }
 
+        public double returnDiscount(List<Cart> itemsSold)
+        {
+            double singleDiscoount = 0;
+            double totalDiscount = 0;
+            foreach (var cart in itemsSold)
+            {
+                if (cart.percentage)
+                {
+                    singleDiscoount = cart.quantity * (cart.price * (cart.discount / 100));
+                }
+                else
+                {
+                    singleDiscoount = cart.quantity * cart.discount;
+                }
+                totalDiscount += singleDiscoount;
+            }
+            return Math.Round(totalDiscount, 2);
+        }
+        public double returnTradeInAmount(List<Cart> itemsSold)
+        {
+            double singleTradeInAmount = 0;
+            double totalTradeinAmount = 0;
+            ItemDataUtilities idu = new ItemDataUtilities();
+            int[] range = idu.tradeInSkuRange(0);
+            foreach (var cart in itemsSold)
+            {
+                if (cart.sku <= range[1] && cart.sku >= range[0])
+                {
+                    singleTradeInAmount = cart.quantity * cart.price;
+                    totalTradeinAmount += singleTradeInAmount;
+                }
+            }
+            return totalTradeinAmount;
+        }
+        public double returnSubtotalAmount(List<Cart> itemsSold)
+        {
+            double totalSubtotalAmount = 0;
+            double totalDiscountAmount = returnDiscount(itemsSold);
+            double totalTradeInAmount = returnTradeInAmount(itemsSold);
+            double totalTotalAmount = returnTotalAmount(itemsSold);
 
+            totalSubtotalAmount = totalSubtotalAmount + totalTotalAmount;
+            totalSubtotalAmount = totalSubtotalAmount - totalDiscountAmount;
+            totalSubtotalAmount = totalSubtotalAmount - (totalTradeInAmount * (-1));
+            return totalSubtotalAmount;
+        }
+        public double returnTotalAmount(List<Cart> itemsSold)
+        {
+            ItemDataUtilities idu = new ItemDataUtilities();
+            int[] range = idu.tradeInSkuRange(0);
+            double singleTotalAmount = 0;
+            double totalTotalAmount = 0;
+            foreach (var cart in itemsSold)
+            {
+                if (cart.sku >= range[1] || cart.sku <= range[0])
+                {
+                    singleTotalAmount = cart.quantity * cart.price;
+                    totalTotalAmount += singleTotalAmount;
+                }
+            }
+            return totalTotalAmount;
+        }
+        
+        //Transfering the trade in item to the clubs table
+        public void transferTradeInStart(List<Cart> Clubs)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            int[] range = idu.tradeInSkuRange(0);
+            Object o;
+
+            foreach (Cart ti in Clubs)
+            {
+                if (ti.sku <= range[1] && ti.sku >= range[0])
+                {
+                    cmd.CommandText = "Select * from tbl_tempTradeInCartSkus Where sku = " + ti.sku;
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+
+                    while (reader.Read())
+                    {
+                        Clubs transferClub = new Clubs
+                        (Convert.ToInt32(reader["sku"]),
+                        Convert.ToInt32(reader["brandID"].ToString()),
+                        Convert.ToInt32(reader["modelID"].ToString()),
+                        Convert.ToInt32(reader["typeID"].ToString()),
+                        reader["clubType"].ToString(),
+                        reader["shaft"].ToString(),
+                        reader["numberOfClubs"].ToString(),
+                        Convert.ToDouble(reader["premium"]),
+                        Convert.ToDouble(reader["cost"]),
+                        Convert.ToDouble(reader["price"]),
+                        Convert.ToInt32(reader["quantity"]),
+                        reader["clubSpec"].ToString(),
+                        reader["shaftSpec"].ToString(),
+                        reader["shaftFlex"].ToString(),
+                        reader["dexterity"].ToString(),
+                        Convert.ToInt32(reader["locationID"].ToString()),
+                        Convert.ToBoolean(reader["used"].ToString()),
+                        reader["comments"].ToString());
+
+
+
+                        o = transferClub as Object;
+                        addItem(o);
+                        transferTradeInDeleteOld(transferClub.sku);
+                    }
+                    conn.Close();
+                }
+            }
+        }
+        public void transferTradeInDeleteOld(int sku)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = "Delete from tbl_tempTradeInCartSkus Where sku = " + sku;
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            conn.Close();
+        }
     }
 }

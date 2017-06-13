@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SweetShop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using SweetShop;
 
 namespace SweetSpotDiscountGolfPOS
 {
@@ -14,12 +14,12 @@ namespace SweetSpotDiscountGolfPOS
         {
 
         }
-
         protected void btnAddNewEmployee_Click(object sender, EventArgs e)
-        {            
+        {
             Response.Redirect("EmployeeAddNew.aspx");
         }
-        protected void grdEmployeesSearched_RowCommand(object sender, GridViewCommandEventArgs e) {
+        protected void grdEmployeesSearched_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
             string key = e.CommandArgument.ToString();
             if (e.CommandName == "ViewProfile")
             {
@@ -28,7 +28,6 @@ namespace SweetSpotDiscountGolfPOS
 
             }
         }
-
         protected void btnEmployeeSearch_Click(object sender, EventArgs e)
         {
 
@@ -38,7 +37,20 @@ namespace SweetSpotDiscountGolfPOS
             grdEmployeesSearched.Visible = true;
             grdEmployeesSearched.DataSource = emp;
             grdEmployeesSearched.DataBind();
-            
+
+        }
+
+        protected void btnLoadItems_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnLoadEmployee_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnLoadCustomers_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

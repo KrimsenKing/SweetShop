@@ -7,6 +7,11 @@
 
 <asp:Content ID="homePageContent" ContentPlaceHolderID="IndividualPageContent" runat="server">
     <h2>Today's Transactions</h2>
-    <hr />
-    <asp:GridView ID="grdSameDaySales" runat="server"></asp:GridView>
+    <%--REMEMBER TO SET DEFAULT BUTTON--%>
+    <%--<asp:Panel ID="pnlDefaultButton" runat="server" DefaultButton="btn">--%>
+
+
+        <hr />
+        <asp:GridView ID="grdSameDaySales" runat="server"></asp:GridView>
+  <%--  </asp:Panel>--%>
 </asp:Content>

@@ -13,6 +13,24 @@ namespace SweetSpotDiscountGolfPOS {
     public partial class SalesCart {
         
         /// <summary>
+        /// lblLocationID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLocationID;
+        
+        /// <summary>
+        /// pnlDefaultButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDefaultButton;
+        
+        /// <summary>
         /// lblCustomer control.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,42 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Button btnCustomerSelect;
         
         /// <summary>
+        /// RadioButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton1;
+        
+        /// <summary>
+        /// RadioButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton2;
+        
+        /// <summary>
+        /// lblShipping control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShipping;
+        
+        /// <summary>
+        /// txtShippingAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtShippingAmount;
+        
+        /// <summary>
         /// lblInvoiceNumber control.
         /// </summary>
         /// <remarks>
@@ -49,13 +103,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Label lblInvoiceNumber;
         
         /// <summary>
-        /// txtInvoiceNumber control.
+        /// lblInvoiceNumberDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInvoiceNumber;
+        protected global::System.Web.UI.WebControls.Label lblInvoiceNumberDisplay;
         
         /// <summary>
         /// lblDate control.
@@ -65,15 +119,6 @@ namespace SweetSpotDiscountGolfPOS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDate;
-        
-        /// <summary>
-        /// lblExists control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExists;
         
         /// <summary>
         /// txtSearch control.
@@ -94,6 +139,15 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Button btnInventorySearch;
         
         /// <summary>
+        /// valInventorySearched control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator valInventorySearched;
+        
+        /// <summary>
         /// grdInventorySearched control.
         /// </summary>
         /// <remarks>
@@ -103,22 +157,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.GridView grdInventorySearched;
         
         /// <summary>
-        /// rdStore control.
+        /// lblqty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdStore;
-        
-        /// <summary>
-        /// rdShipping control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdShipping;
+        protected global::System.Web.UI.WebControls.Label lblqty;
         
         /// <summary>
         /// grdCartItems control.
@@ -139,13 +184,13 @@ namespace SweetSpotDiscountGolfPOS {
         protected global::System.Web.UI.WebControls.Label lblSubtotal;
         
         /// <summary>
-        /// txtSubtotal control.
+        /// lblSubtotalDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSubtotal;
+        protected global::System.Web.UI.WebControls.Label lblSubtotalDisplay;
         
         /// <summary>
         /// btnCancelSale control.

@@ -11,29 +11,31 @@ namespace SweetSpotDiscountGolfPOS
 {
     public partial class EmployeeAddNew : System.Web.UI.Page
     {
-        locationManager lm = new locationManager();
+        LocationManager lm = new LocationManager();
+        EmployeeManager empM = new EmployeeManager();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["empKey"] != null)
             {
-                int empNum = (Convert.ToInt32(Session["empKey"].ToString()));
-                EmployeeManager empM = new EmployeeManager();
-                Employee em = empM.getEmployeeByID(empNum);
+                if (!IsPostBack)
+                {
+                    int empNum = (Convert.ToInt32(Session["empKey"].ToString()));
+                    Employee em = empM.getEmployeeByID(empNum);
 
-                lblFirstNameDisplay.Text = em.firstName.ToString();
-                lblLastNameDisplay.Text = em.lastName.ToString();
-                lblJobDisplay.Text = empM.jobName(em.jobID);
-                lblLocationDisplay.Text = lm.locationName(em.locationID);
-                lblEmailDisplay.Text = em.emailAddress.ToString();
-                lblPrimaryPhoneNumberDisplay.Text = em.primaryContactNumber.ToString();
-                lblSecondaryPhoneNumberDisplay.Text = em.secondaryContactNumber.ToString();
-                lblPrimaryAddressDisplay.Text = em.primaryAddress.ToString();
-                lblSecondaryAddressDisplay.Text = em.secondaryAddress.ToString();
-                lblCityDisplay.Text = em.city.ToString();
-                lblPostalCodeDisplay.Text = em.postZip.ToString();
-                lblProvinceDisplay.Text = lm.provinceName(em.provState);
-                lblCountryDisplay.Text = lm.countryName(em.country);
-                
+                    lblFirstNameDisplay.Text = em.firstName.ToString();
+                    lblLastNameDisplay.Text = em.lastName.ToString();
+                    lblJobDisplay.Text = empM.jobName(em.jobID);
+                    lblLocationDisplay.Text = lm.locationName(em.locationID);
+                    lblEmailDisplay.Text = em.emailAddress.ToString();
+                    lblPrimaryPhoneNumberDisplay.Text = em.primaryContactNumber.ToString();
+                    lblSecondaryPhoneNumberDisplay.Text = em.secondaryContactNumber.ToString();
+                    lblPrimaryAddressDisplay.Text = em.primaryAddress.ToString();
+                    lblSecondaryAddressDisplay.Text = em.secondaryAddress.ToString();
+                    lblCityDisplay.Text = em.city.ToString();
+                    lblPostalCodeDisplay.Text = em.postZip.ToString();
+                    lblProvinceDisplay.Text = lm.provinceName(em.provState);
+                    lblCountryDisplay.Text = lm.countryName(em.country);
+                }
             }
             else
             {
@@ -63,7 +65,7 @@ namespace SweetSpotDiscountGolfPOS
 
                 txtSecondaryAddress.Visible = true;
                 lblSecondaryAddressDisplay.Visible = false;
-                
+
                 txtCity.Visible = true;
                 lblCityDisplay.Visible = false;
 
@@ -78,21 +80,21 @@ namespace SweetSpotDiscountGolfPOS
 
                 btnSaveEmployee.Visible = false;
                 btnAddEmployee.Visible = true;
+                pnlDefaultButton.DefaultButton = "btnAddEmployee";
                 btnEditEmployee.Visible = false;
-                btnCancel.Visible = true;
-                btnBackToSearch.Visible = false;
+                btnCancel.Visible = false;
+                btnBackToSearch.Visible = true;
             }
 
         }
-
         protected void btnAddEmployee_Click(object sender, EventArgs e)
         {
-            EmployeeManager empM = new EmployeeManager();
+
             Employee em = new Employee();
             em.firstName = txtFirstName.Text;
             em.lastName = txtLastName.Text;
-            em.jobID = ddlJob.SelectedIndex;
-            em.locationID = ddlLocation.SelectedIndex;
+            em.jobID = Convert.ToInt32(ddlJob.SelectedValue);
+            em.locationID = Convert.ToInt32(ddlLocation.SelectedValue);
             em.emailAddress = txtEmail.Text;
             em.primaryContactNumber = txtPrimaryPhoneNumber.Text;
             em.secondaryContactNumber = txtSecondaryPhoneNumber.Text;
@@ -100,13 +102,12 @@ namespace SweetSpotDiscountGolfPOS
             em.secondaryAddress = txtSecondaryAddress.Text;
             em.city = txtCity.Text;
             em.postZip = txtPostalCode.Text;
-            em.provState = ddlProvince.SelectedIndex;
-            em.country = ddlCountry.SelectedIndex;
+            em.provState = Convert.ToInt32(ddlProvince.SelectedValue);
+            em.country = Convert.ToInt32(ddlCountry.SelectedValue);
 
             Session["empKey"] = empM.addEmployee(em);
             Response.Redirect(Request.RawUrl);
         }
-
         protected void btnEditEmployee_Click(object sender, EventArgs e)
         {
 
@@ -118,11 +119,11 @@ namespace SweetSpotDiscountGolfPOS
             txtLastName.Visible = true;
             lblLastNameDisplay.Visible = false;
 
-            ddlJob.Text = lblJobDisplay.Text;
+            ddlJob.SelectedValue = empM.jobType(lblJobDisplay.Text).ToString();
             ddlJob.Visible = true;
             lblJobDisplay.Visible = false;
 
-            ddlLocation.Text = lblLocationDisplay.Text;
+            ddlLocation.Text = lm.locationID(lblLocationDisplay.Text).ToString();
             ddlLocation.Visible = true;
             lblLocationDisplay.Visible = false;
 
@@ -145,7 +146,7 @@ namespace SweetSpotDiscountGolfPOS
             txtSecondaryAddress.Text = lblSecondaryAddressDisplay.Text;
             txtSecondaryAddress.Visible = true;
             lblSecondaryAddressDisplay.Visible = false;
-            
+
             txtCity.Text = lblCityDisplay.Text;
             txtCity.Visible = true;
             lblCityDisplay.Visible = false;
@@ -154,15 +155,16 @@ namespace SweetSpotDiscountGolfPOS
             txtPostalCode.Visible = true;
             lblPostalCodeDisplay.Visible = false;
 
-            ddlProvince.Text = lblProvinceDisplay.Text;
+            ddlProvince.Text = lm.pronvinceID(lblProvinceDisplay.Text).ToString();
             ddlProvince.Visible = true;
             lblProvinceDisplay.Visible = false;
 
-            ddlCountry.Text = lblCountryDisplay.Text;
+            ddlCountry.Text = lm.countryID(lblCountryDisplay.Text).ToString();
             ddlCountry.Visible = true;
             lblCountryDisplay.Visible = false;
 
             btnSaveEmployee.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnSaveEmployee";
             btnEditEmployee.Visible = false;
             btnAddEmployee.Visible = false;
             btnCancel.Visible = true;
@@ -172,13 +174,12 @@ namespace SweetSpotDiscountGolfPOS
         protected void btnSaveEmployee_Click(object sender, EventArgs e)
         {
 
-            EmployeeManager ssm = new EmployeeManager();
             Employee em = new Employee();
             em.employeeID = Convert.ToInt32(Session["empKey"].ToString());
             em.firstName = txtFirstName.Text;
             em.lastName = txtLastName.Text;
-            em.jobID = ddlJob.SelectedIndex;
-            em.locationID = ddlLocation.SelectedIndex;
+            em.jobID = Convert.ToInt32(ddlJob.SelectedValue);
+            em.locationID = Convert.ToInt32(ddlLocation.SelectedValue);
             em.emailAddress = txtEmail.Text;
             em.primaryContactNumber = txtPrimaryPhoneNumber.Text;
             em.secondaryContactNumber = txtSecondaryPhoneNumber.Text;
@@ -186,10 +187,10 @@ namespace SweetSpotDiscountGolfPOS
             em.secondaryAddress = txtSecondaryAddress.Text;
             em.city = txtCity.Text;
             em.postZip = txtPostalCode.Text;
-            em.provState = ddlProvince.SelectedIndex;
-            em.country = ddlCountry.SelectedIndex;
-            
-            ssm.updateEmployee(em);
+            em.provState = Convert.ToInt32(ddlProvince.SelectedValue);
+            em.country = Convert.ToInt32(ddlCountry.SelectedValue);
+
+            empM.updateEmployee(em);
 
             txtFirstName.Visible = false;
             lblFirstNameDisplay.Visible = true;
@@ -217,9 +218,10 @@ namespace SweetSpotDiscountGolfPOS
             lblProvinceDisplay.Visible = true;
             ddlCountry.Visible = false;
             lblCountryDisplay.Visible = true;
-            
+
             btnSaveEmployee.Visible = false;
             btnEditEmployee.Visible = true;
+            pnlDefaultButton.DefaultButton = "btnEditEmployee";
             btnCancel.Visible = false;
             btnAddEmployee.Visible = false;
             btnBackToSearch.Visible = true;

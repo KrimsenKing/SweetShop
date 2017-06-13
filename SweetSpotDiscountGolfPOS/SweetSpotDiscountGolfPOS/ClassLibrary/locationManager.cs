@@ -7,10 +7,10 @@ using System.Web;
 
 namespace SweetSpotDiscountGolfPOS.ClassLibrary
 {
-    public class locationManager
+    public class LocationManager
     {
         String connectionString;
-        public locationManager()
+        public LocationManager()
         {
             connectionString = ConfigurationManager.ConnectionStrings["SweetSpotDevConnectionString"].ConnectionString;
         }
@@ -48,7 +48,7 @@ namespace SweetSpotDiscountGolfPOS.ClassLibrary
             int provStateID = 0;
             while (reader.Read())
             {
-                int n = Convert.ToInt32(reader["provName"]);
+                int n = Convert.ToInt32(reader["provStateID"]);
                 provStateID = n;
             }
             conn.Close();
@@ -121,7 +121,7 @@ namespace SweetSpotDiscountGolfPOS.ClassLibrary
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
-            cmd.CommandText = "Select locaitonID from tbl_location where locationName = '" + locationName + "'";
+            cmd.CommandText = "Select locationID from tbl_location where locationName = '" + locationName + "'";
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -134,6 +134,5 @@ namespace SweetSpotDiscountGolfPOS.ClassLibrary
             conn.Close();
             return locID;
         }
-                
     }
 }

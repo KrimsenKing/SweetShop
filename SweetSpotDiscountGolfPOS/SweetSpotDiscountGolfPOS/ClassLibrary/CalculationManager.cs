@@ -71,10 +71,10 @@ namespace SweetSpotDiscountGolfPOS.ClassLibrary
             return totalTotalAmount;
         }
 
-        public double returnGSTAmount(double rate, List<Cart> cart)
+        public double returnGSTAmount(double rate, double subtotal)
         {
             double GSTAmount = 0;
-            GSTAmount = Math.Round((rate * returnSubtotalAmount(cart)), 2);
+            GSTAmount = Math.Round((rate * subtotal), 2);
             return GSTAmount;
         }
         public double returnPSTAmount(double rate, List<Cart> cart)
